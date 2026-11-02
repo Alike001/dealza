@@ -1,0 +1,13 @@
+{
+  "mode": "READ_ONLY_CONSTRUCTOR_SIMULATION",
+  "block": 53610709,
+  "chain_id": 84532,
+  "from": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+  "constructor_arguments": [],
+  "exact_runtime_match": true,
+  "estimated_execution_gas": 2144685,
+  "gas_price_override_wei": 0,
+  "warning": "Zero gas-price read-only estimate does not establish funded live readiness; no transaction was sent",
+  "live_contract_address": null,
+  "live_transaction_hash": null
+}

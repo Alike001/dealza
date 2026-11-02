@@ -1,0 +1,1 @@
+NO-GO: deployer has no test ETH for gas; buyer has no test ETH for gas; seller has no test ETH for gas; reviewer has no test ETH for gas; buyer needs at least 3 test USDC for this sequential five-order rehearsal (10 recommended)

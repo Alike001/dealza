@@ -1,0 +1,8 @@
+test_failed_public_preflight_never_starts_a_mutable_fork (test_integration.IntegrationSafetyTest.test_failed_public_preflight_never_starts_a_mutable_fork) ... ok
+test_public_rpc_rejects_mutation_before_starting_any_process (test_integration.IntegrationSafetyTest.test_public_rpc_rejects_mutation_before_starting_any_process) ... ok
+test_wrong_chain_and_duplicate_roles_are_rejected (test_integration.IntegrationSafetyTest.test_wrong_chain_and_duplicate_roles_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+OK
