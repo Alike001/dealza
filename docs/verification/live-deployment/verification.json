@@ -1,0 +1,91 @@
+{
+  "result": "PASS_FULL_DEPLOYMENT_VERIFICATION",
+  "chain_id": 84532,
+  "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+  "deployment_transaction": "0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1",
+  "deployment_block": 53676176,
+  "snapshot_block": 53678435,
+  "snapshot_block_hash": "0xd15926b27b65e2e336b4c9a296fab52dcea06399b12c8c6cfdb5da0787b83db0",
+  "timestamp": 1793657555,
+  "confirmations": 2260,
+  "canonical_receipt_success": true,
+  "exact_creation_input_match": true,
+  "creation_sha256": "45d2044b191500c9e097982f436a27cad6eb8105f72e161cd59946b854d6094a",
+  "runtime_bytes": 9586,
+  "runtime_keccak256": "0xadbc98ddf155ec9a93328c11d78ff7fe2aeb180cc74bd34222e4313584b2374d",
+  "complete_runtime_match_at_deployment_and_snapshot": true,
+  "fresh_constructor_runtime_match": true,
+  "immutable_references": {},
+  "metadata_stripped": false,
+  "reviewed_contract_inputs_unchanged_since": "2d611b0",
+  "configuration": {
+    "ESCROW()": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+    "COLLECTOR()": "0xf1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea",
+    "USDC()": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+    "CHAIN_ID()": 84532,
+    "MAX_DURATION()": 2592000
+  },
+  "pinned_cpp_collector_usdc_match": true,
+  "usdc_implementation": "0xd74cc5d436923b8ba2c179b4bca2841d8a52c5b5",
+  "public_functions": [
+    "CHAIN_ID",
+    "COLLECTOR",
+    "ESCROW",
+    "MAX_DURATION",
+    "USDC",
+    "cancel",
+    "createOrder",
+    "dispute",
+    "fund",
+    "getOrder",
+    "noteDelivery",
+    "release",
+    "resolve",
+    "sellerNonce",
+    "status",
+    "syncRecovery"
+  ],
+  "proxy_slots": {
+    "implementation": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "admin": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "beacon": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "roles": {
+    "deployer": {
+      "address": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+      "eth_wei": 9804192965582933,
+      "usdc_units": 20000000,
+      "nonce": 4,
+      "code": "0x",
+      "blacklisted": false
+    },
+    "buyer": {
+      "address": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "eth_wei": 100000000000000,
+      "usdc_units": 21000000,
+      "nonce": 0,
+      "code": "0x",
+      "blacklisted": false
+    },
+    "seller": {
+      "address": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "eth_wei": 50000000000000,
+      "usdc_units": 0,
+      "nonce": 0,
+      "code": "0x",
+      "blacklisted": false
+    },
+    "reviewer": {
+      "address": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "eth_wei": 20000000000000,
+      "usdc_units": 0,
+      "nonce": 0,
+      "code": "0x",
+      "blacklisted": false
+    }
+  },
+  "buyer_collector_allowance": 0,
+  "gas_price_snapshot_wei": 6000000,
+  "live_transactions_sent": [],
+  "signature_requested": false
+}

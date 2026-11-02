@@ -1,6 +1,6 @@
 {
   "chainId": 84532,
-  "operator": null,
-  "deploymentBlock": null,
-  "deploymentTransaction": null
+  "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+  "deploymentBlock": 53676176,
+  "deploymentTransaction": "0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1"
 }

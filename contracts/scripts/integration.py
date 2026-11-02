@@ -186,9 +186,12 @@ def preflight(public, roles, artifact):
 class Rehearsal:
     def __init__(self, fork, roles, report, artifact):
         self.rpc, self.roles, self.artifact = fork, roles, artifact
+        self.gas_price = report["gas_price_snapshot_wei"]
+        require(self.gas_price > 0, "Rehearsal requires a nonzero public gas price snapshot")
         self.report = {"mode": "LOCAL_FORK_SIMULATION", "source_block": report["block"], "roles": roles,
                        "live_operator": None, "live_transactions": [], "transactions": [], "negative_checks": [],
-                       "orders": [], "gas_fee_note": "Execution gas only; Base L1 data/operator fees require fresh wallet estimates"}
+                       "orders": [], "gas_price_snapshot_wei": self.gas_price,
+                       "gas_fee_note": "Explicit public snapshot gas price; Base L1 data/operator fees require fresh wallet estimates"}
         self.operator = None
         self.store = None
         self.id = None
@@ -218,7 +221,10 @@ class Rehearsal:
     def tx(self, label, role, target, data):
         sender = self.roles[role]
         before = self.snapshot()
-        tx = {"from": sender, "data": data, "value": "0x0"}
+        # Anvil's automatic fee defaults can reserve much more than actual Base
+        # fees and reject funded participants. Keep real balances and use the
+        # nonzero public snapshot price consistently for estimation and execution.
+        tx = {"from": sender, "data": data, "value": "0x0", "gasPrice": hex(self.gas_price)}
         if target:
             tx["to"] = target
         estimate = int(self.rpc.rpc("eth_estimateGas", [tx]), 16)

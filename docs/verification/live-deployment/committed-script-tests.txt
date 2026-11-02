@@ -1,0 +1,14 @@
+test_failed_public_preflight_never_starts_a_mutable_fork (test_integration.IntegrationSafetyTest.test_failed_public_preflight_never_starts_a_mutable_fork) ... ok
+test_public_rpc_rejects_mutation_before_starting_any_process (test_integration.IntegrationSafetyTest.test_public_rpc_rejects_mutation_before_starting_any_process) ... ok
+test_rehearsal_rejects_zero_price (test_integration.IntegrationSafetyTest.test_rehearsal_rejects_zero_price) ... ok
+test_rehearsal_uses_public_price_without_changing_funded_balance (test_integration.IntegrationSafetyTest.test_rehearsal_uses_public_price_without_changing_funded_balance) ... ok
+test_wrong_chain_and_duplicate_roles_are_rejected (test_integration.IntegrationSafetyTest.test_wrong_chain_and_duplicate_roles_are_rejected) ... ok
+test_public_reader_rejects_wallet_and_mutation_methods (test_funded_preflight.FundingReaderSafetyTest.test_public_reader_rejects_wallet_and_mutation_methods) ... ok
+test_receipt_lookup_uses_only_read_method (test_funded_preflight.FundingReaderSafetyTest.test_receipt_lookup_uses_only_read_method) ... ok
+test_extra_methods_are_read_only (test_verify_live_deployment.DeploymentReaderSafetyTest.test_extra_methods_are_read_only) ... ok
+test_public_endpoint_cannot_sign_send_or_change_state (test_verify_live_deployment.DeploymentReaderSafetyTest.test_public_endpoint_cannot_sign_send_or_change_state) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.010s
+
+OK

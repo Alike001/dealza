@@ -1,0 +1,21 @@
+{
+  "mode": "READ_ONLY_PRODUCTION_PREVIEW",
+  "origin": "http://127.0.0.1:4173",
+  "injected_wallet_present": false,
+  "wallet_connected": false,
+  "signatures_requested": false,
+  "transactions_sent": [],
+  "observations": {
+    "home_renders": true,
+    "help_links_verified_operator": true,
+    "deployment_pending_notice": false,
+    "rpc_http_status": 200,
+    "fork_only_order_shows_unverified_error": true,
+    "fabricated_live_order": false,
+    "console_errors": 0,
+    "console_warnings": 0,
+    "mobile_create_width": 390,
+    "mobile_horizontal_overflow": false
+  },
+  "limitation": "No MetaMask or successful live order exists in this browser acceptance check; live receipt and wallet acceptance remain pending."
+}

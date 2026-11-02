@@ -2,7 +2,9 @@
 
 ## How to Test
 
-Dealza now includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator has not been deployed.** The app deliberately shows **“Testnet integration pending”** and disables onchain order creation and payment actions. There are no sample financial balances, invented receipts, or simulated successful orders in the product.
+Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). The 1 USDC lifecycle passed on a local fork of the deployed operator; a real payment still requires separate authorization and receipt-based acceptance.
+
+Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live payment execution and frontend publication remain separate steps.
 
 ### Run the web application
 
@@ -13,17 +15,17 @@ npm ci
 npm run dev
 ```
 
-Open the Local URL printed by Vite, normally `http://127.0.0.1:5173`. No wallet, funds, backend, database, private keys, or Foundry installation is needed to explore the pending integration experience.
+Open the Local URL printed by Vite, normally `http://127.0.0.1:5173`. No wallet, funds, backend, database, private keys, or Foundry installation is needed to browse the application and prepare a local draft.
 
 Try these flows:
 
-1. Open the home page: the pending integration message and empty order area are explicit.
+1. Open the home page: the verified operator is configured. Connect a wallet to discover its real orders.
 2. Select **Create an order**, enter terms, amount, named buyer/reviewer addresses and deadlines, and **Save draft**. The draft stays on this device; it creates no order or payment.
 3. Open **Connect wallet**. Without an injected wallet, the app explains how to use MetaMask or a compatible wallet. Mobile users can open the page in their wallet’s browser. Connection shares a public address; it does not sign a transaction.
 4. Enable Base Sepolia in the wallet. Another network shows a switch prompt and blocks payment actions. Test USDC/ETH balances, when connected, are real public contract reads; missing reads show an error or dash, never an invented zero.
-5. Open **How it works** to review the reviewer/expiry/cancellation rules. A valid-format checkout URL remains unverified while the operator is missing; an invalid ID shows a clear error.
+5. Open **How it works** to review the reviewer/expiry/cancellation rules. Checkout URLs load real orders from the configured deployment; an unknown or invalid ID shows an error.
 
-No deployment, signatures, broadcasts, or spending are required for the checks above. No live payment can complete until a separately authorized and verified operator deployment is configured.
+These browsing and draft checks require no signatures or spending. Follow the [first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) only after separate authorization of the listed transactions.
 
 ### Automated frontend verification
 
@@ -85,22 +87,26 @@ The application cannot verify physical delivery and does not guarantee reviewer 
 | Existing pre-approval collector | `0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea` |
 | Circle test USDC | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` (6 decimals) |
 | CPP version | v1.1.0, commit `6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9` |
-| DealzaOperator | **Not deployed**; address/block/transaction are null |
+| DealzaOperator | `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block `53676176` |
+| Deployment transaction | `0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1` |
 
 Frontend network configuration: `web/src/lib/config.ts`. Deployment identity: `contracts/config/base-sepolia.deployment.json`. Protocol identity is reused from the verified protocol evidence; ABIs/runtime hash are in `web/src/lib/contracts.generated.ts`.
 
 An optional **public browser RPC** can be set as `VITE_BASE_SEPOLIA_RPC_URL` in `web/.env.local`. `VITE_` values are exposed to every browser visitor: never put a wallet key, seed phrase, secret API credential, or backend token there. The default is `https://sepolia.base.org`. The app verifies chain ID and contract code/configuration before writes; there is no mainnet execution path.
 
-## Connect the real deployment later
+## First real payment and remaining acceptance
 
-The full frontend architecture, function mapping, verification evidence, limitations, and exact activation sequence are in [08-WEB-APPLICATION.md](docs/08-WEB-APPLICATION.md).
+The deployed runtime, creation input, receipt, pinned protocol configuration, USDC implementation, and absence of operator admin/upgrade powers are independently checked. The frontend reads the actual address and block from the shared deployment record. Reproduce the read-only verification and isolated simulation:
 
-1. Fund the test wallets and complete the separately authorized deployment preflight/local rehearsal. No live deployment or payment has been performed by this work.
-2. After explicit deployment authorization, deploy **only DealzaOperator**, with **no constructor arguments**, and verify its source/runtime. Reuse the existing CPP contracts.
-3. Record the real Base Sepolia operator address, deployment block, and deployment transaction in `contracts/config/base-sepolia.deployment.json`; keep `chainId: 84532`. Never use a predicted address as an actual deployment.
-4. Re-run ABI checks, frontend tests/build, protocol verification, and wallet-specific simulations. The app rejects runtime/configuration mismatches.
-5. After separate transaction authorization, create a small real order; verify allowance → pre-approval → reservation → delivery evidence → buyer release against receipts, actual USDC balances, CPP accounting, and Dealza status. Use separate orders for seller cancellation, both reviewer verdicts, and disputed expiry reclaim.
-6. Publish the frontend only after separate authorization. No site was published or GitHub push performed in this task.
+```sh
+cd contracts
+forge build
+python3 scripts/verify_live_deployment.py --simulate --output-dir ../docs/verification/live-deployment
+```
+
+This tool has no public send/sign mode. Its six payment transactions run only on an internally allocated loopback fork, with actual funded participant balances and the existing deployed operator. It neither redeploys nor adds gas/tokens.
+
+[The first-payment runbook](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) gives the six MetaMask confirmations, the two seller rejection checks that use read-only calls, expected balances/events, and recovery rules. Run it after separate authorization, record genuine live receipts, and complete browser acceptance before calling the application fully validated. Other real lifecycle branches and frontend publication remain outstanding.
 
 For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Publishing commands have deliberately not been run.
 

@@ -1,8 +1,12 @@
 # Checkpoint 2 — Base Sepolia integration preparation
 
-## Current decision and mandatory stop
+## Current deployment status
 
-**Latest funded-wallet decision:** see [funded-wallet preflight](verification/funded-preflight/READINESS.md). Participant funding and buyer USDC are now sufficient, and all three transfers succeeded. Deployment remains **NO-GO** because the deployer now has EIP-7702 delegation code and the named-wallet rehearsal requires wallet-specific simulation. The checkpoint observations below are retained as historical evidence.
+**Deployment is now independently verified.** The shared frontend configuration uses the actual operator address and deployment block. See [live verification and first-payment procedure](09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) for current evidence and the separate live-payment authorization boundary. No live payment has been sent by this verification work.
+
+## Historical predeployment decision and mandatory stop
+
+**Latest deployment decision:** see [delegation resolution and updated readiness](verification/delegation-resolution/READINESS.md). The user manually restored the original deployer to standard-EOA mode; the current funded named-wallet rehearsal passes. The checkpoint observations below, including the earlier [delegated-wallet blocker](verification/funded-preflight/READINESS.md), are historical evidence.
 
 **NO-GO for live deployment at the last recorded named-wallet preflight.** All four supplied roles had zero test ETH. Buyer had 1 test USDC; the sequential rehearsal needs at least 3 (10 recommended). These checks must pass before the named-wallet lifecycle rehearsal proceeds. The prior security GO is not a funded-wallet GO.
 

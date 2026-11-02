@@ -1,0 +1,517 @@
+{
+  "mode": "LOCAL_FORK_SIMULATION",
+  "source_block": 53678435,
+  "roles": {
+    "deployer": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+    "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548"
+  },
+  "live_operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+  "live_transactions": [],
+  "transactions": [
+    {
+      "label": "first real payment rehearsal: create",
+      "signer_role": "seller",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "data": "0x0b0c40bb0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df2500000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f30000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54884ed418861a23c9a98422aeb6108f239d6a3ea0edf793cb37f4ccbfdda890836",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "gas": "0x5c177",
+        "nonce": "0x0"
+      },
+      "estimated_execution_gas": 301765,
+      "proposed_gas_limit": 377207,
+      "local_gas_used": 301765,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0
+      },
+      "events": [
+        {
+          "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+          "topics": [
+            "0xb4101461597da7a33c853b6bb668bb0ae69f50c035f63524ef496a14dd14148d",
+            "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+            "0x000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf",
+            "0x0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25"
+          ],
+          "data": "0x0000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54884ed418861a23c9a98422aeb6108f239d6a3ea0edf793cb37f4ccbfdda890836f4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+          "event": "OrderCreated"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "createOrder(address,uint120,uint48,uint48,address,bytes32)",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0
+      }
+    },
+    {
+      "label": "first real payment rehearsal: approve",
+      "signer_role": "buyer",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "data": "0x095ea7b3000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000f4240",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "gas": "0x1108e",
+        "nonce": "0x0"
+      },
+      "estimated_execution_gas": 55819,
+      "proposed_gas_limit": 69774,
+      "local_gas_used": 55437,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 1,
+        "stored_status": 1,
+        "cpp_state": [
+          0,
+          0,
+          0
+        ]
+      },
+      "events": [
+        {
+          "address": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+          "topics": [
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+            "0x0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25",
+            "0x000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000f4240",
+          "event": "Approval"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "approve(address,uint256)",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 1,
+        "stored_status": 1,
+        "cpp_state": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "label": "first real payment rehearsal: preApprove",
+      "signer_role": "buyer",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "data": "0xc6184c2f000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+        "gas": "0x111e6",
+        "nonce": "0x1"
+      },
+      "estimated_execution_gas": 56094,
+      "proposed_gas_limit": 70118,
+      "local_gas_used": 56094,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 1,
+        "stored_status": 1,
+        "cpp_state": [
+          0,
+          0,
+          0
+        ]
+      },
+      "events": [
+        {
+          "address": "0xf1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea",
+          "topics": [
+            "0x648e07873d502d2121c8e8dfb7efab466b43a83ef86ada8626ae88cf568becde",
+            "0xf4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c"
+          ],
+          "data": "0x",
+          "event": "PaymentPreApproved"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "preApprove((address,address,address,address,uint120,uint48,uint48,uint48,uint16,uint16,address,uint256))",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 1,
+        "stored_status": 1,
+        "cpp_state": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "label": "first real payment rehearsal: fund",
+      "signer_role": "buyer",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "data": "0xb5d6529c610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "gas": "0x2bb3d",
+        "nonce": "0x2"
+      },
+      "estimated_execution_gas": 143204,
+      "proposed_gas_limit": 179005,
+      "local_gas_used": 138404,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 21000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 1,
+        "stored_status": 1,
+        "cpp_state": [
+          0,
+          0,
+          0
+        ]
+      },
+      "events": [
+        {
+          "address": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+          "topics": [
+            "0x1c81fb2e3bab27f6bb09bee9a0dddf61600b7cbaf2c12683e4864e0cbdb9d284",
+            "0xf4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c"
+          ],
+          "data": "0x000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea",
+          "event": "PaymentAuthorized"
+        },
+        {
+          "address": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25",
+            "0x00000000000000000000000057ec2910410c3ef888c6127a3684d04171d5a11a"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000f4240",
+          "event": "Transfer"
+        },
+        {
+          "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+          "topics": [
+            "0x6f7ebdb81fa2c65c7aa782993e2026dc4f950ff9cc2715d33a4b5dfe20b8d606",
+            "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+            "0xf4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c"
+          ],
+          "data": "0x",
+          "event": "OrderFunded"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "fund(bytes32,(address,address,address,address,uint120,uint48,uint48,uint48,uint16,uint16,address,uint256))",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 1000000,
+        "status": 2,
+        "stored_status": 2,
+        "cpp_state": [
+          1,
+          1000000,
+          0
+        ]
+      }
+    },
+    {
+      "label": "seller delivery evidence",
+      "signer_role": "seller",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "data": "0x685839b8610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f236a8524d00a9b6bcaee50682f7053e7f8bf75e8d73bc88b3ddd544c2d9fd5da",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "gas": "0x96fc",
+        "nonce": "0x1"
+      },
+      "estimated_execution_gas": 30921,
+      "proposed_gas_limit": 38652,
+      "local_gas_used": 30921,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 1000000,
+        "status": 2,
+        "stored_status": 2,
+        "cpp_state": [
+          1,
+          1000000,
+          0
+        ]
+      },
+      "events": [
+        {
+          "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+          "topics": [
+            "0xac0281fce3112628b3984e944b1c730e898fcebf2980d437e9da8dd66f80c106",
+            "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+          ],
+          "data": "0x236a8524d00a9b6bcaee50682f7053e7f8bf75e8d73bc88b3ddd544c2d9fd5da",
+          "event": "DeliveryNoted"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "noteDelivery(bytes32,bytes32)",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 1000000,
+        "status": 2,
+        "stored_status": 2,
+        "cpp_state": [
+          1,
+          1000000,
+          0
+        ]
+      }
+    },
+    {
+      "label": "buyer approved release",
+      "signer_role": "buyer",
+      "unsigned_transaction": {
+        "chainId": 84532,
+        "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "data": "0x67d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+        "value": "0x0",
+        "gasPrice": "0x5b8d80",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "gas": "0x2ed6d",
+        "nonce": "0x3"
+      },
+      "estimated_execution_gas": 153482,
+      "proposed_gas_limit": 191853,
+      "local_gas_used": 146727,
+      "before": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 0,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 1000000,
+        "status": 2,
+        "stored_status": 2,
+        "cpp_state": [
+          1,
+          1000000,
+          0
+        ]
+      },
+      "events": [
+        {
+          "address": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+          "topics": [
+            "0xac1e0db1957daedbc6944bcb4c8dc947ff8101d710671ac2ec26309f7f38d58e",
+            "0xf4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "event": "PaymentCaptured"
+        },
+        {
+          "address": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+          "topics": [
+            "0xd8699a107a4fe8ea740423e52159bafb235249dce5c2df55fa265db06964d136",
+            "0x000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c8"
+          ],
+          "data": "0x00000000000000000000000057ec2910410c3ef888c6127a3684d04171d5a11a",
+          "event": "TokenStoreCreated"
+        },
+        {
+          "address": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x00000000000000000000000057ec2910410c3ef888c6127a3684d04171d5a11a",
+            "0x000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000f4240",
+          "event": "Transfer"
+        },
+        {
+          "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+          "topics": [
+            "0xa27a1caca2100ee902467a599ab0e434664b80ea8e37cdc85319f1d8ca942dd7",
+            "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+            "0x0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25"
+          ],
+          "data": "0x",
+          "event": "OrderReleased"
+        }
+      ],
+      "live_transaction_hash": null,
+      "live_explorer_url": null,
+      "function": "release(bytes32)",
+      "after": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 1000000,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 4,
+        "stored_status": 4,
+        "cpp_state": [
+          1,
+          0,
+          1000000
+        ]
+      }
+    }
+  ],
+  "negative_checks": [
+    {
+      "label": "seller release",
+      "expected_error": "Unauthorized()",
+      "result": "REVERT",
+      "transaction": {
+        "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "data": "0x67d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+      }
+    },
+    {
+      "label": "seller direct CPP capture",
+      "expected_error": "InvalidSender(address,address)",
+      "result": "REVERT",
+      "transaction": {
+        "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "to": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+        "data": "0x3efa46e1000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006ae918e3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000006ae926f3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f00000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "label": "deployer release",
+      "expected_error": "Unauthorized()",
+      "result": "REVERT",
+      "transaction": {
+        "from": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "data": "0x67d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+      }
+    },
+    {
+      "label": "duplicate buyer release",
+      "expected_error": "InvalidState()",
+      "result": "REVERT",
+      "transaction": {
+        "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "data": "0x67d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+      }
+    }
+  ],
+  "orders": [
+    {
+      "scenario": "first real payment rehearsal",
+      "order_id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+      "payment": [
+        "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+        "0x4f7d38d29172f91f77d3050a9e0f75a1aae5df25",
+        "0xf74ad341e10187073a0eef55356d136f1be5e3cf",
+        "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+        "1000000",
+        "1793661155",
+        "1793664755",
+        "1793664755",
+        "0",
+        "0",
+        "0x0000000000000000000000000000000000000000",
+        "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+      ],
+      "payment_hash": "0xf4a3219c8864eea9e8af46811583bad778d8269a4c7f0261ecf1fd8f827bb36c",
+      "authorization_expiry": 1793664755,
+      "final_state": {
+        "deployer": 20000000,
+        "buyer": 20000000,
+        "seller": 1000000,
+        "reviewer": 0,
+        "operator": 0,
+        "token_store": 0,
+        "status": 4,
+        "stored_status": 4,
+        "cpp_state": [
+          1,
+          0,
+          1000000
+        ]
+      }
+    }
+  ],
+  "gas_price_snapshot_wei": 6000000,
+  "gas_fee_note": "Explicit public snapshot gas price; Base L1 data/operator fees require fresh wallet estimates",
+  "initial_state": {
+    "deployer": 20000000,
+    "buyer": 21000000,
+    "seller": 0,
+    "reviewer": 0,
+    "operator": 0,
+    "token_store": 0
+  },
+  "final_allowance": 0,
+  "result": "PASS_LOCAL_FORK_ONLY",
+  "balance_overrides": false,
+  "deployment_performed": false,
+  "proposed_gas_limits_by_role": {
+    "deployer": 0,
+    "buyer": 510750,
+    "seller": 415859,
+    "reviewer": 0
+  }
+}

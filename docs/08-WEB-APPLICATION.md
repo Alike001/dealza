@@ -1,6 +1,10 @@
 # Dealza web application — implementation and verification
 
-## Result and deployment boundary
+## Current activation status
+
+**The shared deployment record is now populated with the verified live Base Sepolia operator.** Current verification, production-build results, deployed-address payment rehearsal, and remaining live browser/receipt acceptance are in [09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md](09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). The null-deployment and browser observations below describe the original frontend checkpoint. They are retained as historical evidence.
+
+## Original checkpoint result and deployment boundary
 
 Implemented a responsive React/TypeScript/Vite application with real viem wallet and contract interfaces. **The operator deployment remains null.** The default product shows “Testnet integration pending,” permits local order drafts and informational browsing, and does not fabricate financial balances, order records, receipts, or successful payments.
 
