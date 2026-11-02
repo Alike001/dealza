@@ -1,0 +1,80 @@
+{
+  "chain_id": 84532,
+  "block": 53599830,
+  "contracts": {
+    "AuthCaptureEscrow": {
+      "address": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+      "immutable_value": "0xe4be44b1505d29ae640748b4cce530ece6dcd450",
+      "immutable_offsets": [
+        {
+          "start": 5432,
+          "length": 32
+        },
+        {
+          "start": 9686,
+          "length": 32
+        },
+        {
+          "start": 10516,
+          "length": 32
+        }
+      ],
+      "executable_bytes": 10925,
+      "executable_match": true,
+      "full_runtime_keccak256": "0x33558f6cb34733174fdd6ec5ca8257834a8e4302abc08a4542f73ddf07d8702a",
+      "executable_keccak256": "0x07f21e7c7e894babc505fcec58bfc6dd61f6cd01df7c2406ffb0aa6179eb937e",
+      "comparison": "Exact after patching compiler-declared immutables and removing CBOR metadata only"
+    },
+    "PreApprovalPaymentCollector": {
+      "address": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+      "immutable_value": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+      "immutable_offsets": [
+        {
+          "start": 290,
+          "length": 32
+        },
+        {
+          "start": 1192,
+          "length": 32
+        },
+        {
+          "start": 1762,
+          "length": 32
+        }
+      ],
+      "executable_bytes": 2350,
+      "executable_match": true,
+      "full_runtime_keccak256": "0x49757bee314a38822e6f25db499d07edcc18e5a1b32ed6935483a4baa0e8a6e8",
+      "executable_keccak256": "0xf98ae006981da493f45df9c43d6d1ee8eff1ba28d9ffaf863517654d3b879eaa",
+      "comparison": "Exact after patching compiler-declared immutables and removing CBOR metadata only"
+    },
+    "TokenStore": {
+      "address": "0xe4be44b1505d29ae640748b4cce530ece6dcd450",
+      "immutable_value": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+      "immutable_offsets": [
+        {
+          "start": 186,
+          "length": 32
+        },
+        {
+          "start": 579,
+          "length": 32
+        }
+      ],
+      "executable_bytes": 616,
+      "executable_match": true,
+      "full_runtime_keccak256": "0x8ff35d5d4032deaf1cd8e71f770db006d6e1b1ade58dfcaf3cb8b99204a9600a",
+      "executable_keccak256": "0xc51b85d91f1944a14fa67d0bc755899f1698ea1c57448b43cde0e88e44797c7a",
+      "comparison": "Exact after patching compiler-declared immutables and removing CBOR metadata only"
+    }
+  },
+  "usdc": {
+    "address": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "decimals": 6,
+    "symbol": "USDC",
+    "proxy_runtime_keccak256": "0xedc5281a85c0efecd49999a1ef668390c59b88702f2d4a07029d7f5d63059d6c",
+    "implementation": "0xd74cc5d436923b8ba2c179b4bca2841d8a52c5b5",
+    "implementation_runtime_keccak256": "0x1254951e5483b882fd5def9452f58fe786eb3380c0bf9bb2744fa21a0a97a16c",
+    "note": "Circle-issued address independently checked against Circle docs; token is upgradeable"
+  }
+}

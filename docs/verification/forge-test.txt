@@ -1,0 +1,73 @@
+Compiling 4 files with Solc 0.8.28
+Solc 0.8.28 finished in 33.93s
+Compiler run successful!
+
+Ran 34 tests for test/DealzaOperator.t.sol:DealzaOperatorTest
+[PASS] testAllOperatorOnlyProtocolEntrypointsRejectSeller() (gas: 163537)
+[PASS] testAllowanceAloneInsufficient() (gas: 203664)
+[PASS] testBuyerReleaseExactlyOnce() (gas: 529325)
+[PASS] testCPPItselfRejectsExpiredOperatorCapture() (gas: 294401)
+[PASS] testCaptureFailsAtExpiryAndReclaimIsPayerOnly() (gas: 683400)
+[PASS] testDisputeReviewerRelease() (gas: 559181)
+[PASS] testExactHashAndCustody() (gas: 377042)
+[PASS] testFuzzConservationAcrossVerdicts(uint120,bool) (runs: 256, μ: 842773, ~: 833445)
+[PASS] testFuzzRejectEveryAlteredPaymentField(uint8,uint256) (runs: 256, μ: 86048, ~: 85162)
+[PASS] testHashDomainSeparatesChainEscrowAndOperator() (gas: 2714917)
+[PASS] testInvalidInputs() (gas: 210569)
+[PASS] testLastSecondCaptureSucceeds() (gas: 410125)
+[PASS] testNoCaptureBeforeFunding() (gas: 39449)
+[PASS] testNoMainnetOrMissingProtocolConfiguration() (gas: 4377)
+[PASS] testOperatorVoidAfterExpiryAndReclaimRace() (gas: 501708)
+[PASS] testOutsiderCannotFundReleaseCancelDisputeOrResolve() (gas: 443682)
+[PASS] testPreApprovalAloneInsufficientAndFailedFundingAtomic() (gas: 421204)
+[PASS] testPreApprovalCannotBeModifiedOrReplayedForAnotherOrder() (gas: 784872)
+[PASS] testPreApprovalExpiryBoundary() (gas: 189135)
+[PASS] testPreApprovalMustComeFromPayer() (gas: 52858)
+[PASS] testProtocolAuthorizationAndCaptureEvents() (gas: 435880)
+[PASS] testReclaimBeforeExpiryFails() (gas: 321955)
+[PASS] testReclaimThenVoidRaceIsAtomic() (gas: 490183)
+[PASS] testReentrancyDuringCaptureBlocked() (gas: 586656)
+[PASS] testReentrancyDuringCollectionBlocked() (gas: 438851)
+[PASS] testReentrancyDuringVoidBlocked() (gas: 569179)
+[PASS] testReviewerCannotReleaseUndisputedOrder() (gas: 294965)
+[PASS] testReviewerCannotResolveAtExpiryInEitherDirection() (gas: 477255)
+[PASS] testSellerCanDisputeReviewerVoid() (gas: 467280)
+[PASS] testSellerCancellationReturnsAllFundsAndBlocksRelease() (gas: 477332)
+[PASS] testSellerCannotReleaseOrDirectlyCapture() (gas: 376943)
+[PASS] testUnfundedCancellationInvalidatesPreApproval() (gas: 216847)
+[PASS] testUnknownOrderRejected() (gas: 10741)
+[PASS] testWrongSellerRejected() (gas: 184900)
+Suite result: ok. 34 passed; 0 failed; 0 skipped; finished in 272.90ms (357.22ms CPU time)
+
+Ran 1 test for test/DealzaInvariant.t.sol:DealzaInvariantTest
+[PASS]
+DealzaInvariantTest invariants:
+[PASS] invariantConservationAndOnlyPermittedPayouts
+[PASS] invariantProtocolStateAgreesWithOrders
+ DealzaInvariantTest invariants (runs: 128, calls: 4096, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| LifecycleHandler | advanceTime  | 448   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | attack       | 428   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | buyerRelease | 445   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | cancel       | 442   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | create       | 464   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | fund         | 465   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | openDispute  | 480   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | reclaim      | 469   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | resolve      | 455   | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 3.75s (3.73s CPU time)
+
+Ran 2 test suites in 3.76s (4.02s CPU time): 35 tests passed, 0 failed, 0 skipped (35 total tests)

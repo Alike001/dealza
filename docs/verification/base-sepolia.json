@@ -1,0 +1,80 @@
+{
+  "network": "Base Sepolia",
+  "chain_id": 84532,
+  "rpc": "https://sepolia.base.org",
+  "observed_block": 53589971,
+  "protocol_tag": "v1.1.0",
+  "tag_object": "942ffdde73417eb831cebf08bd0397b2c39d499f",
+  "protocol_commit": "6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9",
+  "escrow": {
+    "address": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+    "fully_verified": true,
+    "runtime_bytes": 10978,
+    "runtime_keccak256": "0x33558f6cb34733174fdd6ec5ca8257834a8e4302abc08a4542f73ddf07d8702a",
+    "rpc_runtime_matches_verified": true,
+    "source_equals_tag": true,
+    "full_abi_matches_compiled": true,
+    "compiler": "v0.8.28+commit.7893614a",
+    "compiler_settings": {
+      "evmVersion": "cancun",
+      "libraries": {},
+      "metadata": {
+        "appendCBOR": true,
+        "bytecodeHash": "ipfs",
+        "useLiteralContent": false
+      },
+      "optimizer": {
+        "enabled": true,
+        "runs": 100000
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "*"
+          ],
+          "*": [
+            "*"
+          ]
+        }
+      },
+      "remappings": [
+        "@openzeppelin/contracts/=lib/spend-permissions/lib/openzeppelin-contracts/contracts/",
+        "FreshCryptoLib/=lib/spend-permissions/lib/webauthn-sol/lib/FreshCryptoLib/solidity/src/",
+        "account-abstraction/=lib/spend-permissions/lib/account-abstraction/contracts/",
+        "ds-test/=lib/spend-permissions/lib/webauthn-sol/lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/spend-permissions/lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "fuzzlib/=lib/spend-permissions/lib/magicspend/lib/fuzzlib/src/",
+        "halmos-cheatcodes/=lib/spend-permissions/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "magicspend/=lib/spend-permissions/lib/magicspend/src/",
+        "openzeppelin-contracts/=lib/spend-permissions/lib/openzeppelin-contracts/",
+        "p256-verifier/=lib/spend-permissions/lib/smart-wallet/lib/p256-verifier/",
+        "safe-singleton-deployer-sol/=lib/spend-permissions/lib/smart-wallet/lib/safe-singleton-deployer-sol/",
+        "smart-wallet/=lib/spend-permissions/lib/smart-wallet/src/",
+        "solady/=lib/solady/src/",
+        "spend-permissions/=lib/spend-permissions/src/",
+        "webauthn-sol/=lib/spend-permissions/lib/webauthn-sol/src/",
+        "permit2/=lib/permit2/src/",
+        "forge-gas-snapshot/=lib/permit2/lib/forge-gas-snapshot/src/",
+        "solmate/=lib/permit2/lib/solmate/"
+      ],
+      "viaIR": true
+    }
+  },
+  "collector": {
+    "address": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+    "fully_verified": false,
+    "partially_verified": true,
+    "runtime_keccak256": "0x49757bee314a38822e6f25db499d07edcc18e5a1b32ed6935483a4baa0e8a6e8",
+    "rpc_runtime_matches_verified": true,
+    "source_equals_tag": false,
+    "source_equals_tag_ignoring_comments_whitespace": true
+  },
+  "sources": [
+    "https://github.com/base/commerce-payments/tree/v1.1.0",
+    "https://base-sepolia.blockscout.com/api/v2/smart-contracts/0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+    "https://base-sepolia.blockscout.com/api/v2/smart-contracts/0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+    "https://developers.circle.com/stablecoins/usdc-contract-addresses"
+  ],
+  "method": "Read-only explorer HTTP + eth_chainId + eth_getCode. Fork tests use block 53589971. No broadcast."
+}

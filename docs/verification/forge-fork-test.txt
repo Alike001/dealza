@@ -1,0 +1,35 @@
+Compiling 4 files with Solc 0.8.28
+Solc 0.8.28 finished in 36.49s
+Compiler run successful!
+
+Ran 27 tests for test/fork/BaseSepolia.t.sol:BaseSepoliaForkTest
+[PASS] testAllOperatorOnlyProtocolEntrypointsRejectSeller() (gas: 163340)
+[PASS] testAllowanceAloneInsufficient() (gas: 222032)
+[PASS] testBuyerReleaseExactlyOnce() (gas: 587374)
+[PASS] testCPPItselfRejectsExpiredOperatorCapture() (gas: 320371)
+[PASS] testCaptureFailsAtExpiryAndReclaimIsPayerOnly() (gas: 734108)
+[PASS] testDisputeReviewerRelease() (gas: 602804)
+[PASS] testExactHashAndCustody() (gas: 417332)
+[PASS] testFuzzConservationAcrossVerdicts(uint120,bool) (runs: 256, μ: 915708, ~: 924856)
+[PASS] testFuzzRejectEveryAlteredPaymentField(uint8,uint256) (runs: 256, μ: 93414, ~: 92400)
+[PASS] testLastSecondCaptureSucceeds() (gas: 453748)
+[PASS] testNoCaptureBeforeFunding() (gas: 39416)
+[PASS] testOperatorVoidAfterExpiryAndReclaimRace() (gas: 538214)
+[PASS] testOutsiderCannotFundReleaseCancelDisputeOrResolve() (gas: 469520)
+[PASS] testPreApprovalAloneInsufficientAndFailedFundingAtomic() (gas: 461858)
+[PASS] testPreApprovalCannotBeModifiedOrReplayedForAnotherOrder() (gas: 817877)
+[PASS] testPreApprovalExpiryBoundary() (gas: 200298)
+[PASS] testPreApprovalMustComeFromPayer() (gas: 52735)
+[PASS] testProtocolAuthorizationAndCaptureEvents() (gas: 472322)
+[PASS] testReclaimBeforeExpiryFails() (gas: 347804)
+[PASS] testReclaimThenVoidRaceIsAtomic() (gas: 526689)
+[PASS] testReviewerCannotReleaseUndisputedOrder() (gas: 320827)
+[PASS] testReviewerCannotResolveAtExpiryInEitherDirection() (gas: 513805)
+[PASS] testSellerCanDisputeReviewerVoid() (gas: 525331)
+[PASS] testSellerCancellationReturnsAllFundsAndBlocksRelease() (gas: 528224)
+[PASS] testSellerCannotReleaseOrDirectlyCapture() (gas: 410050)
+[PASS] testUnfundedCancellationInvalidatesPreApproval() (gas: 228010)
+[PASS] testWrongSellerRejected() (gas: 203332)
+Suite result: ok. 27 passed; 0 failed; 0 skipped; finished in 35.03s (64.97s CPU time)
+
+Ran 1 test suite in 35.03s (35.03s CPU time): 27 tests passed, 0 failed, 0 skipped (27 total tests)

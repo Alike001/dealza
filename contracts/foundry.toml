@@ -1,0 +1,29 @@
+[profile.default]
+src = "src"
+test = "test"
+out = "out"
+libs = ["vendor"]
+solc = "0.8.28"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 100000
+via_ir = true
+no_match_path = "test/fork/**"
+remappings = [
+  "commerce-payments/=vendor/commerce-payments/src/",
+  "forge-std/=vendor/forge-std/src/",
+  "solady/=vendor/commerce-payments/lib/solady/src/",
+  "@openzeppelin/contracts/=vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/"
+]
+
+[profile.default.fuzz]
+runs = 256
+
+[profile.default.invariant]
+runs = 128
+depth = 32
+fail_on_revert = true
+
+[profile.fork]
+no_match_path = "__no_exclusion__"
+match_path = "test/fork/**"
