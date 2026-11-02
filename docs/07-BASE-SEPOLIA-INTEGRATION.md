@@ -2,6 +2,8 @@
 
 ## Current decision and mandatory stop
 
+**Latest funded-wallet decision:** see [funded-wallet preflight](verification/funded-preflight/READINESS.md). Participant funding and buyer USDC are now sufficient, and all three transfers succeeded. Deployment remains **NO-GO** because the deployer now has EIP-7702 delegation code and the named-wallet rehearsal requires wallet-specific simulation. The checkpoint observations below are retained as historical evidence.
+
 **NO-GO for live deployment at the last recorded named-wallet preflight.** All four supplied roles had zero test ETH. Buyer had 1 test USDC; the sequential rehearsal needs at least 3 (10 recommended). These checks must pass before the named-wallet lifecycle rehearsal proceeds. The prior security GO is not a funded-wallet GO.
 
 Latest check: Base Sepolia block **53612382**, [preflight snapshot](verification/integration/preflight.json), [exit-2 blocker log](verification/integration/preflight.txt). Buyer collector allowance was zero; no blacklist/pause check failed. The named-wallet lifecycle simulation remains unexecuted, so its per-transaction gas estimates are intentionally pending.

@@ -1,0 +1,1 @@
+NO-GO: deployer is not a plain EOA; wallet-specific transaction simulation is required

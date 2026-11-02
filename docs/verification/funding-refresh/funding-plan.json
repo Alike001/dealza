@@ -1,0 +1,44 @@
+{
+  "block": 53649666,
+  "gas_price_wei": 6000000,
+  "plan": [
+    {
+      "role": "buyer",
+      "amount_wei": 100000000000000,
+      "unsigned_transfer": {
+        "chainId": 84532,
+        "from": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+        "to": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "value": "0x5af3107a4000"
+      },
+      "execution_gas_estimate": 21000,
+      "fee_at_snapshot_plus_l1_bound_wei": 136701713085
+    },
+    {
+      "role": "seller",
+      "amount_wei": 50000000000000,
+      "unsigned_transfer": {
+        "chainId": 84532,
+        "from": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+        "to": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "value": "0x2d79883d2000"
+      },
+      "execution_gas_estimate": 21000,
+      "fee_at_snapshot_plus_l1_bound_wei": 136701713085
+    },
+    {
+      "role": "reviewer",
+      "amount_wei": 20000000000000,
+      "unsigned_transfer": {
+        "chainId": 84532,
+        "from": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+        "to": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "value": "0x12309ce54000"
+      },
+      "execution_gas_estimate": 21000,
+      "fee_at_snapshot_plus_l1_bound_wei": 136701713085
+    }
+  ],
+  "total_value_wei": 170000000000000,
+  "note": "PROPOSED ONLY. Participant amounts are provisional practical cushions, not measured lifecycle minima. No transfer/sign/broadcast. Refresh estimates in wallet; reserve buyer gas for direct reclaim."
+}

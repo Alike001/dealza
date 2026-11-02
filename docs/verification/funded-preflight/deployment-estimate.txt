@@ -1,0 +1,1 @@
+PASS: exact runtime/nonzero-price deployment simulation; no signing or broadcast

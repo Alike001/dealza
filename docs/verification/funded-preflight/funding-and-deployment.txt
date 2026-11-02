@@ -1,0 +1,2 @@
+PASS: exact runtime/nonzero-price deployment simulation; no signing or broadcast
+PASS: three funding transfers verified by receipts, calldata and native balance deltas
