@@ -1,0 +1,20 @@
+{
+  "name": "dealza-workspace",
+  "private": true,
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace web",
+    "build": "npm run build --workspace web",
+    "test": "npm run test --workspace web",
+    "abi:sync": "node web/scripts/sync-abi.mjs",
+    "abi:check": "node web/scripts/sync-abi.mjs --check"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10"
+  }
+}

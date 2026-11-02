@@ -1,0 +1,444 @@
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import App from "../App";
+import { CreateOrder } from "../components/CreateOrder";
+import { OrderPage } from "../components/OrderPage";
+import { WalletContext, WalletProvider, useWallet } from "../lib/wallet";
+import {
+  api,
+  buyer,
+  hash,
+  id,
+  reviewer,
+  seller,
+  session,
+  snapshot,
+  text,
+  wallet,
+} from "./fixtures";
+
+describe("pending integration and routing", () => {
+  it("shows an explicit pending state without inventing orders or balances", () => {
+    const gateway = api({ deployment: null });
+    render(
+      <WalletContext.Provider value={wallet(null)}>
+        <App api={gateway} />
+      </WalletContext.Provider>,
+    );
+    expect(screen.getByText("Testnet integration pending")).toBeInTheDocument();
+    expect(screen.queryByText("Paid to seller")).not.toBeInTheDocument();
+    expect(gateway.listOrders).not.toHaveBeenCalled();
+    expect(gateway.loadOrder).not.toHaveBeenCalled();
+    expect(gateway.act).not.toHaveBeenCalled();
+  });
+  it("opens a shared link without a wallet but never claims it exists when undeployed", () => {
+    const gateway = api({ deployment: null });
+    window.location.hash = `/order/${id}?terms=${encodeURIComponent(text)}`;
+    render(
+      <WalletContext.Provider value={wallet(null)}>
+        <App api={gateway} />
+      </WalletContext.Provider>,
+    );
+    expect(
+      screen.getByText("This order can’t be verified yet."),
+    ).toBeInTheDocument();
+    expect(gateway.loadOrder).not.toHaveBeenCalled();
+  });
+  it("rejects malformed order links instead of making a chain request", async () => {
+    const user = userEvent.setup(),
+      gateway = api({ deployment: null });
+    render(
+      <WalletContext.Provider value={wallet(null)}>
+        <App api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await user.type(screen.getByLabelText("Order link or ID"), "not-an-order");
+    await user.click(screen.getByRole("button", { name: /Open order/ }));
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "complete Dealza order ID",
+    );
+    expect(gateway.loadOrder).not.toHaveBeenCalled();
+  });
+  it("saves only a local draft while integration is pending", async () => {
+    const user = userEvent.setup(),
+      gateway = api({ deployment: null });
+    render(
+      <WalletContext.Provider value={wallet(null)}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await user.type(screen.getByLabelText("What is this order for?"), text);
+    await user.click(screen.getByRole("button", { name: "Save draft" }));
+    expect(
+      screen.getByText(/No order or payment has been created/),
+    ).toBeInTheDocument();
+    expect(gateway.create).not.toHaveBeenCalled();
+    expect(localStorage.getItem("dealza:order-draft:v1")).toContain(text);
+  });
+});
+
+function order(gateway = api(), connected = wallet()) {
+  return render(
+    <WalletContext.Provider value={connected}>
+      <OrderPage id={id} description={text} api={gateway} />
+    </WalletContext.Provider>,
+  );
+}
+async function proposeRelease() {
+  const user = userEvent.setup();
+  await screen.findByText("Payment reserved");
+  await user.click(screen.getByRole("checkbox"));
+  await user.click(
+    screen.getByRole("button", { name: "Approve release to seller" }),
+  );
+  await user.click(screen.getByRole("button", { name: "Continue to wallet" }));
+}
+describe("financial UI transitions", () => {
+  it("ignores an old chain read that arrives after a newer payment state", async () => {
+    vi.useFakeTimers();
+    try {
+      let firstRead!: (value: ReturnType<typeof snapshot>) => void;
+      const old = new Promise<ReturnType<typeof snapshot>>((resolve) => {
+        firstRead = resolve;
+      });
+      const paid = snapshot({
+        held: 0n,
+        captured: 1_000_000n,
+        derived: 4,
+        block: 501n,
+      });
+      paid.order.status = 4;
+      const gateway = api({
+        loadOrder: vi.fn().mockReturnValueOnce(old).mockResolvedValue(paid),
+      });
+      order(gateway);
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(15_000);
+      });
+      expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+      await act(async () => {
+        firstRead(snapshot());
+      });
+      expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+      expect(screen.queryByText("Payment reserved")).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+  it("disconnected visitors can read an order but cannot release or reserve funds", async () => {
+    const gateway = api();
+    order(gateway, wallet(null));
+    await screen.findByText("Payment reserved");
+    expect(screen.getByText("Connect to take part.")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Approve release to seller" }),
+    ).not.toBeInTheDocument();
+    expect(gateway.act).not.toHaveBeenCalled();
+  });
+  it("wrong networks disable actions and offer an explicit network switch", async () => {
+    const gateway = api(),
+      connected = wallet(session(buyer, 1));
+    order(gateway, connected);
+    await screen.findByText("Payment reserved");
+    expect(
+      screen.getByRole("button", { name: "Approve release to seller" }),
+    ).toBeDisabled();
+    await userEvent.click(
+      screen.getByRole("button", { name: "Switch network" }),
+    );
+    expect(connected.switchNetwork).toHaveBeenCalled();
+    expect(gateway.act).not.toHaveBeenCalled();
+  });
+  it("a submitted transaction never marks an order paid before refreshed chain state", async () => {
+    let finish!: () => void;
+    const gateway = api({
+      act: vi.fn(async (_action, _id, _session, update) => {
+        update({ phase: "pending", message: "Waiting for confirmation", hash });
+        await new Promise<void>((resolve) => {
+          finish = resolve;
+        });
+      }),
+    });
+    order(gateway);
+    await proposeRelease();
+    expect(screen.getByText("Payment reserved")).toBeInTheDocument();
+    expect(screen.queryByText("Paid to seller")).not.toBeInTheDocument();
+    const paid = snapshot({ held: 0n, captured: 1_000_000n, derived: 4 });
+    paid.order.status = 4;
+    vi.mocked(gateway.loadOrder).mockResolvedValue(paid);
+    await act(async () => {
+      finish();
+    });
+    expect(await screen.findByText("Paid to seller")).toBeInTheDocument();
+  });
+  it("a declined wallet signature leaves the reservation unchanged", async () => {
+    const gateway = api({
+      act: vi.fn(async () => {
+        throw { code: 4001 };
+      }),
+    });
+    order(gateway);
+    await proposeRelease();
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "declined the wallet request",
+    );
+    expect(screen.getByText("Payment reserved")).toBeInTheDocument();
+    expect(screen.queryByText("Paid to seller")).not.toBeInTheDocument();
+  });
+  it("a reverted payment never becomes a successful release in the interface", async () => {
+    order(
+      api({
+        act: vi.fn(async () => {
+          throw new Error("execution reverted");
+        }),
+      }),
+    );
+    await proposeRelease();
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "rejected by the contract",
+    );
+    expect(screen.getByText("Payment reserved")).toBeInTheDocument();
+    expect(screen.queryByText("Paid to seller")).not.toBeInTheDocument();
+  });
+  it("an expired disputed order exposes recovery, never buyer release or reviewer overrides", async () => {
+    const s = snapshot({ chainTime: 3000, derived: 6 });
+    s.order.status = 3;
+    order(api({ loadOrder: vi.fn(async () => s) }));
+    await screen.findByText("Recovery available");
+    expect(
+      screen.getByRole("button", { name: "Recover expired funds" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Approve release to seller" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getAllByText("A dispute does not pause the clock.").length,
+    ).toBeGreaterThan(0);
+  });
+  it("only the agreed reviewer sees both dispute decisions", async () => {
+    const s = snapshot({ derived: 3 });
+    s.order.status = 3;
+    order(api({ loadOrder: vi.fn(async () => s) }), wallet(session(reviewer)));
+    await screen.findByText("In review");
+    expect(
+      screen.getByRole("button", { name: "Decide: pay the seller" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Decide: return to buyer" }),
+    ).toBeInTheDocument();
+  });
+  it("unverified linked terms are clearly identified before funding", async () => {
+    render(
+      <WalletContext.Provider value={wallet()}>
+        <OrderPage id={id} description="A substituted agreement" api={api()} />
+      </WalletContext.Provider>,
+    );
+    expect(
+      await screen.findByText("These linked terms do not match the order."),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("checkbox")).not.toBeChecked();
+    expect(
+      screen.getByRole("button", { name: "Approve release to seller" }),
+    ).toBeDisabled();
+  });
+  it("shows an unavailable order as an error, not an empty successful payment", async () => {
+    order(
+      api({
+        loadOrder: vi.fn(async () => {
+          throw new Error("Order not found or RPC unavailable");
+        }),
+      }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "couldn’t verify this order",
+    );
+    expect(screen.queryByText("Paid to seller")).not.toBeInTheDocument();
+  });
+});
+
+async function fillOrderForm() {
+  const user = userEvent.setup();
+  await user.type(screen.getByLabelText("What is this order for?"), text);
+  await user.type(screen.getByLabelText(/Order amount/), "1.000001");
+  await user.type(screen.getByLabelText("Buyer’s wallet address"), buyer);
+  await user.type(
+    screen.getByLabelText("Agreed reviewer’s wallet address"),
+    reviewer,
+  );
+  fireEvent.change(screen.getByLabelText("Buyer must reserve by"), {
+    target: {
+      value: new Date(Date.now() + 86400_000).toISOString().slice(0, 16),
+    },
+  });
+  fireEvent.change(screen.getByLabelText("Payment release & review deadline"), {
+    target: {
+      value: new Date(Date.now() + 7 * 86400_000).toISOString().slice(0, 16),
+    },
+  });
+  await user.click(screen.getByRole("button", { name: /Review order/ }));
+  await screen.findByText("REVIEW BEFORE YOU CREATE");
+  return user;
+}
+describe("seller order creation", () => {
+  it("allows term review while undeployed but disables the onchain creation action", async () => {
+    const gateway = api({ deployment: null });
+    render(
+      <WalletContext.Provider value={wallet(session(seller))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await fillOrderForm();
+    expect(
+      screen.getByRole("button", { name: "Testnet integration pending" }),
+    ).toBeDisabled();
+    expect(gateway.create).not.toHaveBeenCalled();
+  });
+  it("keeps a failed seller signature from producing an order link", async () => {
+    const gateway = api({
+      create: vi.fn(async () => {
+        throw { code: 4001 };
+      }),
+    });
+    render(
+      <WalletContext.Provider value={wallet(session(seller))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    const user = await fillOrderForm();
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "declined the wallet request",
+    );
+    expect(
+      screen.queryByText("Your order link is ready."),
+    ).not.toBeInTheDocument();
+  });
+  it("creates a shareable checkout link only when the confirmed gateway returns an order ID", async () => {
+    const gateway = api();
+    render(
+      <WalletContext.Provider value={wallet(session(seller))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    const user = await fillOrderForm();
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    await screen.findByText("Your order link is ready.");
+    expect(
+      (screen.getByLabelText("Shareable checkout link") as HTMLInputElement)
+        .value,
+    ).toContain(id);
+    expect(gateway.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        amount: 1_000_001n,
+        buyer,
+        reviewer,
+        description: text,
+      }),
+      expect.objectContaining({ account: seller }),
+      expect.any(Function),
+    );
+  });
+  it("requires a new review when the selected seller wallet changes", async () => {
+    const gateway = api();
+    const view = render(
+      <WalletContext.Provider value={wallet(session(seller))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await fillOrderForm();
+    view.rerender(
+      <WalletContext.Provider value={wallet(session(buyer))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await waitFor(() =>
+      expect(
+        screen.queryByText("REVIEW BEFORE YOU CREATE"),
+      ).not.toBeInTheDocument(),
+    );
+    expect(gateway.create).not.toHaveBeenCalled();
+  });
+});
+
+function WalletProbe() {
+  const w = useWallet();
+  return (
+    <>
+      <p>{w.session?.account || "Disconnected"}</p>
+      <p>{w.error}</p>
+      <button onClick={() => void w.connect()}>Connect</button>
+    </>
+  );
+}
+describe("injected wallet lifecycle", () => {
+  it("handles accountsChanged and disconnect without signing any message or transaction", async () => {
+    const listeners = new Map<string, (value: unknown) => void>();
+    let accounts: string[] = [];
+    window.ethereum = {
+      request: vi.fn(async ({ method }) => {
+        if (method === "eth_chainId") return "0x14a34";
+        if (method === "eth_requestAccounts") accounts = [buyer];
+        return accounts;
+      }),
+      on: (name, callback) => {
+        listeners.set(name, callback);
+      },
+      removeListener: (name) => {
+        listeners.delete(name);
+      },
+    };
+    const provider = window.ethereum;
+    const view = render(
+      <WalletProvider>
+        <WalletProbe />
+      </WalletProvider>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Connect" }));
+    await screen.findByText(buyer);
+    accounts = [seller];
+    await act(async () => {
+      listeners.get("accountsChanged")?.(accounts);
+    });
+    await screen.findByText(seller);
+    await act(async () => {
+      listeners.get("disconnect")?.(undefined);
+    });
+    await screen.findByText("Disconnected");
+    expect(
+      vi
+        .mocked(provider.request)
+        .mock.calls.every(
+          ([args]) => !/sign|sendTransaction/i.test(args.method),
+        ),
+    ).toBe(true);
+    view.unmount();
+    expect(listeners.size).toBe(0);
+  });
+  it("explains a connection rejection without displaying a connected account", async () => {
+    window.ethereum = {
+      request: vi.fn(async ({ method }) => {
+        if (method === "eth_requestAccounts") throw { code: 4001 };
+        return method === "eth_chainId" ? "0x14a34" : [];
+      }),
+    };
+    render(
+      <WalletProvider>
+        <WalletProbe />
+      </WalletProvider>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Connect" }));
+    await screen.findByText(/declined the wallet request/);
+    expect(screen.getByText("Disconnected")).toBeInTheDocument();
+  });
+});

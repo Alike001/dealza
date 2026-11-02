@@ -1,0 +1,51 @@
+{
+  "mode": "LOCAL_PRODUCTION_BUILD_NO_WALLET",
+  "viewports": [
+    {
+      "route": "home",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "create",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "home",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "create",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "home",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "create",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "home",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "create",
+      "width": 320,
+      "horizontalOverflow": false
+    }
+  ],
+  "draftSavedWithoutOrder": true,
+  "noWalletGuidance": true,
+  "sharedOrderRemainsUnverified": true,
+  "noPaidState": true,
+  "skipLinkWorks": true,
+  "pageErrors": []
+}
