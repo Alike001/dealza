@@ -1,0 +1,29 @@
+{
+  "readOnlyPreflight": "PASS",
+  "independentProviders": 2,
+  "sellerETHWei": "49812291697244",
+  "matchingFreshOrders": 0,
+  "frontendCallCapture": "PASS \u2014 isolated interception only",
+  "effectiveETHValue": "0",
+  "actualMetaMaskConnection": "NOT VERIFIED \u2014 no injected wallet available",
+  "gate1": "NOT EXECUTED \u2014 user confirmation required",
+  "draftStorageChanged": false,
+  "newApplicationCodeChanges": false,
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "buyerUSDCApprovalPerformed": false,
+  "networkDeploymentPerformed": false,
+  "githubPushPerformed": false,
+  "checks": [
+    "Dev server HTTP 200",
+    "Verified frontend runtime/bindings",
+    "Both seller-created orders enumerated",
+    "Predicted ID UnknownOrder",
+    "Two RPC eth_call successes",
+    "Both direct gas estimates agree",
+    "Exact frontend calldata comparison",
+    "Node syntax check",
+    "Local document links",
+    "New files credential-pattern scan"
+  ]
+}

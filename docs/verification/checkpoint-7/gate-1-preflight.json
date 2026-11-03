@@ -1,0 +1,222 @@
+{
+  "queriedAt": "2026-11-03T12:11:05.802Z",
+  "mode": "READ_ONLY_PREFLIGHT_NOT_GATE_1_SUCCESS",
+  "rpcOrigins": [
+    "https://sepolia.base.org",
+    "https://base-sepolia-rpc.publicnode.com"
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "newOrderCreated": false,
+  "block": {
+    "number": "53929992",
+    "hash": "0xb17c68a0276c723017ebe3b00e3d2c297945d9a4e11ecde42a7331624ab0bbb0",
+    "utc": "2026-11-03T12:11:07.000Z"
+  },
+  "terms": {
+    "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+    "usdc": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "amountRaw": "1000000",
+    "amountUSDC": "1",
+    "platformFeeRaw": "0",
+    "description": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+    "fingerprint": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+    "fundingCutoff": 1793790000,
+    "expiry": 1793962800,
+    "fundingCutoffUTC": "2026-11-04T11:00:00.000Z",
+    "expiryUTC": "2026-11-06T11:00:00.000Z",
+    "reserveSecondsRemaining": "82133",
+    "releaseSecondsRemaining": "254933"
+  },
+  "call": {
+    "chainId": 84532,
+    "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "function": "createOrder",
+    "args": [
+      "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "1000000",
+      1793790000,
+      1793962800,
+      "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8"
+    ],
+    "data": "0x0b0c40bb0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df2500000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aeb1030000000000000000000000000000000000000000000000000000000006aedb3300000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54843f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8"
+  },
+  "providers": [
+    {
+      "rpc": "https://sepolia.base.org",
+      "runtime": "0xadbc98ddf155ec9a93328c11d78ff7fe2aeb180cc74bd34222e4313584b2374d",
+      "bindings": [
+        "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+        "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+        "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "84532"
+      ],
+      "sellerNonce": "2",
+      "sellerETHWei": "49812291697244",
+      "sellerETH": "0.000049812291697244",
+      "confirmedNonce": 4,
+      "pendingNonce": 4,
+      "existingOrders": [
+        {
+          "nonce": "0",
+          "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+          "order": {
+            "payment": {
+              "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+              "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+              "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+              "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+              "maxAmount": "1000000",
+              "preApprovalExpiry": 1793725200,
+              "authorizationExpiry": 1793898000,
+              "refundExpiry": 1793898000,
+              "minFeeBps": 0,
+              "maxFeeBps": 0,
+              "feeReceiver": "0x0000000000000000000000000000000000000000",
+              "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+            },
+            "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+            "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+            "status": 4
+          },
+          "status": 4,
+          "matchingFingerprint": false,
+          "matchingFreshTerms": false
+        },
+        {
+          "nonce": "1",
+          "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+          "order": {
+            "payment": {
+              "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+              "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+              "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+              "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+              "maxAmount": "1000000",
+              "preApprovalExpiry": 1793725200,
+              "authorizationExpiry": 1793898000,
+              "refundExpiry": 1793898000,
+              "minFeeBps": 0,
+              "maxFeeBps": 0,
+              "feeReceiver": "0x0000000000000000000000000000000000000000",
+              "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+            },
+            "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+            "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+            "status": 5
+          },
+          "status": 5,
+          "matchingFingerprint": false,
+          "matchingFreshTerms": false
+        }
+      ],
+      "predictedId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+      "predictedExists": false,
+      "simulation": {
+        "result": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+        "ephemeralOnly": true,
+        "value": "0x0"
+      },
+      "directGasEstimate": "288079",
+      "gasPriceWei": "6000000",
+      "directL2ExecutionEstimateWei": "1728474000000"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "runtime": "0xadbc98ddf155ec9a93328c11d78ff7fe2aeb180cc74bd34222e4313584b2374d",
+      "bindings": [
+        "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+        "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+        "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "84532"
+      ],
+      "sellerNonce": "2",
+      "sellerETHWei": "49812291697244",
+      "sellerETH": "0.000049812291697244",
+      "confirmedNonce": 4,
+      "pendingNonce": 4,
+      "existingOrders": [
+        {
+          "nonce": "0",
+          "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+          "order": {
+            "payment": {
+              "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+              "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+              "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+              "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+              "maxAmount": "1000000",
+              "preApprovalExpiry": 1793725200,
+              "authorizationExpiry": 1793898000,
+              "refundExpiry": 1793898000,
+              "minFeeBps": 0,
+              "maxFeeBps": 0,
+              "feeReceiver": "0x0000000000000000000000000000000000000000",
+              "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+            },
+            "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+            "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+            "status": 4
+          },
+          "status": 4,
+          "matchingFingerprint": false,
+          "matchingFreshTerms": false
+        },
+        {
+          "nonce": "1",
+          "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+          "order": {
+            "payment": {
+              "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+              "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+              "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+              "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+              "maxAmount": "1000000",
+              "preApprovalExpiry": 1793725200,
+              "authorizationExpiry": 1793898000,
+              "refundExpiry": 1793898000,
+              "minFeeBps": 0,
+              "maxFeeBps": 0,
+              "feeReceiver": "0x0000000000000000000000000000000000000000",
+              "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+            },
+            "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+            "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+            "status": 5
+          },
+          "status": 5,
+          "matchingFingerprint": false,
+          "matchingFreshTerms": false
+        }
+      ],
+      "predictedId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+      "predictedExists": false,
+      "simulation": {
+        "result": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+        "ephemeralOnly": true,
+        "value": "0x0"
+      },
+      "directGasEstimate": "288079",
+      "gasPriceWei": "6000000",
+      "directL2ExecutionEstimateWei": "1728474000000"
+    }
+  ],
+  "result": "READ_ONLY_PREFLIGHT_PASS",
+  "gate1": "NOT_EXECUTED_AWAITING_USER_METAMASK_CONFIRMATION",
+  "limitations": [
+    "No actual MetaMask connection is asserted; it must be checked in the user browser.",
+    "Nonce/order checks are pinned onchain observations; a pending relayer call can exist without increasing the seller account nonce. Inspect MetaMask Activity and Saved transaction before submitting.",
+    "Direct eth_call/gas estimate does not prove a future wallet envelope or final total fee. MetaMask must refresh the total L1/L2/relayer fee.",
+    "The predicted order ID is not a created order. Verify actual events and state after the user supplies the transaction hash."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "done": true,
+  "providerCalls": [
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_chainId",
+    "eth_sendTransaction"
+  ],
+  "frontend": {
+    "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "deploymentBlock": "53676176",
+    "chainId": 84532,
+    "rpc": "https://sepolia.base.org"
+  },
+  "packet": {
+    "data": "0x0b0c40bb0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df2500000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aeb1030000000000000000000000000000000000000000000000000000000006aedb3300000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54843f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+    "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8"
+  },
+  "stoppedError": "ContractFunctionExecutionError: User rejected the request.\n\nRequest Arguments:\n  chain:  Base Sepolia (id: 84532)\n  from:   0xF74aD341e10187073a0eef55356D136F1be5E3Cf\n  to:     0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8\n  data:   0x0b0c40bb0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df2500000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aeb1030000000000000000000000000000000000000000000000000000000006aedb3300000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54843f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8\n \nContract Call:\n  address:   0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8\n  function:  createOrder(address buyer, uint120 amount, uint48 preApprovalExpiry, uint48 expiry, address reviewer, bytes32 descriptionHash)\n  args:                 (0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25, 1000000, 1793790000, 1793962800, 0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548, 0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8)\n  sender:    0xF74aD341e10187073a0eef55356D136F1be5E3Cf\n\nDocs: https://viem.sh/docs/contract/writeContract\nDetails: Capture-only preflight: stopped before wallet confirmation\nVersion: viem@2.57.14",
+  "result": "PASS_CALL_PREPARATION_ONLY",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "realMetaMaskConnected": false,
+  "pendingIntentRemaining": false,
+  "windowEthereumPresent": false,
+  "draftKeysAfter": [],
+  "limitations": "Capture-only session object intercepted the frontend wallet request and rejected it locally. It was never forwarded to MetaMask or an RPC send endpoint. No signer, signature, transaction hash or broadcast. An omitted transaction value has effective value zero. Genuine MetaMask connection/switching remains manual."
+}
