@@ -1,11 +1,7 @@
+import { useHistory } from "./lib/useHistory";
 import { useEffect, useState, type FormEvent } from "react";
 import type { Address } from "viem";
-import {
-  gateway,
-  type OrderItem,
-  type Page,
-  type PaymentGateway,
-} from "./lib/gateway";
+import { gateway, type PaymentGateway } from "./lib/gateway";
 import {
   friendlyError,
   isOrderId,
@@ -56,7 +52,12 @@ function WalletControl({ api }: { api: PaymentGateway }) {
     return () => {
       ignore = true;
     };
-  }, [api, wallet.session?.account]);
+  }, [
+    api,
+    wallet.session?.account,
+    wallet.session?.chainId,
+    wallet.session?.provider,
+  ]);
   return (
     <div className="wallet-control">
       <button
@@ -175,49 +176,17 @@ function WalletControl({ api }: { api: PaymentGateway }) {
 function OrderList({
   api,
   account,
+  chainId,
 }: {
   api: PaymentGateway;
   account: Address;
+  chainId: number;
 }) {
-  const [page, setPage] = useState<Page<OrderItem> | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    let ignore = false;
-    setPage(null);
-    setLoading(true);
-    setError("");
-    void api
-      .listOrders(account)
-      .then((result) => {
-        if (!ignore) setPage(result);
-      })
-      .catch((e) => {
-        if (!ignore) setError(friendlyError(e));
-      })
-      .finally(() => {
-        if (!ignore) setLoading(false);
-      });
-    return () => {
-      ignore = true;
-    };
-  }, [account, api]);
-  const earlier = async () => {
-    if (page?.next === undefined) return;
-    setLoading(true);
-    try {
-      const next = await api.listOrders(account, page.next);
-      setPage((old) => ({
-        ...next,
-        items: [...(old?.items || []), ...next.items],
-      }));
-      setError("");
-    } catch (e) {
-      setError(friendlyError(e));
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { page, loading, error, older, retry, refresh } = useHistory(
+    `${account}:${chainId}:${api.deployment?.operator}`,
+    (before, signal) => api.listOrders(account, before, signal),
+    (item) => item.id.toLowerCase(),
+  );
   return (
     <>
       {loading && (
@@ -226,11 +195,8 @@ function OrderList({
       {error && (
         <div className="notice danger" role="alert">
           <p>{error}</p>
-          <button
-            className="button secondary"
-            onClick={() => location.reload()}
-          >
-            Retry connection
+          <button className="button secondary" onClick={() => void retry()}>
+            Retry order history
           </button>
         </div>
       )}
@@ -260,7 +226,7 @@ function OrderList({
                   : sameAddress(order.buyer, account)
                     ? "You are buying"
                     : "You are reviewing"}{" "}
-                · Open for current payment status
+                · {order.status}
               </small>
             </div>
             <span>
@@ -273,16 +239,26 @@ function OrderList({
       {page?.next !== undefined && (
         <button
           className="button secondary"
-          onClick={() => void earlier()}
+          onClick={() => void older()}
           disabled={loading}
         >
           Load earlier orders
         </button>
       )}
-      <p className="field-help">
-        Orders come from confirmed creation events, in pages of up to 10,000
-        blocks. Open an order to read its current financial status.
-      </p>
+      {page && (
+        <p className="field-help" role="status">
+          {error
+            ? "History is incomplete. Retry the failed page."
+            : page.next !== undefined
+              ? "Recent orders only. Older blocks have not been checked yet."
+              : "End of order history — checked back to the verified deployment."}{" "}
+          Latest checked block: {page.through.toString()}. Status is read from
+          the current contract state.
+        </p>
+      )}
+      <button className="text-button" onClick={refresh} disabled={loading}>
+        Refresh order history
+      </button>
     </>
   );
 }
@@ -392,7 +368,12 @@ function Home({ api }: { api: PaymentGateway }) {
         <div className="workspace-grid">
           <div className="orders-area">
             {api.deployment && wallet.session ? (
-              <OrderList api={api} account={wallet.session.account} />
+              <OrderList
+                key={`${wallet.session.account}:${wallet.session.chainId}`}
+                api={api}
+                account={wallet.session.account}
+                chainId={wallet.session.chainId}
+              />
             ) : (
               <div className="empty-state">
                 <span className="round-icon">

@@ -31,6 +31,7 @@ export type Order = {
   status: number;
 };
 export type Activity = {
+  logIndex: number;
   name: string;
   hash: Hash;
   block: bigint;

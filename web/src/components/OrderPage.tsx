@@ -1,3 +1,4 @@
+import { useHistory } from "../lib/useHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Hash } from "viem";
 import { explorerTx } from "../lib/config";
@@ -12,11 +13,10 @@ import {
   shareLink,
   shortAddress,
   type Action,
-  type Activity,
   type OrderSnapshot,
   type TxState,
 } from "../lib/domain";
-import type { Page, PaymentGateway } from "../lib/gateway";
+import type { PaymentGateway } from "../lib/gateway";
 import { useWallet } from "../lib/wallet";
 import {
   AddressLink,
@@ -70,9 +70,22 @@ export function OrderPage({
   const [snapshot, setSnapshot] = useState<OrderSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [history, setHistory] = useState<Page<Activity> | null>(null);
-  const [historyError, setHistoryError] = useState("");
-  const [historyLoading, setHistoryLoading] = useState(false);
+  const historyScope =
+    snapshot?.id === id
+      ? `${id}:${wallet.session?.account ?? "public"}:${wallet.session?.chainId ?? 84532}`
+      : null;
+  const {
+    page: history,
+    loading: historyLoading,
+    error: historyError,
+    older: moreHistory,
+    retry: retryHistory,
+    refresh: refreshHistory,
+  } = useHistory(
+    historyScope,
+    (before, signal) => api.activity(snapshot!, before, signal),
+    (event) => `${event.hash.toLowerCase()}:${event.logIndex}`,
+  );
   const [tx, setTx] = useState<TxState>(idleTx);
   const [acknowledged, setAcknowledged] = useState(false);
   const [evidence, setEvidence] = useState("");
@@ -104,7 +117,6 @@ export function OrderPage({
   useEffect(() => {
     let ignore = false;
     setSnapshot(null);
-    setHistory(null);
     setAcknowledged(false);
     setProposed(null);
     setTx(idleTx);
@@ -140,55 +152,6 @@ export function OrderPage({
     setAcknowledged(false);
     setProposed(null);
   }, [wallet.session?.account, wallet.session?.chainId]);
-  useEffect(() => {
-    if (!snapshot) return;
-    let ignore = false;
-    setHistoryLoading(true);
-    void api
-      .activity(snapshot)
-      .then((result) => {
-        if (!ignore) {
-          const start =
-            result.through - 9999n > api.deployment!.block
-              ? result.through - 9999n
-              : api.deployment!.block;
-          setHistory((old) => ({
-            ...result,
-            items: [
-              ...(old?.items.filter((item) => item.block < start) || []),
-              ...result.items,
-            ],
-            next: old ? old.next : result.next,
-          }));
-          setHistoryError("");
-        }
-      })
-      .catch((e) => {
-        if (!ignore) setHistoryError(friendlyError(e));
-      })
-      .finally(() => {
-        if (!ignore) setHistoryLoading(false);
-      });
-    return () => {
-      ignore = true;
-    };
-  }, [api, snapshot?.id, snapshot?.block]);
-  const moreHistory = async () => {
-    if (!snapshot || history?.next === undefined) return;
-    setHistoryLoading(true);
-    try {
-      const page = await api.activity(snapshot, history.next);
-      setHistory((old) => ({
-        ...page,
-        items: [...page.items, ...(old?.items || [])],
-      }));
-      setHistoryError("");
-    } catch (e) {
-      setHistoryError(friendlyError(e));
-    } finally {
-      setHistoryLoading(false);
-    }
-  };
   const execute = async () => {
     const action = proposed;
     if (
@@ -209,6 +172,7 @@ export function OrderPage({
     try {
       await api.act(action, id, wallet.session, setTx, evidence);
       await refresh();
+      refreshHistory();
       setTx((old) => ({
         ...old,
         message:
@@ -444,15 +408,23 @@ export function OrderPage({
                   )}
                   {historyError && (
                     <p className="inline-error" role="alert">
-                      History could not load: {historyError}
+                      History is incomplete. History could not load:{" "}
+                      {historyError}
+                      <button
+                        className="text-button"
+                        onClick={() => void retryHistory()}
+                        disabled={historyLoading}
+                      >
+                        Retry history
+                      </button>
                     </p>
                   )}
                   {history && !history.items.length && (
                     <p>No matching activity in this block range.</p>
                   )}
                   <ol className="activity-list">
-                    {history?.items.map((event, i) => (
-                      <li key={`${event.hash}-${event.name}-${i}`}>
+                    {history?.items.map((event) => (
+                      <li key={`${event.hash}-${event.logIndex}`}>
                         <div>
                           <strong>
                             {eventNames[event.name] || event.name}
@@ -465,6 +437,7 @@ export function OrderPage({
                         </div>
                         <a
                           href={explorerTx(event.hash)}
+                          aria-label={`${eventNames[event.name] || event.name} transaction on Base Sepolia explorer (opens a new tab)`}
                           target="_blank"
                           rel="noreferrer"
                           className="address"
@@ -484,6 +457,23 @@ export function OrderPage({
                       Load earlier activity
                     </button>
                   )}
+                  {history && (
+                    <p className="field-help" role="status">
+                      {historyError
+                        ? "This history is incomplete; the failed page has not been skipped."
+                        : history.next !== undefined
+                          ? "Recent activity only. Load earlier activity to check older blocks."
+                          : "End of history — checked back to the verified deployment."}{" "}
+                      Latest checked block: {history.through.toString()}.
+                    </p>
+                  )}
+                  <button
+                    className="text-button"
+                    onClick={refreshHistory}
+                    disabled={historyLoading}
+                  >
+                    Refresh history
+                  </button>
                 </section>
               </div>
               <aside className="checkout-aside">

@@ -17,14 +17,28 @@ export type OrderItem = {
   amount: bigint;
   expiry: number;
   block: bigint;
+  status: string;
 };
-export type Page<T> = { items: T[]; next?: bigint; through: bigint };
+export type Page<T> = {
+  items: T[];
+  next?: bigint;
+  through: bigint;
+  from?: bigint;
+};
 export interface PaymentGateway {
   deployment: Deployment | null;
   verify(): Promise<void>;
   loadOrder(id: Hash): Promise<OrderSnapshot>;
-  listOrders(account: Address, before?: bigint): Promise<Page<OrderItem>>;
-  activity(s: OrderSnapshot, before?: bigint): Promise<Page<Activity>>;
+  listOrders(
+    account: Address,
+    before?: bigint,
+    signal?: AbortSignal,
+  ): Promise<Page<OrderItem>>;
+  activity(
+    s: OrderSnapshot,
+    before?: bigint,
+    signal?: AbortSignal,
+  ): Promise<Page<Activity>>;
   balances(account: Address): Promise<{ usdc: bigint; eth: bigint }>;
   create(
     terms: CreateTerms,

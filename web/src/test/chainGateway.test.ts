@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  toHex,
   encodeAbiParameters,
   encodeEventTopics,
   encodeFunctionData,
@@ -24,6 +25,7 @@ import {
 
 // Every RPC and wallet method is stubbed. These tests cannot execute transactions.
 const rpc = vi.hoisted(() => ({
+  request: vi.fn(),
   getChainId: vi.fn(),
   getCode: vi.fn(),
   readContract: vi.fn(),
@@ -140,6 +142,7 @@ beforeEach(() => {
   vi.resetAllMocks();
   order = snapshot().order;
   order.status = 1;
+  rpc.request.mockResolvedValue([]);
   rpc.getChainId.mockResolvedValue(84532);
   rpc.getCode.mockImplementation(async ({ address }) =>
     address === operator
@@ -504,4 +507,69 @@ describe("wallet-managed order execution", () => {
       ).toBe(true);
     },
   );
+});
+
+describe("history gateway", () => {
+  function rawCreation(block: number) {
+    return {
+      ...creationLog(),
+      blockNumber: toHex(block),
+      blockHash: hash,
+      transactionHash: hash,
+      transactionIndex: "0x0",
+      logIndex: "0x0",
+      removed: false,
+    };
+  }
+  it.each([4, 5])(
+    "reads current status %s even on an older creation page",
+    async (status) => {
+      order.status = status;
+      const read = rpc.readContract.getMockImplementation()!;
+      rpc.readContract.mockImplementation(async (call) =>
+        call.functionName === "status"
+          ? status
+          : call.functionName === "paymentState"
+            ? status === 4
+              ? [true, 0n, 1000000n]
+              : [false, 0n, 0n]
+            : read(call),
+      );
+      rpc.request.mockResolvedValue([rawCreation(1)]);
+      const result = await chainGateway.listOrders(buyer, 1n);
+      expect(result.items).toHaveLength(1);
+      expect(result.items[0].status).toBe(
+        status === 4 ? "Paid to seller" : "Cancelled",
+      );
+      expect(result.next).toBeUndefined();
+      expect(result.from).toBe(1n);
+      expect(rpc.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({ functionName: "status", blockNumber: 500n }),
+      );
+    },
+  );
+  it("never advances a history cursor when current-state enrichment fails", async () => {
+    rpc.request.mockResolvedValue([rawCreation(1)]);
+    const read = rpc.readContract.getMockImplementation()!;
+    rpc.readContract.mockImplementation(async (call) => {
+      if (call.functionName === "getOrder") throw Error("state read failed");
+      return read(call);
+    });
+    await expect(chainGateway.listOrders(buyer, 1n)).rejects.toThrow(
+      "state read failed",
+    );
+  });
+  it("returns empty older pages with explicit deployment-bound end and <=200 queries", async () => {
+    const page = await chainGateway.activity(snapshot(), 400n);
+    expect(page.items).toEqual([]);
+    expect(page.next).toBeUndefined();
+    expect(page.from).toBe(1n);
+    const calls = rpc.request.mock.calls.map(([req]) => req.params[0]);
+    expect(calls.map((f) => [BigInt(f.fromBlock), BigInt(f.toBlock)])).toEqual([
+      [1n, 200n],
+      [201n, 400n],
+      [1n, 200n],
+      [201n, 400n],
+    ]);
+  });
 });

@@ -1,3 +1,4 @@
+import { createLogReader, historyRange, checkAbort } from "./eventLogs";
 import {
   createPublicClient,
   createWalletClient,
@@ -5,19 +6,24 @@ import {
   decodeEventLog,
   encodeFunctionData,
   erc20Abi,
-  formatLog,
   getAddress,
   http,
   keccak256,
-  toHex,
+  encodeEventTopics,
   type Abi,
   type Address,
   type EIP1193Provider,
   type Hash,
-  type Log,
   type TransactionReceipt,
 } from "viem";
-import { chain, deploymentConfig, network, rpcUrl } from "./config";
+import {
+  chain,
+  deploymentConfig,
+  network,
+  rpcUrl,
+  rpcLogBlocks,
+  historyBlocks,
+} from "./config";
 import {
   operatorAbi,
   collectorAbi,
@@ -484,124 +490,107 @@ async function create(
   );
   return orderId!;
 }
+// Log retries belong to the bounded reader, not nested transport retries.
+const logClient = createPublicClient({
+  chain,
+  transport: http(rpcUrl, { timeout: 15000, retryCount: 0 }),
+});
+const rawLogs = createLogReader(
+  (filter) =>
+    logClient.request(
+      { method: "eth_getLogs", params: [filter] },
+      { retryCount: 0 },
+    ),
+  { maxBlocks: rpcLogBlocks },
+);
 async function range(before?: bigint) {
   const d = requiredDeployment();
-  const to = before ?? (await client.getBlockNumber());
-  if (d.block > to)
-    throw new Error(
-      "The configured deployment block is ahead of the chain. Check the verified deployment record.",
-    );
-  const from = to - 9999n > d.block ? to - 9999n : d.block;
-  return { from, to, next: from > d.block ? from - 1n : undefined };
-}
-async function rawLogs(
-  address: Address,
-  from: bigint,
-  to: bigint,
-  indexedId?: Hash,
-) {
-  const logs: (Log & {
-    blockNumber: bigint;
-    logIndex: number;
-    transactionHash: Hash;
-  })[] = [];
-  for (let start = from; start <= to; start += 1000n) {
-    const entries = await client.request({
-      method: "eth_getLogs",
-      params: [
-        {
-          address,
-          fromBlock: toHex(start),
-          toBlock: toHex(start + 999n < to ? start + 999n : to),
-          ...(indexedId ? { topics: [null, indexedId] } : {}),
-        },
-      ],
-    });
-    for (const entry of entries) {
-      const item = formatLog(entry);
-      if (
-        !item.removed &&
-        item.blockNumber !== null &&
-        item.logIndex !== null &&
-        item.transactionHash !== null
-      )
-        logs.push({
-          ...item,
-          blockNumber: item.blockNumber,
-          logIndex: item.logIndex,
-          transactionHash: item.transactionHash,
-        });
-    }
-  }
-  return logs;
+  const to = before ?? (await client.getBlockNumber({ cacheTime: 0 })) - 1n;
+  return historyRange(d.block, to, historyBlocks);
 }
 async function listOrders(
   account: Address,
   before?: bigint,
+  signal?: AbortSignal,
 ): Promise<Page<OrderItem>> {
   await verify();
   const d = requiredDeployment(),
     r = await range(before);
-  const logs = await rawLogs(d.operator, r.from, r.to);
+  checkAbort(signal);
+  const logs = await rawLogs(
+    d.operator,
+    r.from,
+    r.to,
+    [encodeEventTopics({ abi: operatorAbi, eventName: "OrderCreated" })[0]!],
+    signal,
+  );
   const items: OrderItem[] = [];
   for (const log of logs) {
-    try {
-      const parsed = decodeEventLog({
-        abi: operatorAbi,
-        topics: log.topics,
-        data: log.data,
-      });
-      if (parsed.eventName !== "OrderCreated") continue;
-      const a = parsed.args;
-      if (
-        [a.seller, a.buyer, a.reviewer].some((address) =>
-          sameAddress(address, account),
-        )
+    if (
+      log.topics[0] !==
+      encodeEventTopics({ abi: operatorAbi, eventName: "OrderCreated" })[0]
+    )
+      continue;
+    const parsed = decodeEventLog({ abi: operatorAbi, ...log, strict: true });
+    if (parsed.eventName !== "OrderCreated") continue;
+    const a = parsed.args;
+    if (
+      ![a.seller, a.buyer, a.reviewer].some((address) =>
+        sameAddress(address, account),
       )
-        items.push({
-          id: a.orderId,
-          seller: a.seller,
-          buyer: a.buyer,
-          reviewer: a.reviewer,
-          amount: a.payment.maxAmount,
-          expiry: a.payment.authorizationExpiry,
-          block: log.blockNumber,
-        });
-    } catch {
-      /* Ignore non-order events; RPC failures are never swallowed. */
-    }
+    )
+      continue;
+    checkAbort(signal);
+    const current = await loadOrder(a.orderId);
+    checkAbort(signal);
+    items.push({
+      id: a.orderId,
+      seller: a.seller,
+      buyer: a.buyer,
+      reviewer: a.reviewer,
+      amount: a.payment.maxAmount,
+      expiry: a.payment.authorizationExpiry,
+      block: log.blockNumber,
+      status: financialStatus(current),
+    });
   }
-  return { items: items.reverse(), next: r.next, through: r.to };
+  return { items: items.reverse(), next: r.next, through: r.to, from: r.from };
 }
+
 async function activity(
   s: OrderSnapshot,
   before?: bigint,
+  signal?: AbortSignal,
 ): Promise<Page<Activity>> {
+  await verify();
+  checkAbort(signal);
   const d = requiredDeployment(),
     r = await range(before);
-  const logs = (
-    await Promise.all([
-      rawLogs(d.operator, r.from, r.to, s.id),
-      rawLogs(network.escrow, r.from, r.to, s.order.paymentHash),
-    ])
-  )
-    .flat()
-    .filter(
-      (log) => log.topics[1] === s.id || log.topics[1] === s.order.paymentHash,
-    )
-    .sort((a, b) =>
-      a.blockNumber === b.blockNumber
-        ? a.logIndex - b.logIndex
-        : a.blockNumber > b.blockNumber
-          ? 1
-          : -1,
-    );
+  const logs = [
+    ...(await rawLogs(d.operator, r.from, r.to, [null, s.id], signal)),
+    ...(await rawLogs(
+      network.escrow,
+      r.from,
+      r.to,
+      [null, s.order.paymentHash],
+      signal,
+    )),
+  ].sort((a, b) =>
+    a.blockNumber === b.blockNumber
+      ? a.logIndex - b.logIndex
+      : a.blockNumber < b.blockNumber
+        ? -1
+        : 1,
+  );
   const timestamps = new Map<bigint, number>();
-  for (const block of new Set(logs.map((log) => log.blockNumber)))
+  for (const block of new Set(logs.map((log) => log.blockNumber))) {
+    checkAbort(signal);
     timestamps.set(
       block,
       Number((await client.getBlock({ blockNumber: block })).timestamp),
     );
+  }
+  checkAbort(signal);
   const items: Activity[] = [];
   for (const log of logs) {
     try {
@@ -616,6 +605,7 @@ async function activity(
         decisionHash?: Hash;
       };
       items.push({
+        logIndex: log.logIndex,
         name: parsed.eventName,
         hash: log.transactionHash,
         block: log.blockNumber,
@@ -628,10 +618,12 @@ async function activity(
               "Confirmed on Base Sepolia",
       });
     } catch {
-      /* Unrecognized log; no fabricated activity entries. */
+      throw new Error(
+        "A matching event could not be decoded. History is incomplete; retry after checking the pinned ABI.",
+      );
     }
   }
-  return { items, next: r.next, through: r.to };
+  return { items: items.reverse(), next: r.next, through: r.to, from: r.from };
 }
 export const chainGateway: PaymentGateway = {
   deployment: deploymentConfig,

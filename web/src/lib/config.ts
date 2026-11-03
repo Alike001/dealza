@@ -1,3 +1,4 @@
+import { logBlockLimit, historyWindow } from "./eventLogs";
 import { getAddress, isAddress, type Address } from "viem";
 import { baseSepolia } from "viem/chains";
 import deployment from "../../../contracts/config/base-sepolia.deployment.json";
@@ -52,3 +53,10 @@ export const rpcUrl = rpc;
 export const explorerTx = (hash: string) => `${network.explorer}/tx/${hash}`;
 export const explorerAddress = (address: string) =>
   `${network.explorer}/address/${address}`;
+
+export const rpcLogBlocks = logBlockLimit(
+  import.meta.env.VITE_RPC_LOG_BLOCKS ?? 200,
+);
+export const historyBlocks = historyWindow(
+  import.meta.env.VITE_HISTORY_BLOCKS ?? 2000,
+);
