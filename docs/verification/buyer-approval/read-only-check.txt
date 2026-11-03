@@ -1,0 +1,76 @@
+{
+  "block": {
+    "number": "53854557",
+    "hash": "0x5d575bfdbe9a6bafc22126ab011478748e7f7eec92cc212a241b4738351db0bc",
+    "timestamp": "1793692780"
+  },
+  "original": {
+    "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "status": 1,
+    "preApproved": false,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ],
+    "fundingSecondsRemaining": "32420"
+  },
+  "duplicate": {
+    "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+    "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+    "status": 5,
+    "preApproved": false,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ]
+  },
+  "balances": {
+    "buyerUsdc": "21000000",
+    "buyerEth": "100000000000000",
+    "sellerEth": "49812291697244",
+    "collectorAllowance": "0",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "tokenStoreUsdc": "0",
+    "operatorUsdc": "0",
+    "decimals": 6,
+    "paused": false,
+    "buyerBlacklisted": false,
+    "sellerBlacklisted": false
+  },
+  "cancellation": {
+    "confirmed": true,
+    "hash": "0x9a150e4934f63566722ce02cf20d7d2857fa774e63236eb312e8bcac237c46b2",
+    "blockNumber": "53847244",
+    "confirmations": "7314",
+    "proof": "Exact seller-authorized OrderVoided for duplicate plus current state; original remains pending and both CPP states empty"
+  },
+  "buyerPreparation": {
+    "ready": true,
+    "paymentAttemptsObserved": false,
+    "desiredApproval": {
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "spender": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+      "amount": "1000000"
+    },
+    "blockedUntilDuplicateResolved": false
+  },
+  "nextAction": {
+    "action": "Buyer manually approves exactly 1 USDC to CPP collector",
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "value": "0x0",
+      "data": "0x095ea7b3000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000f4240"
+    },
+    "simulation": "PASS",
+    "completed": false
+  },
+  "crosscheck": {
+    "origin": "https://base-sepolia.drpc.org",
+    "canonicalBlockAndBothOrdersAndCppState": "PASS"
+  }
+}

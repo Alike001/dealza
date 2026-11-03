@@ -1,0 +1,16 @@
+{
+  "baselineCommit": "fb1eb0f48cf0f640cb9e19ba6c523b3094a1465d",
+  "baselinePath": "docs/verification/checkout-continuation/snapshot.json",
+  "baselineBlock": {
+    "number": "53842067",
+    "hash": "0xcbe77d3ec7239a8fa236c4f7e24afe60ced1d40d1141aac5d4614605907c62e8",
+    "timestamp": "1793690282"
+  },
+  "currentBlock": {
+    "number": "53854557",
+    "hash": "0x5d575bfdbe9a6bafc22126ab011478748e7f7eec92cc212a241b4738351db0bc",
+    "timestamp": "1793692780"
+  },
+  "entireOriginalStoredOrderUnchanged": true,
+  "duplicateImmutableTermsUnchanged": true
+}

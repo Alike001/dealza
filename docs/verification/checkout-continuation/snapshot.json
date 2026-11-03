@@ -1,11 +1,11 @@
 {
-  "queriedAt": "2026-11-03T07:18:04.550Z",
+  "queriedAt": "2026-11-03T07:59:42.295Z",
   "rpcOrigin": "https://base-sepolia-rpc.publicnode.com",
   "chainId": 84532,
   "block": {
-    "number": "53842067",
-    "hash": "0xcbe77d3ec7239a8fa236c4f7e24afe60ced1d40d1141aac5d4614605907c62e8",
-    "timestamp": "1793690282"
+    "number": "53854557",
+    "hash": "0x5d575bfdbe9a6bafc22126ab011478748e7f7eec92cc212a241b4738351db0bc",
+    "timestamp": "1793692780"
   },
   "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
   "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
@@ -44,7 +44,7 @@
     ],
     "preApproved": false,
     "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
-    "fundingSecondsRemaining": "34918"
+    "fundingSecondsRemaining": "32420"
   },
   "duplicate": {
     "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
@@ -66,9 +66,9 @@
       "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
       "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
       "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
-      "status": 1
+      "status": 5
     },
-    "status": 1,
+    "status": 5,
     "paymentState": [
       false,
       "0",
@@ -76,7 +76,7 @@
     ],
     "preApproved": false,
     "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
-    "fundingSecondsRemaining": "34918"
+    "fundingSecondsRemaining": "32420"
   },
   "balances": {
     "buyerUsdc": "21000000",
@@ -108,14 +108,14 @@
       "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
       "transactionHash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
       "blockNumber": "53694732",
-      "confirmations": "147336",
+      "confirmations": "159826",
       "verified": true
     },
     {
       "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
       "transactionHash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
       "blockNumber": "53829603",
-      "confirmations": "12465",
+      "confirmations": "24955",
       "verified": true
     }
   ],
@@ -175,15 +175,29 @@
           "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
         }
       }
+    },
+    {
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53847244",
+      "transactionHash": "0x9a150e4934f63566722ce02cf20d7d2857fa774e63236eb312e8bcac237c46b2",
+      "eventName": "OrderVoided",
+      "args": {
+        "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+        "authorizedBy": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf"
+      }
     }
   ],
   "historyScan": {
     "fromBlock": 53676176,
-    "toBlock": "53842067",
+    "toBlock": "53854557",
     "complete": true
   },
   "cancellation": {
-    "confirmed": false
+    "confirmed": true,
+    "hash": "0x9a150e4934f63566722ce02cf20d7d2857fa774e63236eb312e8bcac237c46b2",
+    "blockNumber": "53847244",
+    "confirmations": "7314",
+    "proof": "Exact seller-authorized OrderVoided for duplicate plus current state; original remains pending and both CPP states empty"
   },
   "buyerPreparation": {
     "ready": true,
@@ -193,19 +207,18 @@
       "spender": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
       "amount": "1000000"
     },
-    "blockedUntilDuplicateResolved": true
+    "blockedUntilDuplicateResolved": false
   },
   "nextAction": {
-    "action": "Seller manually cancels duplicate only",
+    "action": "Buyer manually approves exactly 1 USDC to CPP collector",
     "transaction": {
       "chainId": "0x14a34",
-      "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
-      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
       "value": "0x0",
-      "data": "0xc4d252f5808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97"
+      "data": "0x095ea7b3000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000f4240"
     },
     "simulation": "PASS",
-    "estimatedGas": "33943",
     "completed": false
   },
   "independentRpcCrosscheck": {

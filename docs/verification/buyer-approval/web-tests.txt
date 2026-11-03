@@ -1,0 +1,19 @@
+
+> test
+> npm run test --workspace web
+
+
+> @dealza/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  6 passed (6)
+      Tests  121 passed (121)
+   Start at  09:03:07
+   Duration  25.09s (tests 56%, environment 23%, import 17%, setup 4%, transform 1%)
+
+    Isolate  6 workers spawned · ~1.77s startup each (spawn + environment, per file)
+             at least ~1.77s faster with isolate: false — reuses workers across files instead of one per file
