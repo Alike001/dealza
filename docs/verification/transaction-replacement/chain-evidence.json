@@ -1,0 +1,293 @@
+{
+  "queriedAt": "2026-11-03T07:01:53.881Z",
+  "rpc": "https://base-sepolia-rpc.publicnode.com",
+  "chainId": 84532,
+  "block": {
+    "number": "53837220",
+    "hash": "0xc9ae6d30d0cfcada8186c29a34d99f2087e901177994f1c579e2909ac6d04f8a",
+    "timestamp": "1793689312"
+  },
+  "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+  "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+  "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+  "nonce": 4,
+  "pendingNonce": 4,
+  "balanceWei": "49812291697244",
+  "operatorRuntimeHash": "0xadbc98ddf155ec9a93328c11d78ff7fe2aeb180cc74bd34222e4313584b2374d",
+  "orderNonce": "2",
+  "transactions": [
+    {
+      "hash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "from": "0xb42f812a44c22cc6b861478900401ee759ebead6",
+      "to": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "nonce": 138336,
+      "type": "eip7702",
+      "value": "0",
+      "inputSelector": "0xcef6d209",
+      "inputBytes": 2212,
+      "authorizations": [
+        {
+          "chainId": 84532,
+          "target": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+          "nonce": 0,
+          "authority": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf"
+        }
+      ],
+      "embeddedCreateCalls": [
+        {
+          "functionName": "createOrder",
+          "args": [
+            "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "1000000",
+            1793725200,
+            1793898000,
+            "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4"
+          ]
+        },
+        {
+          "functionName": "createOrder",
+          "args": [
+            "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "1000000",
+            1793725200,
+            1793898000,
+            "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4"
+          ]
+        }
+      ],
+      "status": "success",
+      "blockNumber": "53694732",
+      "blockHash": "0x8a4e4269cb2de64c89c9ca030119cbab8f41bafa4cdafaa1ee4531e6c4491835",
+      "events": [
+        {
+          "orderId": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+          "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+          "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+          "payment": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793725200,
+            "authorizationExpiry": 1793898000,
+            "refundExpiry": 1793898000,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+          }
+        }
+      ]
+    },
+    {
+      "hash": "0x7f168316d9df0afe2d041276cd33beda9bc94c8755f6c68e5b46b83d7fb84ca0",
+      "from": "0xf74ad341e10187073a0eef55356d136f1be5e3cf",
+      "to": "0xf74ad341e10187073a0eef55356d136f1be5e3cf",
+      "nonce": 1,
+      "type": "eip7702",
+      "value": "0",
+      "inputSelector": "0x",
+      "inputBytes": 0,
+      "authorizations": [
+        {
+          "chainId": 84532,
+          "target": "0x0000000000000000000000000000000000000000",
+          "nonce": 2,
+          "authority": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf"
+        }
+      ],
+      "embeddedCreateCalls": [],
+      "status": "success",
+      "blockNumber": "53696890",
+      "blockHash": "0x1aa0e62704b5b58ee25ca24e5d563df3d55166c897ed2f576f376d9511608947",
+      "events": []
+    },
+    {
+      "hash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
+      "from": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+      "to": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "nonce": 138487,
+      "type": "eip7702",
+      "value": "0",
+      "inputSelector": "0xcef6d209",
+      "inputBytes": 2212,
+      "authorizations": [
+        {
+          "chainId": 84532,
+          "target": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+          "nonce": 3,
+          "authority": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf"
+        }
+      ],
+      "embeddedCreateCalls": [
+        {
+          "functionName": "createOrder",
+          "args": [
+            "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "1000000",
+            1793725200,
+            1793898000,
+            "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4"
+          ]
+        },
+        {
+          "functionName": "createOrder",
+          "args": [
+            "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "1000000",
+            1793725200,
+            1793898000,
+            "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+            "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4"
+          ]
+        }
+      ],
+      "status": "success",
+      "blockNumber": "53829603",
+      "blockHash": "0xe601211f22582a7eff09fd2ff54d3bc8914e5fce94cb90d9620bd2e0559cdda0",
+      "events": [
+        {
+          "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+          "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+          "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+          "payment": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793725200,
+            "authorizationExpiry": 1793898000,
+            "refundExpiry": 1793898000,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+          }
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+      "transactionHash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "blockNumber": "53694732",
+      "event": {
+        "orderId": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+        "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+        }
+      },
+      "order": {
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+        },
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+        "status": 1
+      },
+      "status": 1
+    },
+    {
+      "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+      "transactionHash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
+      "blockNumber": "53829603",
+      "event": {
+        "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+        "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+        }
+      },
+      "order": {
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+        },
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+        "status": 1
+      },
+      "status": 1
+    }
+  ],
+  "nextManualAction": {
+    "action": "Cancel the second, unfunded duplicate; retain the original. No request was sent to a wallet.",
+    "retainedOrderId": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+    "duplicateOrderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+    "simulatedAtBlock": "53837220",
+    "estimatedGas": "33943",
+    "unsignedTransaction": {
+      "chainId": "0x14a34",
+      "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0xc4d252f5808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97"
+    }
+  }
+}

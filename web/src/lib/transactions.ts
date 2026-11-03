@@ -5,7 +5,13 @@ export interface TransactionPort {
   check(): Promise<void>;
   simulate(): Promise<void>;
   send(): Promise<Hash>;
-  wait(hash: Hash, replaced: (hash: Hash) => void): Promise<TransactionReceipt>;
+  wait(
+    hash: Hash,
+    replaced: (
+      hash: Hash,
+      reason?: "repriced" | "cancelled" | "replaced",
+    ) => void,
+  ): Promise<TransactionReceipt>;
   verify(receipt: TransactionReceipt): Promise<void>;
 }
 /** Confirmation describes the transaction only. Financial status always comes from a fresh chain read. */
@@ -30,12 +36,16 @@ export async function confirmTransaction(
     message: "Submitted. Waiting for confirmation on Base Sepolia…",
     hash,
   });
-  const receipt = await port.wait(hash, (replacement) => {
+  const receipt = await port.wait(hash, (replacement, reason) => {
     hash = replacement;
     update({
       phase: "pending",
       message:
-        "Your wallet replaced this transaction. Checking the confirmed result…",
+        reason === "repriced"
+          ? "Your wallet changed the gas price. Verifying the confirmed action…"
+          : reason === "cancelled"
+            ? "Your wallet submitted a cancellation. Checking the receipt…"
+            : "A replacement transaction was reported. Verifying what actually executed…",
       hash,
     });
   });

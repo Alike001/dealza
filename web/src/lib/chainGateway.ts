@@ -232,6 +232,7 @@ async function send(
   call: ContractCall,
   session: Session,
   update: (state: TxState) => void,
+  verifyResult?: (receipt: TransactionReceipt) => Promise<void>,
 ): Promise<TransactionReceipt> {
   const wallet = createWalletClient({
     chain,
@@ -257,24 +258,45 @@ async function send(
           confirmations: 2,
           timeout: 180_000,
           onReplaced: (replacement) => {
-            cancelled = replacement.reason === "cancelled";
-            replaced(replacement.transaction.hash);
+            cancelled ||= replacement.reason === "cancelled";
+            replaced(replacement.transaction.hash, replacement.reason);
           },
         }),
       verify: async (receipt) => {
         const tx = await client.getTransaction({
           hash: receipt.transactionHash,
         });
-        if (
-          cancelled ||
-          !sameAddress(tx.to ?? "", call.address) ||
-          !sameAddress(tx.from, session.account) ||
-          tx.input !== expectedData ||
-          tx.value !== 0n
-        )
+        if (cancelled)
           throw new Error(
-            "Your wallet replaced this action with a different transaction. Refresh the order; no payment success is assumed.",
+            "Your wallet confirmed a cancellation transaction. This action was not completed. Check existing orders before retrying.",
           );
+        const directCall =
+          sameAddress(tx.to ?? "", call.address) &&
+          sameAddress(tx.from, session.account) &&
+          tx.input === expectedData &&
+          tx.value === 0n;
+        // MetaMask may return a relayer's transaction hash for eth_sendTransaction.
+        // Its outer sender/calldata differ, even though the seller executed our call.
+        // Only creation has an exact event + read-back proof. Other actions still
+        // require direct transaction identity; a wrapper alone proves nothing.
+        const canVerifyInnerCreation =
+          !!verifyResult &&
+          !!tx.to &&
+          !sameAddress(tx.to, call.address) &&
+          tx.input !== "0x" &&
+          tx.value === 0n;
+        if (!directCall && !canVerifyInnerCreation) {
+          const authorizationChange =
+            "authorizationList" in tx &&
+            tx.authorizationList?.length &&
+            tx.input === "0x";
+          throw new Error(
+            authorizationChange
+              ? "Your wallet confirmed an account delegation change, not this action. Your draft is kept. Check existing orders before retrying."
+              : "Your wallet confirmed a different transaction. The requested action was not confirmed. Check existing orders before trying again.",
+          );
+        }
+        await verifyResult?.(receipt);
       },
     },
     update,
@@ -376,7 +398,8 @@ async function create(
     throw new Error(
       "Check the order addresses and deadlines against current chain time.",
     );
-  const receipt = await send(
+  let orderId: Hash | undefined;
+  await send(
     {
       address: d.operator,
       abi: operatorAbi,
@@ -392,35 +415,74 @@ async function create(
     },
     session,
     update,
-  );
-  for (const log of receipt.logs) {
-    if (!sameAddress(log.address, d.operator)) continue;
-    try {
-      const decoded = decodeEventLog({
-        abi: operatorAbi,
-        topics: log.topics,
-        data: log.data,
-      });
-      if (decoded.eventName === "OrderCreated") {
-        const id = decoded.args.orderId;
-        const s = await loadOrder(id, receipt.blockNumber);
+    async (receipt) => {
+      const matches = [];
+      let sawOrderEvent = false;
+      for (const log of receipt.logs) {
+        if (!sameAddress(log.address, d.operator)) continue;
+        let decoded;
+        try {
+          decoded = decodeEventLog({
+            abi: operatorAbi,
+            topics: log.topics,
+            data: log.data,
+            strict: true,
+          });
+        } catch {
+          continue;
+        }
+        if (decoded.eventName !== "OrderCreated") continue;
+        sawOrderEvent = true;
+        const a = decoded.args;
+        const p = a.payment;
         if (
-          !sameAddress(s.order.payment.receiver, session.account) ||
-          !sameAddress(s.order.payment.payer, terms.buyer) ||
-          !sameAddress(s.order.reviewer, terms.reviewer) ||
-          s.order.descriptionHash !== descriptionHash(terms.description) ||
-          s.order.payment.maxAmount !== terms.amount
+          !sameAddress(a.seller, session.account) ||
+          !sameAddress(a.buyer, terms.buyer) ||
+          !sameAddress(a.reviewer, terms.reviewer) ||
+          a.descriptionHash !== descriptionHash(terms.description) ||
+          !sameAddress(p.operator, d.operator) ||
+          !sameAddress(p.payer, terms.buyer) ||
+          !sameAddress(p.receiver, session.account) ||
+          !sameAddress(p.token, network.usdc) ||
+          p.maxAmount !== terms.amount ||
+          p.preApprovalExpiry !== terms.fundingCutoff ||
+          p.authorizationExpiry !== terms.expiry ||
+          p.refundExpiry !== terms.expiry ||
+          p.minFeeBps !== 0 ||
+          p.maxFeeBps !== 0 ||
+          !/^0x0{40}$/i.test(p.feeReceiver) ||
+          p.salt !== BigInt(a.orderId)
         )
-          throw new Error("Confirmed order terms do not match your request.");
-        return id;
+          continue;
+        matches.push(a);
       }
-    } catch (e) {
-      if (e instanceof Error && /terms do not/.test(e.message)) throw e;
-    }
-  }
-  throw new Error(
-    "Transaction confirmed but the new order could not be verified. Inspect the receipt before trying again.",
+      if (matches.length !== 1)
+        throw new Error(
+          matches.length > 1
+            ? "Multiple matching orders were confirmed. Open My orders to inspect them; do not create another order."
+            : sawOrderEvent
+              ? "Confirmed order terms do not match your request. Check existing orders before retrying."
+              : "Transaction confirmed but the new order could not be verified. Inspect the receipt and My orders before trying again.",
+        );
+      const event = matches[0];
+      const s = await loadOrder(event.orderId, receipt.blockNumber);
+      if (
+        !sameAddress(s.order.reviewer, event.reviewer) ||
+        s.order.descriptionHash !== event.descriptionHash ||
+        s.order.paymentHash !== event.paymentHash ||
+        Object.entries(event.payment).some(
+          ([key, value]) =>
+            String(value).toLowerCase() !==
+            String(
+              s.order.payment[key as keyof typeof event.payment],
+            ).toLowerCase(),
+        )
+      )
+        throw new Error("Confirmed order terms do not match your request.");
+      orderId = event.orderId;
+    },
   );
+  return orderId!;
 }
 async function range(before?: bigint) {
   const d = requiredDeployment();

@@ -10,6 +10,7 @@ import { describe, expect, it, vi } from "vitest";
 import App from "../App";
 import { CreateOrder } from "../components/CreateOrder";
 import { OrderPage } from "../components/OrderPage";
+import { orderDraftKey } from "../lib/orderDraft";
 import { WalletContext, WalletProvider, useWallet } from "../lib/wallet";
 import {
   api,
@@ -70,7 +71,7 @@ describe("pending integration and routing", () => {
     const user = userEvent.setup(),
       gateway = api({ deployment: null });
     render(
-      <WalletContext.Provider value={wallet(null)}>
+      <WalletContext.Provider value={wallet(session(seller))}>
         <CreateOrder api={gateway} />
       </WalletContext.Provider>,
     );
@@ -80,7 +81,9 @@ describe("pending integration and routing", () => {
       screen.getByText(/No order or payment has been created/),
     ).toBeInTheDocument();
     expect(gateway.create).not.toHaveBeenCalled();
-    expect(localStorage.getItem("dealza:order-draft:v1")).toContain(text);
+    expect(
+      localStorage.getItem(orderDraftKey(session(seller), null)!),
+    ).toContain(text);
   });
 });
 
@@ -440,5 +443,237 @@ describe("injected wallet lifecycle", () => {
     await userEvent.click(screen.getByRole("button", { name: "Connect" }));
     await screen.findByText(/declined the wallet request/);
     expect(screen.getByText("Disconnected")).toBeInTheDocument();
+  });
+});
+
+describe("seller draft recovery", () => {
+  const draftKey = () => orderDraftKey(session(seller), api().deployment)!;
+  const createView = (gateway = api(), connected = wallet(session(seller))) =>
+    render(
+      <WalletContext.Provider value={connected}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+  it("restores every edited field after refresh without restoring review or sending a transaction", async () => {
+    const gateway = api();
+    const view = createView(gateway);
+    await fillOrderForm();
+    const saved = JSON.parse(localStorage.getItem(draftKey())!).form;
+    view.unmount();
+    createView(gateway);
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(
+      saved.description,
+    );
+    expect(screen.getByLabelText(/Order amount/)).toHaveValue(saved.amount);
+    expect(screen.getByLabelText("Buyer’s wallet address")).toHaveValue(
+      saved.buyer,
+    );
+    expect(
+      screen.getByLabelText("Agreed reviewer’s wallet address"),
+    ).toHaveValue(saved.reviewer);
+    expect(screen.getByLabelText("Buyer must reserve by")).toHaveValue(
+      saved.fundingCutoff,
+    );
+    expect(
+      screen.getByLabelText("Payment release & review deadline"),
+    ).toHaveValue(saved.expiry);
+    expect(screen.getByText(/Incomplete draft restored/)).toBeInTheDocument();
+    expect(
+      screen.queryByText("REVIEW BEFORE YOU CREATE"),
+    ).not.toBeInTheDocument();
+    expect(gateway.create).not.toHaveBeenCalled();
+  });
+  it("isolates account/network/disconnect changes and restores the original account's draft", async () => {
+    const gateway = api();
+    const view = createView(gateway);
+    await fillOrderForm();
+    const rerender = (connected: ReturnType<typeof wallet>) =>
+      view.rerender(
+        <WalletContext.Provider value={connected}>
+          <CreateOrder api={gateway} />
+        </WalletContext.Provider>,
+      );
+    for (const connected of [
+      wallet(session(buyer)),
+      wallet(session(seller, 1)),
+      wallet(null),
+    ]) {
+      rerender(connected);
+      expect(screen.getByLabelText("What is this order for?")).toHaveValue("");
+      expect(
+        screen.queryByText("REVIEW BEFORE YOU CREATE"),
+      ).not.toBeInTheDocument();
+    }
+    rerender(wallet(session(seller)));
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(gateway.create).not.toHaveBeenCalled();
+  });
+  it.each([
+    ["amount", "0", "positive amount"],
+    ["buyer", seller, "different wallets"],
+    ["reviewer", "not-an-address", "reviewer’s complete"],
+    ["description", " ", "Describe the order"],
+    ["fundingCutoff", "2000-01-01T12:00", "future deadlines"],
+    ["expiry", "2099-01-01T12:00", "future deadlines"],
+  ])(
+    "revalidates restored %s without trusting a previous review",
+    async (name, value, message) => {
+      const view = createView();
+      await fillOrderForm();
+      view.unmount();
+      const stored = JSON.parse(localStorage.getItem(draftKey())!);
+      stored.form[name] = value;
+      stored.terms = { approved: true };
+      stored.created = id;
+      localStorage.setItem(draftKey(), JSON.stringify(stored));
+      const gateway = api();
+      createView(gateway);
+      expect(screen.getByRole("alert")).toHaveTextContent(message);
+      expect(
+        screen.queryByText("Your order link is ready."),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("REVIEW BEFORE YOU CREATE"),
+      ).not.toBeInTheDocument();
+      expect(gateway.create).not.toHaveBeenCalled();
+    },
+  );
+  it("revalidates a deadline that expires between review and creation", async () => {
+    const gateway = api();
+    createView(gateway);
+    const user = await fillOrderForm();
+    const now = Date.now();
+    vi.spyOn(Date, "now").mockReturnValue(now + 2 * 86400_000);
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "future deadlines",
+    );
+    expect(gateway.create).not.toHaveBeenCalled();
+    expect(localStorage.getItem(draftKey())).toContain(text);
+  });
+  it.each([
+    "wallet upgrade replaced the order",
+    "Receipt timed out",
+    "execution reverted",
+    "User rejected request",
+  ])("retains the draft after %s", async (message) => {
+    const gateway = api({
+      create: vi.fn(async () => {
+        throw new Error(message);
+      }),
+    });
+    const view = createView(gateway);
+    const user = await fillOrderForm();
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    await screen.findByRole("alert");
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(
+      screen.queryByText("Your order link is ready."),
+    ).not.toBeInTheDocument();
+    view.unmount();
+    createView(gateway);
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(gateway.create).toHaveBeenCalledTimes(1);
+  });
+  it("keeps pending drafts and ignores an old completion after account changes", async () => {
+    let finish!: (value: typeof id) => void;
+    const gateway = api({
+      create: vi.fn(async (_terms, _session, update) => {
+        update({ phase: "pending", hash, message: "Waiting" });
+        return new Promise<typeof id>((resolve) => {
+          finish = resolve;
+        });
+      }),
+    });
+    const view = createView(gateway);
+    const user = await fillOrderForm();
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    expect(localStorage.getItem(draftKey())).toContain(text);
+    expect(screen.getByLabelText("What is this order for?")).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Clear draft" })).toBeDisabled();
+    view.rerender(
+      <WalletContext.Provider value={wallet(session(buyer))}>
+        <CreateOrder api={gateway} />
+      </WalletContext.Provider>,
+    );
+    await act(async () => {
+      finish(id);
+    });
+    expect(
+      screen.queryByText("Your order link is ready."),
+    ).not.toBeInTheDocument();
+    expect(localStorage.getItem(draftKey())).toContain(text);
+  });
+  it("restores a draft refreshed during a pending transaction without resubmitting or assuming success", async () => {
+    let finish!: (value: typeof id) => void;
+    const gateway = api({
+      create: vi.fn(async (_terms, _session, update) => {
+        update({ phase: "pending", hash, message: "Waiting" });
+        return new Promise<typeof id>((resolve) => {
+          finish = resolve;
+        });
+      }),
+    });
+    const view = createView(gateway);
+    const user = await fillOrderForm();
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    view.unmount();
+    createView(gateway);
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(
+      screen.queryByText("REVIEW BEFORE YOU CREATE"),
+    ).not.toBeInTheDocument();
+    expect(gateway.create).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      finish(id);
+    });
+    expect(
+      screen.queryByText("Your order link is ready."),
+    ).not.toBeInTheDocument();
+    expect(localStorage.getItem(draftKey())).toContain(text);
+  });
+  it("clears the scoped draft only on verified creation or explicit clear", async () => {
+    const gateway = api();
+    const view = createView(gateway);
+    const user = await fillOrderForm();
+    localStorage.setItem("other-account-draft", "preserve");
+    await user.click(
+      screen.getByRole("button", { name: "Create order on Base Sepolia" }),
+    );
+    await screen.findByText("Your order link is ready.");
+    expect(localStorage.getItem(draftKey())).toBeNull();
+    expect(localStorage.getItem("other-account-draft")).toBe("preserve");
+    view.unmount();
+    createView(gateway);
+    fireEvent.change(screen.getByLabelText("What is this order for?"), {
+      target: { value: text },
+    });
+    await user.click(screen.getByRole("button", { name: "Clear draft" }));
+    expect(localStorage.getItem(draftKey())).toBeNull();
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue("");
+  });
+  it("shows storage failure without claiming the draft was saved", () => {
+    createView();
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("quota");
+    });
+    fireEvent.change(screen.getByLabelText("What is this order for?"), {
+      target: { value: text },
+    });
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "could not save this draft",
+    );
+    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(
+      screen.queryByText(/Draft saved on this device/),
+    ).not.toBeInTheDocument();
   });
 });

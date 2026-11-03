@@ -98,3 +98,37 @@ describe("wallet session validation", () => {
     await expect(assertSession(s)).rejects.toThrow("changed accounts");
   });
 });
+
+describe("replacement classifications", () => {
+  it.each([
+    ["repriced", "changed the gas price"],
+    ["cancelled", "submitted a cancellation"],
+    ["replaced", "replacement transaction was reported"],
+  ] as const)(
+    "reports %s without declaring a successful order",
+    async (reason, message) => {
+      const update = vi.fn();
+      const p = port({
+        wait: vi.fn(async (_hash, replaced) => {
+          replaced(hash, reason);
+          return receipt("success");
+        }),
+        verify: vi.fn(async () => {
+          throw new Error("no matching order");
+        }),
+      });
+      await expect(confirmTransaction(p, update)).rejects.toThrow(
+        "no matching order",
+      );
+      expect(update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          phase: "pending",
+          message: expect.stringContaining(message),
+        }),
+      );
+      expect(update.mock.calls.some(([s]) => s.phase === "confirmed")).toBe(
+        false,
+      );
+    },
+  );
+});

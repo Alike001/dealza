@@ -9,6 +9,13 @@ import {
   type CreateTerms,
   type TxState,
 } from "../lib/domain";
+import {
+  emptyOrderForm,
+  orderDraftKey,
+  readOrderDraft,
+  writeOrderDraft,
+  removeOrderDraft,
+} from "../lib/orderDraft";
 import type { PaymentGateway } from "../lib/gateway";
 import { useWallet } from "../lib/wallet";
 import {
@@ -22,57 +29,83 @@ import {
   TransactionNotice,
 } from "./common";
 
-const draftKey = "dealza:order-draft:v1";
-const defaultForm = () => ({
-  description: "",
-  buyer: "",
-  reviewer: "",
-  amount: "",
-  fundingCutoff: "",
-  expiry: "",
-});
-function savedDraft() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(draftKey) || "{}") as Record<
-      string,
-      unknown
-    >;
-    return Object.fromEntries(
-      Object.entries(defaultForm()).map(([k, v]) => [
-        k,
-        typeof parsed[k] === "string" ? String(parsed[k]).slice(0, 1600) : v,
-      ]),
-    ) as ReturnType<typeof defaultForm>;
-  } catch {
-    return defaultForm();
-  }
-}
+// Remount all review/transaction state when the account, chain or deployment changes.
 export function CreateOrder({ api }: { api: PaymentGateway }) {
   const wallet = useWallet();
-  const [form, setForm] = useState(savedDraft);
+  const key = orderDraftKey(wallet.session, api.deployment);
+  return (
+    <ScopedCreateOrder key={key ?? "disconnected"} api={api} draftKey={key} />
+  );
+}
+function ScopedCreateOrder({
+  api,
+  draftKey,
+}: {
+  api: PaymentGateway;
+  draftKey: string | null;
+}) {
+  const wallet = useWallet();
+  const [restored] = useState(() => readOrderDraft(draftKey));
+  const [form, setForm] = useState(restored ?? emptyOrderForm());
   const [terms, setTerms] = useState<CreateTerms | null>(null);
   const [error, setError] = useState("");
-  const [saved, setSaved] = useState("");
+  const [saved, setSaved] = useState(
+    restored
+      ? "Incomplete draft restored on this device. If you already submitted a transaction, check My orders before retrying. Review all fields and deadlines."
+      : "",
+  );
   const [tx, setTx] = useState<TxState>(idleTx);
   const [created, setCreated] = useState("");
   const inFlight = useRef(false);
+  const active = useRef(true);
   useEffect(() => {
-    setTerms(null);
-  }, [wallet.session?.account, wallet.session?.chainId]);
+    active.current = true;
+    if (restored) {
+      try {
+        validateTerms(restored, wallet.session?.account);
+      } catch (e) {
+        setError(friendlyError(e));
+      }
+    }
+    return () => {
+      active.current = false;
+    };
+  }, []);
+  const persist = (value: typeof form) => {
+    try {
+      writeOrderDraft(draftKey, value);
+      setSaved(
+        "Draft saved on this device. No order or payment has been created.",
+      );
+      return true;
+    } catch (e) {
+      setSaved("");
+      setError(
+        draftKey
+          ? "Your browser could not save this draft. Keep a separate copy of your terms."
+          : friendlyError(e),
+      );
+      return false;
+    }
+  };
   const busy = ["checking", "signature", "pending"].includes(tx.phase);
   const field = (name: keyof typeof form) => ({
     value: form[name],
+    disabled: busy,
     onChange: (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-      setForm((old) => ({ ...old, [name]: e.target.value }));
+      const next = { ...form, [name]: e.target.value };
+      setForm(next);
       setTerms(null);
       setError("");
-      setSaved("");
+      // Save during the edit, before a refresh or wallet navigation can unmount us.
+      if (draftKey) persist(next);
     },
   });
   const review = (event: FormEvent) => {
     event.preventDefault();
+    setTerms(null);
     setError("");
     try {
       setTerms(validateTerms(form, wallet.session?.account));
@@ -81,14 +114,19 @@ export function CreateOrder({ api }: { api: PaymentGateway }) {
     }
   };
   const save = () => {
+    persist(form);
+  };
+  const clear = () => {
     try {
-      localStorage.setItem(draftKey, JSON.stringify(form));
-      setSaved(
-        "Draft saved on this device. No order or payment has been created.",
-      );
+      removeOrderDraft(draftKey);
+      setForm(emptyOrderForm());
+      setTerms(null);
+      setError("");
+      setTx(idleTx);
+      setSaved("Draft cleared on this device.");
     } catch {
       setError(
-        "Your browser could not save this draft. Keep a separate copy of your terms.",
+        "Your browser could not clear this draft. Try again before leaving this device.",
       );
     }
   };
@@ -97,6 +135,7 @@ export function CreateOrder({ api }: { api: PaymentGateway }) {
       !terms ||
       !wallet.session ||
       !api.deployment ||
+      wallet.session.chainId !== 84532 ||
       busy ||
       inFlight.current
     )
@@ -107,10 +146,16 @@ export function CreateOrder({ api }: { api: PaymentGateway }) {
       message: "Checking your wallet, deployment, and order terms…",
     });
     try {
-      const id = await api.create(terms, wallet.session, setTx);
-      setCreated(shareLink(id, terms.description));
+      // Review is not authorization to use stale deadlines or edited storage.
+      const currentTerms = validateTerms(form, wallet.session.account);
+      persist(form);
+      const id = await api.create(currentTerms, wallet.session, (state) => {
+        if (active.current) setTx(state);
+      });
+      if (!active.current) return;
+      setCreated(shareLink(id, currentTerms.description));
       try {
-        localStorage.removeItem(draftKey);
+        removeOrderDraft(draftKey);
       } catch {
         /* Financial state does not depend on browser storage. */
       }
@@ -120,6 +165,8 @@ export function CreateOrder({ api }: { api: PaymentGateway }) {
           "Your order was confirmed and its terms were read back from the contract. Share the checkout link with your buyer.",
       }));
     } catch (e) {
+      if (!active.current) return;
+      setTerms(null);
       setTx((old) => ({
         phase: "error",
         hash: old.hash,
@@ -275,9 +322,18 @@ export function CreateOrder({ api }: { api: PaymentGateway }) {
               >
                 Save draft
               </button>
+              <button
+                type="button"
+                className="button secondary"
+                onClick={clear}
+                disabled={busy}
+              >
+                Clear draft
+              </button>
             </div>
             <p role="status" className="field-help">
-              {saved}
+              {saved ||
+                "Drafts save automatically for the connected wallet and network on this device. Keep private information out of the terms."}
             </p>
           </form>
           <aside className="create-aside">
