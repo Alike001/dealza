@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-11-03T08:46:06.054Z",
+  "context7": "Resolved coinbase commerce-onchain-payment-protocol, but queries returned legacy TransferIntent interfaces. Second resolution base commerce-payments did not find the correct CPP library. No legacy ABI used. Retrieved authoritative base/commerce-payments v1.1.0 and pinned commit sources directly instead. Viem simulateContract and estimateContractGas docs fetched separately via Context7 /wevm/viem.",
+  "version": "v1.1.0",
+  "commit": "6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9",
+  "sourceChecks": "Fresh official tag sources for escrow and collector match vendored SHA256 byte-for-byte. Online verifier also fetched all four CPP files from pinned official commit and compared exactly; compiled executable runtimes matched live escrow, collector and TokenStore implementation.",
+  "tagSources": [
+    {
+      "url": "https://raw.githubusercontent.com/base/commerce-payments/v1.1.0/src/AuthCaptureEscrow.sol",
+      "sha256": "31c6a0c3efec3acacb351e9cefe72b23a56d734474f1785dbf3e4ab45ef1477d"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/base/commerce-payments/v1.1.0/src/collectors/PreApprovalPaymentCollector.sol",
+      "sha256": "9e03cdbe73ee299e1f2bbb80f61967b90e0ed1a2455c9ba288d571fa10a310c2"
+    }
+  ],
+  "verificationCommands": [
+    "npm run abi:check",
+    "python3 contracts/scripts/verify_protocol.py --online --runtime-report /tmp/dealza-reservation-runtime.json",
+    "node web/scripts/verify-buyer-reservation.mjs"
+  ],
+  "rpcNote": "A prior dRPC attempt returned HTTP 500 before simulations. Successful final run used PublicNode and official sepolia.base.org, with agreement at the same pinned canonical block."
+}

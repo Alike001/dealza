@@ -1,0 +1,62 @@
+{
+  "queriedAt": "2026-11-03T08:48:28.466Z",
+  "block": {
+    "number": "53869188",
+    "hash": "0x1d1beb1956f79e5b94eb37c9e3977dc2376a24f5dab9b208d677b51274341ab3",
+    "timestamp": "1793695706",
+    "utc": "2026-11-03T08:48:26.000Z"
+  },
+  "original": {
+    "payment": {
+      "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "maxAmount": "1000000",
+      "preApprovalExpiry": 1793725200,
+      "authorizationExpiry": 1793898000,
+      "refundExpiry": 1793898000,
+      "minFeeBps": 0,
+      "maxFeeBps": 0,
+      "feeReceiver": "0x0000000000000000000000000000000000000000",
+      "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+    },
+    "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+    "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "status": 1
+  },
+  "duplicate": {
+    "payment": {
+      "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "maxAmount": "1000000",
+      "preApprovalExpiry": 1793725200,
+      "authorizationExpiry": 1793898000,
+      "refundExpiry": 1793898000,
+      "minFeeBps": 0,
+      "maxFeeBps": 0,
+      "feeReceiver": "0x0000000000000000000000000000000000000000",
+      "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+    },
+    "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+    "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+    "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+    "status": 5
+  },
+  "paymentState": [
+    false,
+    "0",
+    "0"
+  ],
+  "preApproved": true,
+  "allowance": "1000000",
+  "buyerUsdc": "21000000",
+  "buyerEth": "100000000000000",
+  "exactDirectEthCall": {},
+  "exactDelegatedSelfCall": {},
+  "passed": true,
+  "noSigningOrBroadcast": true
+}

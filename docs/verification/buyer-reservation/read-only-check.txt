@@ -1,0 +1,374 @@
+{
+  "result": "GO_TRANSACTION_4_ONLY",
+  "block": {
+    "number": "53868481",
+    "hash": "0x74ef746997b771ed2bc2410fdec703ee35121311cb6e68c52a638e8f63ca804b",
+    "timestamp": "1793695565",
+    "utc": "2026-11-03T08:46:05.000Z"
+  },
+  "transaction3": {
+    "type": "eip1559",
+    "from": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+    "to": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+    "confirmations": "2610",
+    "events": [
+      {
+        "eventName": "PaymentPreApproved",
+        "args": {
+          "paymentInfoHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59"
+        },
+        "logIndex": 1
+      }
+    ]
+  },
+  "balances": {
+    "buyerEth": "100000000000000",
+    "buyerUsdc": "21000000",
+    "sellerUsdc": "0",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "tokenStoreUsdc": "0",
+    "operatorUsdc": "0",
+    "allowance": "1000000"
+  },
+  "buyerAccount": {
+    "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+    "nonce": 1,
+    "pendingNonce": 1
+  },
+  "reservationDeadline": {
+    "unix": 1793725200,
+    "utc": "2026-11-03T17:00:00.000Z",
+    "secondsRemaining": "29635"
+  },
+  "preparedTransaction": {
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0xb5d6529c610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aea1310000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+    },
+    "function": "fund",
+    "signature": "fund(bytes32,(address,address,address,address,uint120,uint48,uint48,uint48,uint16,uint16,address,uint256))",
+    "arguments": [
+      "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+      {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793725200,
+        "authorizationExpiry": 1793898000,
+        "refundExpiry": 1793898000,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+      }
+    ],
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "amountRaw": "1000000",
+    "custodyDestination": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "estimatedGas": "144284",
+    "gasPriceWei": "6000000",
+    "estimatedExecutionCostWei": "865704000000",
+    "gasCaveat": "Refresh MetaMask gas and total fee including Base L1 data fee. Routed envelope gas can differ. No fixed gas or nonce is prescribed.",
+    "routedSelfExecutionTransaction": {
+      "chainId": "0x14a34",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "value": "0x0",
+      "data": "0xe9ae5c530000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001d8d798Ec27019Bba2E6411986A2D58ff3D50F8C9c80000000000000000000000000000000000000000000000000000000000000000b5d6529c610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aea1310000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f0000000000000000"
+    },
+    "routedSelfExecutionGas": "150936"
+  },
+  "directSimulation": "PASS",
+  "routedSimulation": "PASS",
+  "history": {
+    "fromBlock": 53676176,
+    "toBlock": "53868481",
+    "complete": true,
+    "events": [
+      {
+        "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "blockNumber": "0x333510c",
+        "transactionHash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+        "eventName": "OrderCreated",
+        "args": {
+          "orderId": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+          "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+          "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+          "payment": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793725200,
+            "authorizationExpiry": 1793898000,
+            "refundExpiry": 1793898000,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+          }
+        }
+      },
+      {
+        "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "blockNumber": "0x3355fe3",
+        "transactionHash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
+        "eventName": "OrderCreated",
+        "args": {
+          "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+          "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+          "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+          "payment": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793725200,
+            "authorizationExpiry": 1793898000,
+            "refundExpiry": 1793898000,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+          }
+        }
+      },
+      {
+        "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "blockNumber": "0x335a4cc",
+        "transactionHash": "0x9a150e4934f63566722ce02cf20d7d2857fa774e63236eb312e8bcac237c46b2",
+        "eventName": "OrderVoided",
+        "args": {
+          "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+          "authorizedBy": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf"
+        }
+      },
+      {
+        "address": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+        "blockNumber": "0x335ed90",
+        "transactionHash": "0x78cd5930a57b51edccb09a54c6c8e6edd8e85c6c78cfef7549bb9d280a26ba70",
+        "eventName": "PaymentPreApproved",
+        "args": {
+          "paymentInfoHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59"
+        }
+      }
+    ]
+  },
+  "abi": {
+    "version": "v1.1.0",
+    "commit": "6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9",
+    "signature": "fund(bytes32,(address,address,address,address,uint120,uint48,uint48,uint48,uint16,uint16,address,uint256))",
+    "function": {
+      "type": "function",
+      "name": "fund",
+      "inputs": [
+        {
+          "name": "id",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "payment",
+          "type": "tuple",
+          "internalType": "struct AuthCaptureEscrow.PaymentInfo",
+          "components": [
+            {
+              "name": "operator",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "payer",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "receiver",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "token",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "maxAmount",
+              "type": "uint120",
+              "internalType": "uint120"
+            },
+            {
+              "name": "preApprovalExpiry",
+              "type": "uint48",
+              "internalType": "uint48"
+            },
+            {
+              "name": "authorizationExpiry",
+              "type": "uint48",
+              "internalType": "uint48"
+            },
+            {
+              "name": "refundExpiry",
+              "type": "uint48",
+              "internalType": "uint48"
+            },
+            {
+              "name": "minFeeBps",
+              "type": "uint16",
+              "internalType": "uint16"
+            },
+            {
+              "name": "maxFeeBps",
+              "type": "uint16",
+              "internalType": "uint16"
+            },
+            {
+              "name": "feeReceiver",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "salt",
+              "type": "uint256",
+              "internalType": "uint256"
+            }
+          ]
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    "internalAuthorizeSignature": "authorize((address,address,address,address,uint120,uint48,uint48,uint48,uint16,uint16,address,uint256),uint256,address,bytes)",
+    "internalAuthorizeFunction": {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "operator",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "payer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "uint120",
+              "name": "maxAmount",
+              "type": "uint120"
+            },
+            {
+              "internalType": "uint48",
+              "name": "preApprovalExpiry",
+              "type": "uint48"
+            },
+            {
+              "internalType": "uint48",
+              "name": "authorizationExpiry",
+              "type": "uint48"
+            },
+            {
+              "internalType": "uint48",
+              "name": "refundExpiry",
+              "type": "uint48"
+            },
+            {
+              "internalType": "uint16",
+              "name": "minFeeBps",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "maxFeeBps",
+              "type": "uint16"
+            },
+            {
+              "internalType": "address",
+              "name": "feeReceiver",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "salt",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct AuthCaptureEscrow.PaymentInfo",
+          "name": "paymentInfo",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "tokenCollector",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "collectorData",
+          "type": "bytes"
+        }
+      ],
+      "name": "authorize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    "internalAuthorizeArguments": [
+      {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793725200,
+        "authorizationExpiry": 1793898000,
+        "refundExpiry": 1793898000,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+      },
+      "1000000",
+      "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+      "0x"
+    ],
+    "internalAuthorizeCalldata": "0x41d66202000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aea1310000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000006aecb610000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000001e00000000000000000000000000000000000000000000000000000000000000000",
+    "computedPaymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "typeHash": "0xae68ac7ce30c86ece8196b61a7c486d8f0061f575037fbd34e7fe4e2820c6591",
+    "structHash": "0xa9ac1be67823ddab1e1f57ee3aa84f9d2b5fbe6e58829d97dc0a7b218295c4b7",
+    "sources": [
+      "https://github.com/base/commerce-payments/blob/v1.1.0/src/AuthCaptureEscrow.sol",
+      "https://github.com/base/commerce-payments/blob/v1.1.0/src/collectors/PreApprovalPaymentCollector.sol"
+    ]
+  }
+}
