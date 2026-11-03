@@ -49,6 +49,10 @@ export async function confirmTransaction(
       hash,
     });
   });
+  if (receipt.transactionHash.toLowerCase() !== hash.toLowerCase())
+    throw new Error(
+      "Receipt hash does not match the submitted or reported replacement transaction.",
+    );
   if (receipt.status !== "success")
     throw new Error(
       "The transaction reverted. No successful payment is recorded.",

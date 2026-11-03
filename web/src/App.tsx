@@ -1,3 +1,4 @@
+import { PendingTransaction } from "./components/PendingTransaction";
 import { useHistory } from "./lib/useHistory";
 import { useEffect, useState, type FormEvent } from "react";
 import type { Address } from "viem";
@@ -647,6 +648,7 @@ export default function App({ api = gateway }: { api?: PaymentGateway }) {
           </button>
         </div>
       )}
+      <PendingTransaction api={api} />
       {route.path === "/" ? (
         <Home api={api} />
       ) : route.path === "/create" ? (

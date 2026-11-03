@@ -1,4 +1,6 @@
+import { usePendingRequest } from "../lib/usePendingRequest";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import type { Hash } from "viem";
 import {
   descriptionHash,
   friendlyError,
@@ -45,6 +47,7 @@ function ScopedCreateOrder({
   draftKey: string | null;
 }) {
   const wallet = useWallet();
+  const pending = usePendingRequest(wallet.session, api.deployment?.operator);
   const [restored] = useState(() => readOrderDraft(draftKey));
   const [form, setForm] = useState(restored ?? emptyOrderForm());
   const [terms, setTerms] = useState<CreateTerms | null>(null);
@@ -137,6 +140,7 @@ function ScopedCreateOrder({
       !api.deployment ||
       wallet.session.chainId !== 84532 ||
       busy ||
+      pending ||
       inFlight.current
     )
       return;
@@ -169,7 +173,7 @@ function ScopedCreateOrder({
       setTerms(null);
       setTx((old) => ({
         phase: "error",
-        hash: old.hash,
+        hash: (e as { hash?: Hash }).hash ?? old.hash,
         message: friendlyError(e),
       }));
     } finally {
@@ -250,8 +254,8 @@ function ScopedCreateOrder({
               <span>test USDC</span>
             </div>
             <p className="field-help">
-              Platform fee: 0 USDC. Each person also pays test ETH for their
-              wallet transactions.
+              Platform fee: 0 USDC. Wallet transactions may also require test
+              ETH for gas.
             </p>
             <div className="panel-heading sub">
               <span className="step-number">02</span>
@@ -394,7 +398,10 @@ function ScopedCreateOrder({
             className="button"
             onClick={() => void create()}
             disabled={
-              !api.deployment || wallet.session?.chainId !== 84532 || busy
+              !api.deployment ||
+              wallet.session?.chainId !== 84532 ||
+              busy ||
+              pending
             }
           >
             {busy

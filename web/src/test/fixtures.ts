@@ -81,6 +81,7 @@ export function api(overrides: Partial<PaymentGateway> = {}): PaymentGateway {
   return {
     deployment: { operator, block: 1n },
     verify: vi.fn(async () => {}),
+    resumePending: vi.fn(async () => undefined),
     loadOrder: vi.fn(async () => snapshot()),
     listOrders: vi.fn(async () => ({ items: [], through: 500n })),
     activity: vi.fn(async () => ({ items: [], through: 500n })),

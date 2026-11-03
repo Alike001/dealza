@@ -26,6 +26,7 @@ import {
 // Every RPC and wallet method is stubbed. These tests cannot execute transactions.
 const rpc = vi.hoisted(() => ({
   request: vi.fn(),
+  getTransactionReceipt: vi.fn(),
   getChainId: vi.fn(),
   getCode: vi.fn(),
   readContract: vi.fn(),
@@ -39,7 +40,34 @@ const rpc = vi.hoisted(() => ({
 const wallet = vi.hoisted(() => ({ writeContract: vi.fn() }));
 vi.mock("viem", async (original) => ({
   ...(await original<typeof import("viem")>()),
-  createPublicClient: () => rpc,
+  createPublicClient: () => ({
+    ...rpc,
+    getTransaction: async (args: { hash: typeof hash }) => ({
+      hash: args.hash,
+      chainId: 84532,
+      blockHash: hash,
+      blockNumber: 500n,
+      ...(await rpc.getTransaction(args)),
+    }),
+    waitForTransactionReceipt: async (args: unknown) => {
+      const r = await rpc.waitForTransactionReceipt(args);
+      lastReceipt = {
+        blockHash: hash,
+        transactionIndex: 0,
+        ...r,
+        logs: r.logs.map((l: object, index: number) => ({
+          blockHash: r.blockHash ?? hash,
+          blockNumber: r.blockNumber,
+          transactionHash: r.transactionHash,
+          transactionIndex: 0,
+          logIndex: index,
+          removed: false,
+          ...l,
+        })),
+      };
+      return lastReceipt;
+    },
+  }),
   createWalletClient: () => wallet,
 }));
 vi.mock("../lib/config", async (original) => {
@@ -88,6 +116,7 @@ const expectedData = encodeFunctionData({
   ],
 });
 const replacementHash = keccak256("0x1234");
+let lastReceipt: TransactionReceipt;
 let order = snapshot().order;
 function creationLog(
   overrides: Partial<{
@@ -142,6 +171,7 @@ beforeEach(() => {
   vi.resetAllMocks();
   order = snapshot().order;
   order.status = 1;
+  rpc.getTransactionReceipt.mockImplementation(async () => lastReceipt);
   rpc.request.mockResolvedValue([]);
   rpc.getChainId.mockResolvedValue(84532);
   rpc.getCode.mockImplementation(async ({ address }) =>
@@ -151,8 +181,13 @@ beforeEach(() => {
         ? "0x02"
         : "0x03",
   );
-  rpc.getBlock.mockResolvedValue({ number: 500n, timestamp: 1500n });
-  rpc.getBlockNumber.mockResolvedValue(500n);
+  rpc.getBlock.mockResolvedValue({
+    number: 500n,
+    timestamp: 1500n,
+    hash,
+    transactions: [hash, replacementHash],
+  });
+  rpc.getBlockNumber.mockResolvedValue(501n);
   rpc.getBalance.mockResolvedValue(1_000_000n);
   rpc.simulateContract.mockResolvedValue({});
   wallet.writeContract.mockResolvedValue(hash);
@@ -229,7 +264,9 @@ describe("create-order chain confirmation", () => {
     const update = vi.fn();
     await expect(
       chainGateway.create(terms, session(seller), update),
-    ).rejects.toThrow(/different transaction|could not be verified/);
+    ).rejects.toThrow(
+      /different transaction|could not be verified|upgrade|identity/,
+    );
     expect(update.mock.calls.some(([s]) => s.phase === "confirmed")).toBe(
       false,
     );
@@ -361,7 +398,7 @@ describe("wallet-managed order execution", () => {
     const update = vi.fn();
     await expect(
       chainGateway.create(terms, session(seller), update),
-    ).rejects.toThrow("account delegation change");
+    ).rejects.toThrow(/account upgrade|delegation change/);
     expect(update.mock.calls.some(([s]) => s.phase === "confirmed")).toBe(
       false,
     );
@@ -439,17 +476,19 @@ describe("wallet-managed order execution", () => {
       await expect(
         chainGateway.create(terms, session(seller), update),
       ).rejects.toThrow("reverted");
-      expect(rpc.getTransaction).not.toHaveBeenCalled();
+      expect(rpc.getTransaction).toHaveBeenCalled();
       expect(update.mock.calls.some(([s]) => s.phase === "confirmed")).toBe(
         false,
       );
     },
   );
-  it("does not apply creation's event proof exception to payment actions", async () => {
+  it("does not accept creation events as proof of cancellation", async () => {
     relay();
     await expect(
       chainGateway.act("cancel", id, session(seller), vi.fn()),
-    ).rejects.toThrow("different transaction");
+    ).rejects.toThrow(
+      /action events|creation|order terms|post-state|resulting order status/,
+    );
   });
   it.each([false, true])(
     "uses ordinary wallet RPC without capabilities or authorization requests (namespace fallback: %s)",

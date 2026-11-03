@@ -28,6 +28,11 @@ export type Page<T> = {
 export interface PaymentGateway {
   deployment: Deployment | null;
   verify(): Promise<void>;
+  resumePending(
+    session: Session,
+    update: (state: TxState) => void,
+    hash?: Hash,
+  ): Promise<Hash | undefined>;
   loadOrder(id: Hash): Promise<OrderSnapshot>;
   listOrders(
     account: Address,
@@ -59,6 +64,8 @@ const implementation = () => import("./chainGateway");
 export const gateway: PaymentGateway = {
   deployment: deploymentConfig,
   verify: async () => (await implementation()).chainGateway.verify(),
+  resumePending: async (...args) =>
+    (await implementation()).chainGateway.resumePending(...args),
   loadOrder: async (...args) =>
     (await implementation()).chainGateway.loadOrder(...args),
   listOrders: async (...args) =>

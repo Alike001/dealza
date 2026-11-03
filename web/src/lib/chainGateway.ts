@@ -1,3 +1,22 @@
+import {
+  verifyCanonicalReceipt,
+  verifyActionEffects,
+  verifyCreationEffects,
+  equal,
+  expectedEvents,
+} from "./receiptProof";
+import {
+  beginIntent,
+  pendingKey,
+  saveIntent,
+  trackHash,
+  clearIntent,
+  pendingIntent,
+  savedCreation,
+  rememberCreation,
+  SubmittedTransactionError,
+  type Intent,
+} from "./pendingTransaction";
 import { createLogReader, historyRange, checkAbort } from "./eventLogs";
 import {
   createPublicClient,
@@ -64,13 +83,13 @@ function requiredDeployment() {
     );
   return deploymentConfig;
 }
-async function verify() {
+async function verify(blockNumber?: bigint) {
   const d = requiredDeployment();
   if ((await client.getChainId()) !== 84532)
     throw new Error("The read connection is not on Base Sepolia.");
   const codes = await Promise.all(
     [d.operator, network.escrow, network.collector].map((address) =>
-      client.getCode({ address }),
+      client.getCode({ address, blockNumber }),
     ),
   );
   if (
@@ -87,26 +106,31 @@ async function verify() {
   const [escrow, collector, usdc, chainId, boundEscrow] = await Promise.all([
     client.readContract({
       address: d.operator,
+      blockNumber,
       abi: operatorAbi,
       functionName: "ESCROW",
     }),
     client.readContract({
       address: d.operator,
+      blockNumber,
       abi: operatorAbi,
       functionName: "COLLECTOR",
     }),
     client.readContract({
       address: d.operator,
+      blockNumber,
       abi: operatorAbi,
       functionName: "USDC",
     }),
     client.readContract({
       address: d.operator,
+      blockNumber,
       abi: operatorAbi,
       functionName: "CHAIN_ID",
     }),
     client.readContract({
       address: network.collector,
+      blockNumber,
       abi: collectorAbi,
       functionName: "authCaptureEscrow",
     }),
@@ -122,12 +146,16 @@ async function verify() {
       "The operator configuration does not match this application.",
     );
 }
-async function loadOrder(id: Hash, minimumBlock = 0n): Promise<OrderSnapshot> {
-  await verify();
+async function loadOrder(
+  id: Hash,
+  minimumBlock = 0n,
+  exactBlock?: bigint,
+): Promise<OrderSnapshot> {
+  await verify(exactBlock);
   const d = requiredDeployment();
   const head = await client.getBlockNumber({ cacheTime: 0 });
   const block = await client.getBlock({
-    blockNumber: head < minimumBlock ? minimumBlock : head,
+    blockNumber: exactBlock ?? (head < minimumBlock ? minimumBlock : head),
   });
   const params = {
     address: d.operator,
@@ -234,79 +262,283 @@ async function loadOrder(id: Hash, minimumBlock = 0n): Promise<OrderSnapshot> {
   financialStatus(snapshot);
   return snapshot;
 }
+const activeSubmissions = new Set<string>();
+const proofNetwork = () => ({
+  operator: requiredDeployment().operator,
+  escrow: network.escrow,
+  collector: network.collector,
+  usdc: network.usdc,
+});
+class NoActionError extends Error {
+  readonly name = "NoActionError";
+}
+async function checkTerminal(receipt: TransactionReceipt, intent: Intent) {
+  if (receipt.status !== "reverted" && !intent.cancelled) return;
+  await verifyCanonicalReceipt(client, receipt, {
+    requireSuccess: false,
+    requireAction: false,
+  });
+  if (receipt.status === "reverted") {
+    clearIntent(intent);
+    throw new NoActionError(
+      "The transaction is canonically reverted. No action was completed. Refresh the order before making a new request.",
+    );
+  }
+  const full = await client.getTransaction({ hash: receipt.transactionHash });
+  if (
+    full.input === "0x" &&
+    full.value === 0n &&
+    sameAddress(full.to ?? "", full.from) &&
+    expectedEvents(receipt, proofNetwork()).length === 0
+  ) {
+    clearIntent(intent);
+    throw new NoActionError(
+      "Your wallet confirmed a cancellation transaction. No requested action was completed. Refresh before submitting a new request.",
+    );
+  }
+  throw Error(
+    "A cancellation transaction was reported but its receipt requires review. Keep both transaction hashes and do not submit again.",
+  );
+}
+function rejectedByUser(error: unknown): boolean {
+  let e = error as { code?: number; name?: string; cause?: unknown };
+  const seen = new Set<unknown>();
+  while (e && !seen.has(e)) {
+    seen.add(e);
+    if (e.code === 4001 || e.name === "UserRejectedRequestError") return true;
+    e = e.cause as typeof e;
+  }
+  return false;
+}
+async function verifyIntent(
+  receipt: TransactionReceipt,
+  intent: Intent,
+): Promise<Hash | undefined> {
+  if (!intent.hash || !equal(receipt.transactionHash, intent.hash))
+    throw Error(
+      "Receipt hash does not match the saved submission or its replacement.",
+    );
+  await checkTerminal(receipt, intent);
+  const outer = await verifyCanonicalReceipt(client, receipt);
+  if (
+    sameAddress(outer.to ?? "", intent.target) &&
+    (!sameAddress(outer.from, intent.actor) || outer.input !== intent.data)
+  )
+    throw Error(
+      "Your wallet confirmed a different transaction at the expected target. Check its receipt before submitting again.",
+    );
+  await verify(receipt.blockNumber);
+  if (intent.cancelled)
+    throw Error(
+      "Your wallet confirmed a cancellation transaction. This action was not completed. Inspect its receipt.",
+    );
+  let created: Hash | undefined;
+  if (intent.action === "create") {
+    if (!intent.terms) throw Error("Missing saved creation terms");
+    const event = verifyCreationEffects(
+      receipt,
+      proofNetwork(),
+      intent.actor,
+      intent.terms,
+    );
+    const state = await loadOrder(
+      event.id,
+      receipt.blockNumber,
+      receipt.blockNumber,
+    );
+    if (
+      !equal(state.order.payment, event.payment) ||
+      state.order.paymentHash !== event.paymentHash ||
+      !equal(state.order.reviewer, intent.terms.reviewer) ||
+      state.order.descriptionHash !==
+        descriptionHash(intent.terms.description) ||
+      state.order.status !== 1 ||
+      state.collected ||
+      state.held !== 0n ||
+      state.captured !== 0n
+    )
+      throw Error("Confirmed order terms do not match your request.");
+    created = event.id;
+  } else {
+    if (!intent.before) throw Error("Missing saved order context");
+    const after = await loadOrder(
+      intent.before.id,
+      receipt.blockNumber,
+      receipt.blockNumber,
+    );
+    verifyActionEffects({
+      action: intent.action,
+      actor: intent.actor,
+      before: intent.before,
+      after,
+      proof: intent.proof,
+      receipt,
+      network: proofNetwork(),
+    });
+  }
+  if (
+    (await client.getBlock({ blockNumber: receipt.blockNumber })).hash !==
+    receipt.blockHash
+  )
+    throw Error(
+      "Canonical block changed during verification. Recheck the saved transaction.",
+    );
+  if (created) rememberCreation(intent, created);
+  clearIntent(intent);
+  return created;
+}
 async function send(
   call: ContractCall,
   session: Session,
   update: (state: TxState) => void,
-  verifyResult?: (receipt: TransactionReceipt) => Promise<void>,
+  intent: Intent,
 ): Promise<TransactionReceipt> {
+  beginIntent(intent); // Durable before opening the wallet; refresh cannot start a second request.
+  const key = pendingKey(intent.actor, intent.operator);
+  activeSubmissions.add(key);
   const wallet = createWalletClient({
     chain,
     account: session.account,
     transport: custom(session.provider as EIP1193Provider),
   });
-  const expectedData = encodeFunctionData(call);
-  let cancelled = false;
-  return confirmTransaction(
-    {
-      check: async () => {
-        await assertSession(session);
-        await verify();
+  let submitted = false,
+    walletOpened = false;
+  try {
+    return await confirmTransaction(
+      {
+        check: async () => {
+          await assertSession(session);
+          await verify();
+        },
+        simulate: async () => {
+          await client.simulateContract({ ...call, account: session.account });
+        },
+        send: async () => {
+          walletOpened = true;
+          try {
+            const hash = await wallet.writeContract({
+              ...call,
+              account: session.account,
+              chain,
+            });
+            submitted = true;
+            trackHash(intent, hash);
+            return hash;
+          } catch (e) {
+            if (rejectedByUser(e)) clearIntent(intent);
+            throw e;
+          }
+        },
+        wait: async (hash, replaced) => {
+          const receipt = await client.waitForTransactionReceipt({
+            hash,
+            confirmations: 2,
+            timeout: 180000,
+            onReplaced: (r) => {
+              trackHash(intent, r.transaction.hash);
+              intent.cancelled ||= r.reason === "cancelled";
+              saveIntent(intent);
+              replaced(r.transaction.hash, r.reason);
+            },
+          });
+          if (!equal(receipt.transactionHash, intent.hash))
+            throw Error(
+              "Receipt hash does not match the submitted or reported replacement transaction.",
+            );
+          await checkTerminal(receipt, intent);
+          return receipt;
+        },
+        verify: async (receipt) => {
+          await verifyIntent(receipt, intent);
+        },
       },
-      simulate: async () => {
-        await client.simulateContract({ ...call, account: session.account });
-      },
-      send: async () =>
-        wallet.writeContract({ ...call, account: session.account, chain }),
-      wait: (hash, replaced) =>
-        client.waitForTransactionReceipt({
-          hash,
-          confirmations: 2,
-          timeout: 180_000,
-          onReplaced: (replacement) => {
-            cancelled ||= replacement.reason === "cancelled";
-            replaced(replacement.transaction.hash, replacement.reason);
-          },
-        }),
-      verify: async (receipt) => {
-        const tx = await client.getTransaction({
-          hash: receipt.transactionHash,
+      update,
+    );
+  } catch (e) {
+    if (e instanceof NoActionError)
+      throw new SubmittedTransactionError(e.message, intent.hash);
+    if (!walletOpened) clearIntent(intent);
+    if (
+      walletOpened &&
+      (submitted || pendingIntent(intent.actor, intent.operator))
+    )
+      throw new SubmittedTransactionError(
+        `${submitted ? "The submitted action is not verified." : "The wallet did not return a usable hash; submission status is unknown."} Recheck the saved transaction; do not submit again. ${String((e as Error).message || e).split("\n")[0]}`,
+        intent.hash,
+      );
+    throw e;
+  } finally {
+    activeSubmissions.delete(key);
+  }
+}
+async function resumePending(
+  session: Session,
+  update: (state: TxState) => void,
+  suppliedHash?: Hash,
+): Promise<Hash | undefined> {
+  await assertSession(session);
+  if (
+    activeSubmissions.has(
+      pendingKey(session.account, requiredDeployment().operator),
+    )
+  )
+    throw Error(
+      "This page is still processing the original wallet request. Wait for its result before rechecking.",
+    );
+  const intent = pendingIntent(session.account, requiredDeployment().operator);
+  if (!intent) throw Error("No unresolved transaction for this wallet.");
+  if (suppliedHash) {
+    if (!/^0x[0-9a-f]{64}$/i.test(suppliedHash))
+      throw Error("Enter a complete transaction hash.");
+    trackHash(intent, suppliedHash);
+  }
+  if (!intent.hash)
+    throw Error(
+      "The wallet did not return a hash. Find the submitted transaction in your wallet and paste its hash. Do not submit again.",
+    );
+  update({
+    phase: "pending",
+    hash: intent.hash,
+    message:
+      "Rechecking the saved transaction. No signature or payment is requested…",
+  });
+  try {
+    const receipt = await client.waitForTransactionReceipt({
+      hash: intent.hash,
+      confirmations: 2,
+      timeout: 180000,
+      onReplaced: (r) => {
+        trackHash(intent, r.transaction.hash);
+        intent.cancelled ||= r.reason === "cancelled";
+        saveIntent(intent);
+        update({
+          phase: "pending",
+          hash: intent.hash,
+          message: "Rechecking the replacement transaction…",
         });
-        if (cancelled)
-          throw new Error(
-            "Your wallet confirmed a cancellation transaction. This action was not completed. Check existing orders before retrying.",
-          );
-        const directCall =
-          sameAddress(tx.to ?? "", call.address) &&
-          sameAddress(tx.from, session.account) &&
-          tx.input === expectedData &&
-          tx.value === 0n;
-        // MetaMask may return a relayer's transaction hash for eth_sendTransaction.
-        // Its outer sender/calldata differ, even though the seller executed our call.
-        // Only creation has an exact event + read-back proof. Other actions still
-        // require direct transaction identity; a wrapper alone proves nothing.
-        const canVerifyInnerCreation =
-          !!verifyResult &&
-          !!tx.to &&
-          !sameAddress(tx.to, call.address) &&
-          tx.input !== "0x" &&
-          tx.value === 0n;
-        if (!directCall && !canVerifyInnerCreation) {
-          const authorizationChange =
-            "authorizationList" in tx &&
-            tx.authorizationList?.length &&
-            tx.input === "0x";
-          throw new Error(
-            authorizationChange
-              ? "Your wallet confirmed an account delegation change, not this action. Your draft is kept. Check existing orders before retrying."
-              : "Your wallet confirmed a different transaction. The requested action was not confirmed. Check existing orders before trying again.",
-          );
-        }
-        await verifyResult?.(receipt);
       },
-    },
-    update,
-  );
+    });
+    if (!equal(receipt.transactionHash, intent.hash))
+      throw Error(
+        "Receipt hash does not match the saved submission or reported replacement.",
+      );
+    await checkTerminal(receipt, intent);
+    const id = await verifyIntent(receipt, intent);
+    update({
+      phase: "confirmed",
+      hash: receipt.transactionHash,
+      message: "The saved transaction and its onchain effects are verified.",
+    });
+    return id;
+  } catch (e) {
+    if (e instanceof NoActionError)
+      throw new SubmittedTransactionError(e.message, intent.hash);
+    throw new SubmittedTransactionError(
+      "The saved action remains unverified. Inspect its receipt and retry this read-only check; do not submit again. " +
+        String((e as Error).message || e).split("\n")[0],
+      intent.hash,
+    );
+  }
 }
 async function act(
   action: Action,
@@ -383,8 +615,18 @@ async function act(
       functionName: action === "sync" ? "syncRecovery" : action,
       args: [id],
     };
-  const receipt = await send(call, session, update);
-  await loadOrder(id, receipt.blockNumber);
+  const receipt = await send(call, session, update, {
+    version: 1,
+    actor: session.account,
+    operator: d.operator,
+    target: call.address,
+    data: encodeFunctionData(call),
+    action,
+    before: s,
+    proof,
+  });
+  // Receipt-block state is already verified; current UI reads may fail independently.
+  void receipt;
 }
 async function create(
   terms: CreateTerms,
@@ -404,91 +646,58 @@ async function create(
     throw new Error(
       "Check the order addresses and deadlines against current chain time.",
     );
-  let orderId: Hash | undefined;
-  await send(
-    {
-      address: d.operator,
-      abi: operatorAbi,
-      functionName: "createOrder",
-      args: [
-        terms.buyer,
-        terms.amount,
-        terms.fundingCutoff,
-        terms.expiry,
-        terms.reviewer,
-        descriptionHash(terms.description),
-      ],
-    },
-    session,
-    update,
-    async (receipt) => {
-      const matches = [];
-      let sawOrderEvent = false;
-      for (const log of receipt.logs) {
-        if (!sameAddress(log.address, d.operator)) continue;
-        let decoded;
-        try {
-          decoded = decodeEventLog({
-            abi: operatorAbi,
-            topics: log.topics,
-            data: log.data,
-            strict: true,
-          });
-        } catch {
-          continue;
-        }
-        if (decoded.eventName !== "OrderCreated") continue;
-        sawOrderEvent = true;
-        const a = decoded.args;
-        const p = a.payment;
-        if (
-          !sameAddress(a.seller, session.account) ||
-          !sameAddress(a.buyer, terms.buyer) ||
-          !sameAddress(a.reviewer, terms.reviewer) ||
-          a.descriptionHash !== descriptionHash(terms.description) ||
-          !sameAddress(p.operator, d.operator) ||
-          !sameAddress(p.payer, terms.buyer) ||
-          !sameAddress(p.receiver, session.account) ||
-          !sameAddress(p.token, network.usdc) ||
-          p.maxAmount !== terms.amount ||
-          p.preApprovalExpiry !== terms.fundingCutoff ||
-          p.authorizationExpiry !== terms.expiry ||
-          p.refundExpiry !== terms.expiry ||
-          p.minFeeBps !== 0 ||
-          p.maxFeeBps !== 0 ||
-          !/^0x0{40}$/i.test(p.feeReceiver) ||
-          p.salt !== BigInt(a.orderId)
-        )
-          continue;
-        matches.push(a);
-      }
-      if (matches.length !== 1)
-        throw new Error(
-          matches.length > 1
-            ? "Multiple matching orders were confirmed. Open My orders to inspect them; do not create another order."
-            : sawOrderEvent
-              ? "Confirmed order terms do not match your request. Check existing orders before retrying."
-              : "Transaction confirmed but the new order could not be verified. Inspect the receipt and My orders before trying again.",
-        );
-      const event = matches[0];
-      const s = await loadOrder(event.orderId, receipt.blockNumber);
-      if (
-        !sameAddress(s.order.reviewer, event.reviewer) ||
-        s.order.descriptionHash !== event.descriptionHash ||
-        s.order.paymentHash !== event.paymentHash ||
-        Object.entries(event.payment).some(
-          ([key, value]) =>
-            String(value).toLowerCase() !==
-            String(
-              s.order.payment[key as keyof typeof event.payment],
-            ).toLowerCase(),
-        )
-      )
-        throw new Error("Confirmed order terms do not match your request.");
-      orderId = event.orderId;
-    },
-  );
-  return orderId!;
+  const call: ContractCall = {
+    address: d.operator,
+    abi: operatorAbi,
+    functionName: "createOrder",
+    args: [
+      terms.buyer,
+      terms.amount,
+      terms.fundingCutoff,
+      terms.expiry,
+      terms.reviewer,
+      descriptionHash(terms.description),
+    ],
+  };
+  const data = encodeFunctionData(call);
+  const prior = savedCreation(session.account, d.operator, data);
+  if (prior) {
+    const existing = await loadOrder(prior);
+    if (
+      !sameAddress(existing.order.payment.receiver, session.account) ||
+      !sameAddress(existing.order.payment.payer, terms.buyer) ||
+      !sameAddress(existing.order.reviewer, terms.reviewer) ||
+      existing.order.payment.maxAmount !== terms.amount ||
+      existing.order.payment.preApprovalExpiry !== terms.fundingCutoff ||
+      existing.order.payment.authorizationExpiry !== terms.expiry ||
+      existing.order.descriptionHash !== descriptionHash(terms.description)
+    )
+      throw Error(
+        "Saved creation terms do not match the chain. Check existing orders before submitting again.",
+      );
+    update({
+      phase: "confirmed",
+      message:
+        "These exact terms were already created. Opening the verified order.",
+    });
+    return prior;
+  }
+  await send(call, session, update, {
+    version: 1,
+    actor: session.account,
+    operator: d.operator,
+    target: d.operator,
+    data,
+    action: "create",
+    terms,
+    proof: descriptionHash(terms.description),
+  });
+  const id = savedCreation(session.account, d.operator, data);
+  if (!id)
+    throw Error(
+      "Verified creation result could not be restored. Check existing orders before retrying.",
+    );
+  return id;
 }
 // Log retries belong to the bounded reader, not nested transport retries.
 const logClient = createPublicClient({
@@ -628,6 +837,7 @@ async function activity(
 export const chainGateway: PaymentGateway = {
   deployment: deploymentConfig,
   verify,
+  resumePending,
   loadOrder,
   listOrders,
   activity,

@@ -243,11 +243,17 @@ export function allowedActions(s: OrderSnapshot, actor?: Address): Action[] {
 }
 export function friendlyError(error: unknown): string {
   const e = error as {
+    hash?: Hash;
     code?: number;
     name?: string;
     message?: string;
     cause?: unknown;
   };
+  if (e?.name === "SubmittedTransactionError")
+    return (
+      e.message?.slice(0, 500) ||
+      "Recheck the saved transaction before submitting again."
+    );
   if (e?.code === 4001 || /rejected|denied|cancelled/i.test(e?.message || ""))
     return "You declined the wallet request. Nothing was confirmed. You can try again.";
   if (/insufficient funds|exceeds.*balance/i.test(e?.message || ""))

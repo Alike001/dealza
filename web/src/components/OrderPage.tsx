@@ -1,3 +1,4 @@
+import { usePendingRequest } from "../lib/usePendingRequest";
 import { useHistory } from "../lib/useHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Hash } from "viem";
@@ -67,6 +68,10 @@ export function OrderPage({
   api: PaymentGateway;
 }) {
   const wallet = useWallet();
+  const pending = usePendingRequest(wallet.session, api.deployment?.operator);
+  const scope = `${id}:${wallet.session?.account}:${wallet.session?.chainId}`;
+  const activeScope = useRef(scope);
+  activeScope.current = scope;
   const [snapshot, setSnapshot] = useState<OrderSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -151,6 +156,7 @@ export function OrderPage({
   useEffect(() => {
     setAcknowledged(false);
     setProposed(null);
+    setTx(idleTx);
   }, [wallet.session?.account, wallet.session?.chainId]);
   const execute = async () => {
     const action = proposed;
@@ -160,17 +166,23 @@ export function OrderPage({
       !snapshot ||
       !acknowledged ||
       busy ||
+      pending ||
       inFlight.current
     )
       return;
     inFlight.current = true;
+    const submittedScope = activeScope.current;
+    const safeUpdate = (state: TxState) => {
+      if (activeScope.current === submittedScope) setTx(state);
+    };
     setTx({
       phase: "checking",
       message: "Checking your wallet and the latest payment state…",
     });
     setProposed(null);
     try {
-      await api.act(action, id, wallet.session, setTx, evidence);
+      await api.act(action, id, wallet.session, safeUpdate, evidence);
+      if (activeScope.current !== submittedScope) return;
       await refresh();
       refreshHistory();
       setTx((old) => ({
@@ -180,10 +192,11 @@ export function OrderPage({
       }));
       setEvidence("");
     } catch (e) {
+      if (activeScope.current !== submittedScope) return;
       setTx((old) => ({
         phase: "error",
         message: friendlyError(e),
-        hash: old.hash,
+        hash: (e as { hash?: Hash }).hash ?? old.hash,
       }));
       await refresh();
     } finally {
@@ -601,6 +614,7 @@ export function OrderPage({
                             className={`button ${["revoke", "cancel", "dispute", "delivery", "sync"].includes(action) ? "secondary" : ""}`}
                             disabled={
                               !acknowledged ||
+                              pending ||
                               busy ||
                               loading ||
                               wallet.session?.chainId !== 84532 ||
@@ -649,6 +663,7 @@ export function OrderPage({
                           className="button"
                           disabled={
                             !acknowledged ||
+                            pending ||
                             busy ||
                             wallet.session?.chainId !== 84532
                           }
