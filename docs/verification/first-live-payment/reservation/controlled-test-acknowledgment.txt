@@ -1,0 +1,1 @@
+Dealza controlled test delivery acknowledgment; Base Sepolia chain 84532; order 0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f; reservation 0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08; no physical delivery asserted; no payment release authorized.

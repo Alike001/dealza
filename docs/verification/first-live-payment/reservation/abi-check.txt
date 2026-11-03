@@ -1,0 +1,5 @@
+
+> abi:check
+> node web/scripts/sync-abi.mjs --check
+
+Contract source / ABI provenance: PASS

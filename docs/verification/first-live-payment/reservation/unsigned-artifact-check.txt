@@ -1,0 +1,1 @@
+PASS: unsigned transaction decodes to exact noteDelivery; acknowledgment bytes/hash, chain, seller, target, zero value, evidence and all simulation gates agree.

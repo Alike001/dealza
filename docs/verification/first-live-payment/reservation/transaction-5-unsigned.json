@@ -1,0 +1,31 @@
+{
+  "transaction": {
+    "chainId": "0x14a34",
+    "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "data": "0x685839b8610384701397935f144496cca9496417e029c7d9089f019993da4373a618769fe81e15ba659740bcf8626122f97a3abec2c73ea4833c149f2ff47bc5210dbe82"
+  },
+  "function": "noteDelivery",
+  "signature": "noteDelivery(bytes32,bytes32)",
+  "arguments": [
+    "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+    "0xe81e15ba659740bcf8626122f97a3abec2c73ea4833c149f2ff47bc5210dbe82"
+  ],
+  "acknowledgment": "Dealza controlled test delivery acknowledgment; Base Sepolia chain 84532; order 0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f; reservation 0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08; no physical delivery asserted; no payment release authorized.",
+  "evidenceHash": "0xe81e15ba659740bcf8626122f97a3abec2c73ea4833c149f2ff47bc5210dbe82",
+  "estimatedGas": "31273",
+  "gasPriceWei": "6000000",
+  "estimatedExecutionCostWei": "187638000000",
+  "sellerEthWei": "49812291697244",
+  "gasCaveat": "Refresh gas and Base L1 data fee in MetaMask. This is an estimate, not a fixed gas limit or nonce.",
+  "restriction": "Transaction 5 only: controlled test acknowledgment. No physical delivery asserted and no USDC release authorized.",
+  "routedSelfExecutionTransaction": {
+    "chainId": "0x14a34",
+    "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "to": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "value": "0x0",
+    "data": "0xe9ae5c53000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000078d798Ec27019Bba2E6411986A2D58ff3D50F8C9c80000000000000000000000000000000000000000000000000000000000000000685839b8610384701397935f144496cca9496417e029c7d9089f019993da4373a618769fe81e15ba659740bcf8626122f97a3abec2c73ea4833c149f2ff47bc5210dbe820000000000000000"
+  },
+  "routedSelfExecutionGas": "36617"
+}
