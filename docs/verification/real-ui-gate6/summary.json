@@ -1,0 +1,115 @@
+{
+  "result": "PASS_COMPLETE_SIX_GATE_REAL_UI_CHECKOUT",
+  "snapshot": {
+    "number": "54009238",
+    "hash": "0x7be17fb25cd51e5a76981699b28d73cfa04f002db8725ffd519fe904bd61eeb3",
+    "utc": "2026-11-03T16:35:16.000Z"
+  },
+  "orderId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+  "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+  "gates": [
+    {
+      "gate": 1,
+      "action": "Seller creates order",
+      "transactionHash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+      "block": "53938394",
+      "effect": "OrderCreated; exact immutable terms. Buyer 20 / seller 1 / custody 0."
+    },
+    {
+      "gate": 2,
+      "action": "Buyer exact allowance",
+      "transactionHash": "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+      "block": "53979603",
+      "effect": "USDC Approval(owner=buyer, spender=collector, value=1000000). No Transfer."
+    },
+    {
+      "gate": 3,
+      "action": "Buyer terms authorization",
+      "transactionHash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+      "block": "53987356",
+      "effect": "Collector PaymentPreApproved(exact payment hash). No Transfer."
+    },
+    {
+      "gate": 4,
+      "action": "Buyer reservation",
+      "transactionHash": "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+      "block": "53991659",
+      "effect": "PaymentAuthorized + Transfer(buyer,TokenStore,1000000) + OrderFunded. Buyer 20 \u2192 19; custody 0 \u2192 1; allowance 1 \u2192 0."
+    },
+    {
+      "gate": 5,
+      "action": "Seller controlled acknowledgment",
+      "transactionHash": "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+      "block": "54002282",
+      "effect": "DeliveryNoted(exact order/evidence). Buyer 19 / seller 1 / custody 1, unchanged; Reserved."
+    },
+    {
+      "gate": 6,
+      "action": "Buyer release",
+      "transactionHash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+      "block": "54007444",
+      "effect": "PaymentCaptured(fee=0) + Transfer(TokenStore,seller,1000000) + OrderReleased(authorizedBy=buyer). Seller 1 \u2192 2; custody 1 \u2192 0; Released."
+    }
+  ],
+  "finalState": {
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 4
+    },
+    "status": 4,
+    "paymentState": [
+      true,
+      "0",
+      "1000000"
+    ],
+    "allowance": "0",
+    "balances": {
+      "buyer": "19000000",
+      "seller": "2000000",
+      "store": "0",
+      "operator": "0",
+      "collector": "0",
+      "escrow": "0"
+    },
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a"
+  },
+  "duplicateRelease": [
+    {
+      "error": "InvalidState",
+      "passed": true
+    },
+    {
+      "error": "InvalidState",
+      "passed": true
+    }
+  ],
+  "frontendFixCommit": "7ac9d4f",
+  "tests": {
+    "frontend": 226,
+    "contracts": 46,
+    "fork": 36,
+    "scripts": 13,
+    "build": "PASS"
+  },
+  "submissionContext": "User-reported actual Dealza frontend and MetaMask submission; independently checked canonical onchain outcomes and production frontend reconciliation. No physical delivery.",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "pushPerformed": false,
+  "deploymentPerformed": false
+}

@@ -1,0 +1,1 @@
+PASS: exact creation/runtime/raw metadata, all 15 public sources, full Blockscout ABI, dependency pins; payment runbook unchanged

@@ -1,0 +1,104 @@
+{
+  "result": "PASS_GATE_6_SETTLED",
+  "block": {
+    "number": "54009238",
+    "hash": "0x7be17fb25cd51e5a76981699b28d73cfa04f002db8725ffd519fe904bd61eeb3",
+    "utc": "2026-11-03T16:35:16.000Z"
+  },
+  "release": {
+    "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+    "block": "54007444",
+    "type": "eip1559",
+    "events": [
+      {
+        "address": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+        "logIndex": 1,
+        "eventName": "PaymentCaptured",
+        "args": {
+          "paymentInfoHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+          "amount": "1000000",
+          "feeAmount": "0",
+          "feeReceiver": "0x0000000000000000000000000000000000000000"
+        }
+      },
+      {
+        "address": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+        "logIndex": 2,
+        "eventName": "Transfer",
+        "args": {
+          "from": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+          "to": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "value": "1000000"
+        }
+      },
+      {
+        "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+        "logIndex": 3,
+        "eventName": "OrderReleased",
+        "args": {
+          "orderId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+          "authorizedBy": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25"
+        }
+      }
+    ]
+  },
+  "current": {
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 4
+    },
+    "status": 4,
+    "paymentState": [
+      true,
+      "0",
+      "1000000"
+    ],
+    "allowance": "0",
+    "balances": {
+      "buyer": "19000000",
+      "seller": "2000000",
+      "store": "0",
+      "operator": "0",
+      "collector": "0",
+      "escrow": "0"
+    },
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a"
+  },
+  "gate2": {
+    "hash": "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+    "event": {
+      "eventName": "Approval",
+      "args": {
+        "owner": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "spender": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+        "value": "1000000"
+      }
+    }
+  },
+  "duplicateRelease": [
+    {
+      "error": "InvalidState",
+      "passed": true
+    },
+    {
+      "error": "InvalidState",
+      "passed": true
+    }
+  ]
+}

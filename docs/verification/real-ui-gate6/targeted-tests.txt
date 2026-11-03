@@ -1,0 +1,12 @@
+
+> @dealza/web@0.1.0 test
+> vitest run src/test/ui.test.tsx src/test/routedActions.test.ts src/test/transactions.test.ts src/test/pendingTransaction.test.tsx
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  4 passed (4)
+      Tests  80 passed (80)
+   Start at  17:37:33
+   Duration  37.35s (tests 69%, environment 15%, import 12%, setup 2%, transform 2%)

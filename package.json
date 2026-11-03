@@ -12,7 +12,7 @@
     "abi:check": "node web/scripts/sync-abi.mjs --check"
   },
   "engines": {
-    "node": ">=22.12"
+    "node": "24.x"
   },
   "devDependencies": {
     "prettier": "3.9.10"

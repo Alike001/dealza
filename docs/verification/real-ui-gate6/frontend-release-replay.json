@@ -1,0 +1,94 @@
+{
+  "done": true,
+  "providerCalls": [
+    "eth_accounts",
+    "eth_chainId"
+  ],
+  "updates": [
+    {
+      "phase": "pending",
+      "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+      "message": "Rechecking the saved transaction. No signature or payment is requested…"
+    },
+    {
+      "phase": "confirmed",
+      "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+      "message": "The saved transaction and its onchain effects are verified.",
+      "snapshot": {
+        "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+        "order": {
+          "payment": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793790000,
+            "authorizationExpiry": 1793962800,
+            "refundExpiry": 1793962800,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+          },
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+          "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+          "status": 4
+        },
+        "derived": 4,
+        "collected": true,
+        "held": "0",
+        "captured": "1000000",
+        "allowance": "0",
+        "preApproved": true,
+        "buyerBalance": "19000000",
+        "buyerGas": "100000000000000",
+        "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+        "storeBalance": "0",
+        "chainTime": 1793723357,
+        "block": "54007444"
+      }
+    }
+  ],
+  "pendingIntentRemaining": false,
+  "current": {
+    "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 4
+    },
+    "derived": 4,
+    "collected": true,
+    "held": "0",
+    "captured": "1000000",
+    "allowance": "0",
+    "preApproved": true,
+    "buyerBalance": "19000000",
+    "buyerGas": "100000000000000",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "storeBalance": "0",
+    "chainTime": 1793723946,
+    "block": "54010386"
+  },
+  "result": "PASS",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "realMetaMaskConnected": false
+}

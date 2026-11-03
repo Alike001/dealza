@@ -1,6 +1,6 @@
 # Fresh UI checkout — separate authorization gates
 
-**Historical preparation snapshot, superseded by [verified Gate 5 and the final Gate 6 packet](26-REAL-UI-GATE-5-AND-FINAL-RELEASE-READINESS.md). Gates 1–5 are verified; the existing fresh order is Reserved and undisputed with 1 USDC held. Gate 6 buyer release is ready, not executed by the audit. Do not recreate or fund this order again.**
+**Historical preparation snapshot, superseded by [the complete six-gate real UI checkout](27-COMPLETE-REAL-UI-CHECKOUT.md). All six gates are verified; this existing order is Released. Do not recreate, approve, fund or release it again. Public hosting is the next task.**
 
 **At the original preparation snapshot: LOCAL DRAFT ONLY. No new order exists, no allowance/preapproval was granted, and no funds were reserved or paid.** The creation button was not clicked. This packet prepares a genuine MetaMask run after separate authorization; it does not authorize signing or broadcasting.
 

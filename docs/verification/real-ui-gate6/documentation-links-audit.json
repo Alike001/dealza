@@ -1,0 +1,21 @@
+{
+  "missing": [],
+  "existingUntrackedReferences": [
+    {
+      "source": "docs/07-BASE-SEPOLIA-INTEGRATION.md",
+      "target": "docs/verification/delegation-resolution/READINESS.md"
+    },
+    {
+      "source": "docs/13-DUPLICATE-ORDER-CHECKOUT-CONTINUATION.md",
+      "target": "docs/14-BUYER-APPROVAL-AND-PREAPPROVAL.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/verification/delegation-resolution/READINESS.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/10-PUBLIC-SOURCE-VERIFICATION.md"
+    }
+  ]
+}

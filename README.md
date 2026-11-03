@@ -1,10 +1,14 @@
 # Dealza
 
+**Complete real MetaMask UI checkout verified on Base Sepolia: all six gates PASS.** Final release [`0x6408…c023`](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023): buyer **19 USDC**, seller **2 USDC**, reserve **0**, captured **1 USDC**, fee **0**, order **Released**. Controlled test; no physical delivery occurred. [Complete evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) · [Release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). **Website and GitHub publication have not been performed by this audit.**
+
 ## How to Test
 
 Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). **The first controlled live 1 test-USDC lifecycle passed independent two-RPC verification**: buyer 20 USDC, seller 1 USDC, original Released, duplicate Voided, zero reserved balance and zero platform fee. [All six transactions and settlement proof](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md).
 
 Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live buyer-release settlement is verified; frontend publication and full wallet/browser acceptance remain outstanding.
+
+Public source is now verified with exact creation/runtime matches on Sourcify and fully verified on Blockscout. [Source-verification evidence and public links](docs/10-PUBLIC-SOURCE-VERIFICATION.md). BaseScan-specific status remains unconfirmed; the prepared first-payment procedure is unchanged.
 
 ### Run the web application
 
@@ -28,7 +32,7 @@ Try these flows:
 
 These browsing and draft checks require no signatures or spending. To inspect the settled order locally, open `/#/order/0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f`. It reads **Paid to seller**, 0 reserved and 1 captured. **History now passes real Base Sepolia checks:** both orders show current Released/Voided state, and older activity links to the verified final receipt. Use **Load earlier activity** to reach older records; refreshing starts a fresh recent window. [Checkpoint 5 evidence and audit](docs/19-CHECKPOINT-5-HISTORY-AND-RELEASE-AUDIT.md). [Prioritized release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). Any new payment tests require separate transaction authorization.
 
-Fresh real-UI checkout **Gate 1 PASS**: the seller created order `0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd` through Dealza and MetaMask (user-reported), independently verified on two RPCs in [transaction 0x057a…4567](https://sepolia.basescan.org/tx/0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567). It is Pending and unfunded; the wallet-free checkout survives refresh. Buyer allowance remains zero. [Verified terms, receipt proof and next single Gate 2 approval](docs/23-REAL-UI-GATE-1-AND-BUYER-APPROVAL.md). The remaining signed buyer/seller gates and public publication are outstanding.
+Fresh real UI checkout **Gates 1–6 PASS** for order `0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd`. The buyer/seller report using the actual Dealza frontend and MetaMask; canonical receipts, exact inner routed calls, pinned events, historical/current state and balances are independently verified. The settled shared checkout survives refresh; its history exposes the genuine final transaction and the completed buyer has no release action. [Six transaction hashes, balance movements, screenshot and frontend fix](docs/27-COMPLETE-REAL-UI-CHECKOUT.md). No further payment is needed for this demonstration.
 
 ### Automated frontend verification
 
@@ -41,7 +45,7 @@ npm run preview --workspace web
 
 Production output: **`web/dist/`**. The preview command serves that output locally, normally at `http://127.0.0.1:4173`.
 
-Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. Checkpoint 6 passes **222 frontend tests**, including bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
+Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. Current verification passes **226 frontend tests**, including bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
 
 The committed frontend ABIs are generated from the existing Solidity artifacts and pinned CPP v1.1.0 ABI. Their source hashes are checked during the production build. A clean frontend build does not need generated Foundry outputs. If Solidity interfaces intentionally change, run:
 
@@ -97,7 +101,7 @@ Frontend network configuration: `web/src/lib/config.ts`. Deployment identity: `c
 
 An optional **public browser RPC** can be set as `VITE_BASE_SEPOLIA_RPC_URL` in `web/.env.local`. `VITE_` values are exposed to every browser visitor: never put a wallet key, seed phrase, secret API credential, or backend token there. The default is `https://sepolia.base.org`. History requests default to at most **200 inclusive blocks**, configured by `VITE_RPC_LOG_BLOCKS` (integer 1–200). `VITE_HISTORY_BLOCKS` controls each UI window (default 2,000, integer 1–10,000). Set smaller limits for stricter providers and rebuild. Log reads are serialized, range errors shrink the request, and transient failures have bounded retries. Recent windows remain explicitly incomplete until older pages are checked; failed pages retain their cursor for retry. The app verifies chain ID and contract code/configuration before writes; there is no mainnet execution path.
 
-## Verified first live payment and remaining acceptance
+## Verified settlements and remaining acceptance
 
 The deployed runtime, creation input, receipt, pinned protocol configuration, USDC implementation, and absence of operator admin/upgrade powers are independently checked. The frontend reads the actual address and block from the shared deployment record. Reproduce the read-only verification and isolated simulation:
 
@@ -111,9 +115,13 @@ This tool has no public send/sign mode. Its six payment transactions run only on
 
 [The completed live lifecycle](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md) records all six canonical transactions, decoded events, historical balances, buyer authorization and duplicate-release rejection. Release [`0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53`](https://base-sepolia.blockscout.com/tx/0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53) mined in block **53885645** on **2026-11-03 at 09:43:17 UTC**. CPP `PaymentCaptured`, a single TokenStore-to-seller transfer of **1,000,000 raw USDC**, and buyer-authorized `OrderReleased` prove settlement. CPP remaining refundable accounting is not retained refund liquidity.
 
-Reproduce the read-only settlement verification after `forge build`: `node web/scripts/verify-complete-payment.mjs`. [The earlier runbook](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) is historical preparation. Real history and responsive browser reads now pass. **Receipt compatibility now passes the tested routes:** all actions use strict canonical receipts, action-specific events and receipt-block state. Seven authentic mined receipts passed live read-only replay. The next gate is a separately authorized fresh checkout in genuine MetaMask; the automation browser has no extension. [Checkpoint 6 audit](docs/20-CHECKPOINT-6-RECEIPT-COMPATIBILITY.md) and [fresh-order gates](docs/21-FRESH-UI-CHECKOUT-GATES.md). Full live frontend checkout, real-wallet switching, physical mobile acceptance, funded cancellation/dispute/expiry-recovery live branches and frontend publication remain unverified; see the [current audit](docs/20-CHECKPOINT-6-RECEIPT-COMPATIBILITY.md) and [release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md).
+Reproduce the current fresh-order settlement verification without a wallet: `node web/scripts/verify-ui-gate6-settlement.mjs`. It checks two RPCs, exact events/state/balances, all seven lifecycle events, the original exact approval and duplicate-release rejection. The earlier first-payment verifier/runbooks are historical and use earlier balance assumptions. [Complete real UI checkout](docs/27-COMPLETE-REAL-UI-CHECKOUT.md).
 
-For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Publishing commands have deliberately not been run.
+The confirmation UI now applies the already-verified receipt-block snapshot immediately. Lagging RPC reads cannot roll it back; a failed refresh retains the last verified record, explains the delay, pauses actions and retries automatically. Saved receipt reconciliation also updates the visible order. No optimistic payment success or financial-contract changes were introduced.
+
+The full happy-path UI checkout is verified. Physical mobile wallets, broader wrong-network/account-switch behavior and live signed funded-cancellation/reviewer/disputed-expiry-recovery branches remain acceptance limits. Contract/fork/fixture coverage for these branches passes; it is not live UI acceptance or an independent audit. Publish as a **Base Sepolia controlled-test demo**, with these limits explicit.
+
+For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Node 24 is pinned in `.nvmrc` and the root package engine. The [public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) has exact hosting settings and public acceptance checks. Publishing commands have deliberately not been run.
 
 ## Repository and evidence
 

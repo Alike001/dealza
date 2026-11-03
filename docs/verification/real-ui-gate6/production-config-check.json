@@ -1,0 +1,83 @@
+{
+  "result": "PASS_LOCAL_PRODUCTION_CONFIGURATION",
+  "node": "24.14.1",
+  "settings": {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "npm ci",
+    "buildCommand": "npm run build",
+    "outputDirectory": "web/dist",
+    "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'"
+          }
+        ]
+      }
+    ]
+  },
+  "publicEnvironmentDefaults": {
+    "VITE_BASE_SEPOLIA_RPC_URL": "https://sepolia.base.org",
+    "VITE_RPC_LOG_BLOCKS": 200,
+    "VITE_HISTORY_BLOCKS": 2000
+  },
+  "artifact": [
+    {
+      "path": "web/dist/_headers",
+      "bytes": 380,
+      "sha256": "8eee0f17f993febb060664d8de04227a8a1f06c13f50dd5fd6b02b8fa4c21bd7"
+    },
+    {
+      "path": "web/dist/assets/ccip-DsG16fFD.js",
+      "bytes": 2883,
+      "sha256": "2764107dbb0a6edded7f16b9b126ae6c2ba88d3634e213a8f1fa2fdfd74a2360"
+    },
+    {
+      "path": "web/dist/assets/chainGateway-DQDWDw0M.js",
+      "bytes": 294518,
+      "sha256": "3f340f43e361f4399aaf1baf75b3c21e68ee79856a973226db9dc76f66dd28aa"
+    },
+    {
+      "path": "web/dist/assets/index-DKyloaOG.js",
+      "bytes": 334745,
+      "sha256": "ffc4975502d55414efdab37ae2c863b402d01656ae019cde600118315897e5cf"
+    },
+    {
+      "path": "web/dist/assets/index-DgERqosV.css",
+      "bytes": 18312,
+      "sha256": "d2079ec288915972dea5bfb6e9d3f3830cba3ef3a85e60418b4173690ea85881"
+    },
+    {
+      "path": "web/dist/assets/secp256k1-DrmcJMFl.js",
+      "bytes": 55,
+      "sha256": "8c2a3e18ecc8072e589982916bacf5ae91c74c9f5bf6738518f316a05db66360"
+    },
+    {
+      "path": "web/dist/favicon.svg",
+      "bytes": 252,
+      "sha256": "088dc5a22c5d6a99cf1f7333a75a26208818a2ee89ec59d3b83e437b967c422a"
+    },
+    {
+      "path": "web/dist/index.html",
+      "bytes": 664,
+      "sha256": "d3b00bdb835124d9bcb7cad59751307a67167064af568126d13e44570444a4b4"
+    }
+  ],
+  "limits": "Production preview reads real settled state. Host-enforced headers, public-origin CORS and external wallet behavior remain pending actual publication.",
+  "deploymentPerformed": false
+}
