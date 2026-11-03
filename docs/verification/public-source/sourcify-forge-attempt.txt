@@ -1,0 +1,17 @@
+Start verifying contract `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8` deployed on base-sepolia
+EVM version: cancun
+Compiler version: v0.8.28+commit.7893614a
+Optimizations:    100000
+
+Verifying on sourcify...
+Submitting verification for [DealzaOperator] 0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8.
+Submitted contract for verification:
+	Verification Job ID: `dcf52633-c6b0-4a2b-9907-6313185a418b`
+	URL: https://sourcify.dev/server/verify-ui/jobs/dcf52633-c6b0-4a2b-9907-6313185a418b
+dcf52633-c6b0-4a2b-9907-6313185a418b	https://sourcify.dev/server/verify-ui/jobs/dcf52633-c6b0-4a2b-9907-6313185a418b
+
+Waiting for sourcify verification result...
+Warning: Verification is still pending...; waiting 5 seconds before trying again (1 tries remaining)
+Warning: Verification is still pending...; waiting 5 seconds before trying again (0 tries remaining)
+Contract successfully verified:
+Status: `exact_match`

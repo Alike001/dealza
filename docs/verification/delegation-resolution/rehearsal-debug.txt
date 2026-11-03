@@ -1,0 +1,3 @@
+Local RPC failure: {"code": -32003, "message": "Insufficient funds for gas * price + value"}
+Failed after: ['deploy operator (no constructor arguments)']
+Error type: LocalRevert

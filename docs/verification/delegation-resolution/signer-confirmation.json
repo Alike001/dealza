@@ -1,0 +1,11 @@
+{
+  "chain_id": 84532,
+  "deployer": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+  "source": "User reply in this session on 2026-11-02",
+  "user_confirmed_manual_switch_to_standard": true,
+  "user_confirmed_available_in_metamask": true,
+  "user_selected_same_deployer_address": true,
+  "agent_performed_wallet_signing": false,
+  "agent_changed_delegation": false,
+  "scope": "Evidence for readiness only; no deployment or broadcast authorization"
+}

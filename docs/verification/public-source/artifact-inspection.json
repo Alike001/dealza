@@ -1,0 +1,150 @@
+{
+  "result": "PASS_PUBLIC_SOURCE_VERIFICATION",
+  "compiler": {
+    "version": "0.8.28+commit.7893614a"
+  },
+  "settings": {
+    "compilationTarget": {
+      "src/DealzaOperator.sol": "DealzaOperator"
+    },
+    "evmVersion": "cancun",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 100000
+    },
+    "remappings": [
+      ":@openzeppelin/contracts/=vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/",
+      ":commerce-payments/=vendor/commerce-payments/src/",
+      ":forge-std/=vendor/forge-std/src/",
+      ":openzeppelin-contracts/=vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/",
+      ":solady/=vendor/commerce-payments/lib/solady/src/"
+    ],
+    "viaIR": true
+  },
+  "explicit_metadata_settings": {
+    "useLiteralContent": false,
+    "bytecodeHash": "ipfs",
+    "appendCBOR": true
+  },
+  "source_count": 15,
+  "source_paths": [
+    "src/DealzaOperator.sol",
+    "vendor/commerce-payments/lib/solady/src/utils/LibClone.sol",
+    "vendor/commerce-payments/lib/solady/src/utils/ReentrancyGuardTransient.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/interfaces/IERC1363.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/interfaces/IERC165.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/interfaces/IERC20.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/utils/Address.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/utils/Errors.sol",
+    "vendor/commerce-payments/lib/spend-permissions/lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+    "vendor/commerce-payments/src/AuthCaptureEscrow.sol",
+    "vendor/commerce-payments/src/TokenStore.sol",
+    "vendor/commerce-payments/src/collectors/PreApprovalPaymentCollector.sol",
+    "vendor/commerce-payments/src/collectors/TokenCollector.sol"
+  ],
+  "all_source_contents_and_keccak_hashes_match": true,
+  "blockscout_full_abi_match": true,
+  "abi_comparison_note": "All complete ABI entries match, sorting only top-level entries and JSON object keys; no fields were removed.",
+  "all_77_dependency_hashes_match_lock": true,
+  "creation_runtime_and_raw_metadata_exact_match": true,
+  "runtime_bytes": 9586,
+  "creation_sha256": "45d2044b191500c9e097982f436a27cad6eb8105f72e161cd59946b854d6094a",
+  "metadata_note": "Canonical original solc metadata is rawMetadata. Foundry's separate deserialized metadata object normalizes output/settings. Sourcify returned metadata equals parsed rawMetadata.",
+  "build_info_note": "Existing build-info has id/source_id_to_path/language only, no full compiler input/output. Regenerated verification input was compiled separately with unchanged settings to prove exact equality; no artifacts or configuration were changed.",
+  "build_info": [
+    {
+      "name": "2cff76a16f597728.json",
+      "sha256": "9e978aaa59eb28986cf0ee77e91e7b35a2abf762f4dff4309ed95de0e6eb1d1a",
+      "keys": [
+        "id",
+        "source_id_to_path",
+        "language"
+      ]
+    },
+    {
+      "name": "82fc001ce5d8f358.json",
+      "sha256": "f1e944a0b1305e7113afde6b43729399b377ae2eb5751571f6ce1963493f2dde",
+      "keys": [
+        "id",
+        "source_id_to_path",
+        "language"
+      ]
+    },
+    {
+      "name": "c0f0f9e9ffa9e564.json",
+      "sha256": "8bcfbf00e7906a8a5a340078a425d60dc8636a489a2ab15f7ff9349b95e847cb",
+      "keys": [
+        "id",
+        "source_id_to_path",
+        "language"
+      ]
+    },
+    {
+      "name": "d4c067f1fe10bfb0.json",
+      "sha256": "aa05f81cac14669c29b15d1a40f3bedea796c7af7d714af1cce682749c0eb9a8",
+      "keys": [
+        "id",
+        "source_id_to_path",
+        "language"
+      ]
+    },
+    {
+      "name": "da7df32f95486d50.json",
+      "sha256": "6e300f06f655ff70897d457d8cd2b98fd4114ea557fdd6bb52853cd653bdf956",
+      "keys": [
+        "id",
+        "source_id_to_path",
+        "language"
+      ]
+    }
+  ],
+  "dependencies": {
+    "commerce_payments": {
+      "tag": "v1.1.0",
+      "commit": "6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9",
+      "repository": "https://github.com/base/commerce-payments",
+      "scope": "Minimal unmodified compilation closure for AuthCaptureEscrow and PreApprovalPaymentCollector; exact verified sources. CPP sources compared with tag."
+    },
+    "upstream_dependency_commits": {
+      "forge-std": "8ba9031ffcbe25aa0d1224d3ca263a995026e477",
+      "solady": "5ea5d9f57ed6d24a27d00934f4a3448def931415",
+      "spend-permissions": "8aae4dab686de6e7c5f42db59ef4ba0fcd84c721",
+      "openzeppelin-contracts": "1edc2ae004974ebf053f4eba26b45469937b9381"
+    }
+  },
+  "sourcify": {
+    "match": "exact_match",
+    "runtimeMatch": "exact_match",
+    "creationMatch": "exact_match",
+    "verifiedAt": "2026-11-02T22:35:54Z",
+    "deployment": {
+      "transactionHash": "0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1",
+      "blockNumber": "53676176",
+      "transactionIndex": "2",
+      "deployer": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a"
+    }
+  },
+  "blockscout": {
+    "is_verified": true,
+    "is_fully_verified": true,
+    "is_partially_verified": false,
+    "verified_at": "2026-11-02T22:36:08.971497Z",
+    "compiler_version": "v0.8.28+commit.7893614a",
+    "optimization_runs": 100000
+  },
+  "basescan": {
+    "status": "UNCONFIRMED",
+    "page_http_status": 403,
+    "keyless_api_response": "Missing/Invalid API Key",
+    "sourcify_forwarding_error": "Daily limit of 500 source code submissions reached"
+  },
+  "first_payment_runbook_unchanged": true,
+  "wallet_transactions": [],
+  "api_key_used": false
+}

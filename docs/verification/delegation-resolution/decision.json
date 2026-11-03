@@ -1,0 +1,16 @@
+{
+  "decision": "GO_FOR_SEPARATELY_AUTHORIZED_BASE_SEPOLIA_DEPLOYMENT_ONLY",
+  "chain_id": 84532,
+  "deployer": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+  "live_operator": null,
+  "live_deployment_transaction": null,
+  "manual_signer_confirmation": "signer-confirmation.json",
+  "signing_route": "standard MetaMask EOA, Foundry --browser, ordinary direct-CREATE eth_sendTransaction, no authorizationList",
+  "wallet_signing_exercised_by_agent": false,
+  "latest_read_only_snapshot": "final-refresh.json",
+  "constructor_and_prediction": "deployment.json",
+  "named_wallet_rehearsal": "rehearsal.json",
+  "fee_budgets": "local-diagnostic.json",
+  "historical_delegated_create": "historical-delegated-create.json",
+  "scope": "Readiness only. No broadcast authorization. Lifecycle transactions and publication require separate authorization."
+}

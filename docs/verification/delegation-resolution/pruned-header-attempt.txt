@@ -1,0 +1,4 @@
+Failed operation: cast eth_getBlockByNumber
+Error: Error: server returned an error response: error code 4444: pruned history unavailable: requested 23680810, earliest available 46500000
+
+NO-GO: Read-only subprocess failed

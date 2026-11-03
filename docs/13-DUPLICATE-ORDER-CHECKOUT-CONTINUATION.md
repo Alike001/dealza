@@ -1,6 +1,6 @@
 # Duplicate verification and first-payment continuation
 
-**Update: GO for Transaction 2 only — the duplicate cancellation is confirmed and the exact buyer allowance is ready for manual review. No approval has been signed or broadcast. See the current evidence below; the earlier pre-cancellation sections are historical.**
+**Superseded by [Transaction 2 verified / Transaction 3 prepared](14-BUYER-APPROVAL-AND-PREAPPROVAL.md): approval is now confirmed and the original order remains Pending and unfunded. This report records historical Transaction 2 preparation.**
 
 This supersedes the preparation snapshot and “no live order” statements in report 11. It does not claim that the live checkout or payment has completed. The wallet compatibility and draft autosave fixes in report 12 remain intact.
 

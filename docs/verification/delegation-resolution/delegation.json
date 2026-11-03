@@ -1,0 +1,28 @@
+{
+  "chain_id": 84532,
+  "block": 53654038,
+  "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+  "valid_23_byte_indicator": true,
+  "delegation_target": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+  "official_address_match": true,
+  "official_version": "v1.3.0",
+  "official_deployment_transaction_match": true,
+  "target_runtime_bytes": 11185,
+  "target_runtime_keccak256": "0x83805f9ac7395294043b10c3b7c1839b7e4582a3e693028c36df84978b09d4e2",
+  "sourcify_exact_runtime_match": true,
+  "official_source_sha256": {
+    "src/EIP7702/EIP7702DeleGatorCore.sol": "02dfadfd49a854613a3d7553508ac719c43e803ffaa6f052dd5b15005afb31a4",
+    "src/EIP7702/EIP7702StatelessDeleGator.sol": "9c02aaeca33ac6c703979f416850b90851604ca824c27b3cc4fa63f6ed8a58e1",
+    "src/interfaces/IDeleGatorCore.sol": "ef828b80805df17c27f3d55eb92a7f5493e00352c6e5b7788468093cac4c2618",
+    "src/interfaces/IDelegationManager.sol": "993950a14df88fb423509e255cd624ff16c6184af5d68cea59b19a3d28d07a8d",
+    "src/interfaces/IERC7821.sol": "6c5e1a0af00e75bc2b2efecad3017832b04c0a0e82bebddd988534287d3e48d9",
+    "src/libraries/ERC1271Lib.sol": "b850bb2ec9eacf1c9925e77d92156102c39e685943809a95166d4e79cd32fbb4",
+    "src/utils/Constants.sol": "0afcc9f627c79d7ab98ae7c17e5b09eac334eb28b96092644e442a129ebc1dd2",
+    "src/utils/Types.sol": "48c14a9ddfa6e040dd530d3a961a2d1520655771d02e230569540ccd94e6047c"
+  },
+  "sources": [
+    "https://raw.githubusercontent.com/MetaMask/delegation-framework/v1.3.0/documents/Deployments.md",
+    "https://sourcify.dev/server/v2/contract/84532/0x63c0c19a282a1b52b07dd5a65b58948a07dae32b?fields=all"
+  ],
+  "signing_route_validated": false
+}

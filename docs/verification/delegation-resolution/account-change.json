@@ -1,0 +1,46 @@
+{
+  "transition_block": 53667094,
+  "block_hash": "0xe1eb4ed3601651b4295dee80dc0764c8f3044fe93d6f3a73361a205736fc86bb",
+  "timestamp": 1793655287,
+  "prior_code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+  "current_code": "0x",
+  "prior_nonce": "0x1",
+  "current_nonce": "0x3",
+  "relevant_transactions": [
+    {
+      "type": "0x4",
+      "chainId": "0x14a34",
+      "nonce": "0x1",
+      "gas": "0xb565",
+      "maxFeePerGas": "0xe66860",
+      "maxPriorityFeePerGas": "0x186a0",
+      "to": "0x9ceaa6abfb2bc1ac202f96496cdc683d86bc458a",
+      "value": "0x0",
+      "accessList": [],
+      "authorizationList": [
+        {
+          "chainId": "0x14a34",
+          "address": "0x0000000000000000000000000000000000000000",
+          "nonce": "0x2",
+          "yParity": "0x1",
+          "r": "0x39e9fb45bd6b5496ea4004634badd443b268f922fba70992bac41431b542c949",
+          "s": "0x1c55c94e8d08531eb433809294f522efd8eb47f45a13a622d6d8f8b8371d7bb3"
+        }
+      ],
+      "input": "0x",
+      "r": "0x4574107b9de5d1c0be919250525c8aceb9b10a25ba351e5965e93f276cb2f9a2",
+      "s": "0x592e619088f09dd2a847a789fe9e95b2d52b7fb985ad4b4e23c7b2836ee07259",
+      "yParity": "0x1",
+      "v": "0x1",
+      "hash": "0x426cfab87fa5229521ec740d80ee667f0fa29508180f5ec7794f7faadbe8eaa1",
+      "blockHash": "0xe1eb4ed3601651b4295dee80dc0764c8f3044fe93d6f3a73361a205736fc86bb",
+      "blockNumber": "0x332e516",
+      "transactionIndex": "0x3",
+      "blockTimestamp": "0x6ae901f7",
+      "blockTimestampMs": "0x1a19e2faf30",
+      "from": "0x9ceaa6abfb2bc1ac202f96496cdc683d86bc458a",
+      "gasPrice": "0x4dd1e0"
+    }
+  ],
+  "note": "Read-only observation; no wallet or transaction used by this audit."
+}

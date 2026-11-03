@@ -1,0 +1,1 @@
+NO-GO: LocalRevert. No live send/sign mode exists.

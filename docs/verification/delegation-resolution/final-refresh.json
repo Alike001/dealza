@@ -1,0 +1,37 @@
+{
+  "block": 53671209,
+  "block_hash": "0x35c38b6730ba63ff35a6df61cb5b113ed4c6f91d19584ea2658db6783511d2b8",
+  "timestamp": 1793656110,
+  "chain_id": 84532,
+  "roles": {
+    "deployer": {
+      "address": "0x9Ceaa6aBFb2bC1aC202f96496Cdc683d86Bc458a",
+      "code": "0x",
+      "balance_wei": 9829799473135824,
+      "nonce": 3,
+      "pending_nonce": 3
+    },
+    "buyer": {
+      "address": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "code": "0x",
+      "balance_wei": 100000000000000,
+      "nonce": 0,
+      "pending_nonce": 0
+    },
+    "seller": {
+      "address": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "code": "0x",
+      "balance_wei": 50000000000000,
+      "nonce": 0,
+      "pending_nonce": 0
+    },
+    "reviewer": {
+      "address": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "code": "0x",
+      "balance_wei": 20000000000000,
+      "nonce": 0,
+      "pending_nonce": 0
+    }
+  },
+  "gas_price_wei": 6000000
+}
