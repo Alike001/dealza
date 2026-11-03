@@ -1,5 +1,5 @@
 import type { Hash, TransactionReceipt } from "viem";
-import type { TxState } from "./domain";
+import type { OrderSnapshot, TxState } from "./domain";
 
 export interface TransactionPort {
   check(): Promise<void>;
@@ -12,7 +12,7 @@ export interface TransactionPort {
       reason?: "repriced" | "cancelled" | "replaced",
     ) => void,
   ): Promise<TransactionReceipt>;
-  verify(receipt: TransactionReceipt): Promise<void>;
+  verify(receipt: TransactionReceipt): Promise<OrderSnapshot | void>;
 }
 /** Confirmation describes the transaction only. Financial status always comes from a fresh chain read. */
 export async function confirmTransaction(
@@ -57,11 +57,14 @@ export async function confirmTransaction(
     throw new Error(
       "The transaction reverted. No successful payment is recorded.",
     );
-  await port.verify(receipt);
+  const snapshot = await port.verify(receipt);
   update({
     phase: "confirmed",
-    message: "Transaction confirmed. Refreshing the payment record…",
+    message: snapshot
+      ? "Transaction confirmed. Payment record verified at the receipt block."
+      : "Transaction confirmed. Refreshing the payment record…",
     hash: receipt.transactionHash,
+    ...(snapshot ? { snapshot } : {}),
   });
   return receipt;
 }

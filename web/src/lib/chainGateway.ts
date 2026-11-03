@@ -313,7 +313,7 @@ function rejectedByUser(error: unknown): boolean {
 async function verifyIntent(
   receipt: TransactionReceipt,
   intent: Intent,
-): Promise<Hash | undefined> {
+): Promise<{ created?: Hash; snapshot: OrderSnapshot }> {
   if (!intent.hash || !equal(receipt.transactionHash, intent.hash))
     throw Error(
       "Receipt hash does not match the saved submission or its replacement.",
@@ -333,6 +333,7 @@ async function verifyIntent(
       "Your wallet confirmed a cancellation transaction. This action was not completed. Inspect its receipt.",
     );
   let created: Hash | undefined;
+  let snapshot: OrderSnapshot;
   if (intent.action === "create") {
     if (!intent.terms) throw Error("Missing saved creation terms");
     const event = verifyCreationEffects(
@@ -359,6 +360,7 @@ async function verifyIntent(
     )
       throw Error("Confirmed order terms do not match your request.");
     created = event.id;
+    snapshot = state;
   } else {
     if (!intent.before) throw Error("Missing saved order context");
     const after = await loadOrder(
@@ -375,6 +377,7 @@ async function verifyIntent(
       receipt,
       network: proofNetwork(),
     });
+    snapshot = after;
   }
   if (
     (await client.getBlock({ blockNumber: receipt.blockNumber })).hash !==
@@ -385,7 +388,7 @@ async function verifyIntent(
     );
   if (created) rememberCreation(intent, created);
   clearIntent(intent);
-  return created;
+  return { created, snapshot };
 }
 async function send(
   call: ContractCall,
@@ -449,7 +452,7 @@ async function send(
           return receipt;
         },
         verify: async (receipt) => {
-          await verifyIntent(receipt, intent);
+          return (await verifyIntent(receipt, intent)).snapshot;
         },
       },
       update,
@@ -523,13 +526,14 @@ async function resumePending(
         "Receipt hash does not match the saved submission or reported replacement.",
       );
     await checkTerminal(receipt, intent);
-    const id = await verifyIntent(receipt, intent);
+    const verified = await verifyIntent(receipt, intent);
     update({
       phase: "confirmed",
       hash: receipt.transactionHash,
       message: "The saved transaction and its onchain effects are verified.",
+      snapshot: verified.snapshot,
     });
-    return id;
+    return verified.created;
   } catch (e) {
     if (e instanceof NoActionError)
       throw new SubmittedTransactionError(e.message, intent.hash);

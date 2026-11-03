@@ -104,6 +104,129 @@ async function proposeRelease() {
   await user.click(screen.getByRole("button", { name: "Continue to wallet" }));
 }
 describe("financial UI transitions", () => {
+  it("shows receipt-verified settlement immediately and never rolls back to a lagging read", async () => {
+    const paid = snapshot({
+      held: 0n,
+      captured: 1_000_000n,
+      storeBalance: 0n,
+      derived: 4,
+      block: 510n,
+    });
+    paid.order.status = 4;
+    let finish!: () => void;
+    const gateway = api({
+      // All later reads lag behind the authenticated receipt block.
+      loadOrder: vi.fn().mockResolvedValue(snapshot({ block: 505n })),
+      act: vi.fn(async (_action, _id, _session, update) => {
+        update({
+          phase: "confirmed",
+          hash,
+          message: "Payment record verified",
+          snapshot: paid,
+        });
+        await new Promise<void>((resolve) => {
+          finish = resolve;
+        });
+      }),
+    });
+    order(gateway);
+    await proposeRelease();
+    expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+    expect(screen.queryByText("Payment reserved")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Approve release to seller" }),
+    ).not.toBeInTheDocument();
+    await act(async () => {
+      finish();
+    });
+    expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+  });
+  it("retains a verified settlement with an explicit warning when the next RPC read fails", async () => {
+    const paid = snapshot({
+      held: 0n,
+      captured: 1_000_000n,
+      storeBalance: 0n,
+      derived: 4,
+      block: 510n,
+    });
+    paid.order.status = 4;
+    const gateway = api({
+      loadOrder: vi
+        .fn()
+        .mockResolvedValueOnce(snapshot())
+        .mockRejectedValue(Error("RPC unavailable")),
+      act: vi.fn(async (_action, _id, _session, update) => {
+        update({
+          phase: "confirmed",
+          hash,
+          message: "Receipt verified",
+          snapshot: paid,
+        });
+      }),
+    });
+    order(gateway);
+    await proposeRelease();
+    await screen.findByText("Latest update unavailable.");
+    expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Showing the last verified payment record/),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Approve release to seller" }),
+    ).not.toBeInTheDocument();
+  });
+  it("updates the visible order after a saved receipt is reconciled", async () => {
+    order();
+    await screen.findByText("Payment reserved");
+    const paid = snapshot({
+      held: 0n,
+      captured: 1_000_000n,
+      storeBalance: 0n,
+      derived: 4,
+      block: 510n,
+    });
+    paid.order.status = 4;
+    await act(async () => {
+      window.dispatchEvent(
+        new CustomEvent("dealza:confirmed-order", { detail: paid }),
+      );
+    });
+    expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Approve release to seller" }),
+    ).not.toBeInTheDocument();
+  });
+  it("automatically refreshes a previously reserved order to its settled state", async () => {
+    vi.useFakeTimers();
+    try {
+      const paid = snapshot({
+        held: 0n,
+        captured: 1_000_000n,
+        storeBalance: 0n,
+        derived: 4,
+        block: 510n,
+      });
+      paid.order.status = 4;
+      order(
+        api({
+          loadOrder: vi
+            .fn()
+            .mockResolvedValueOnce(snapshot())
+            .mockResolvedValue(paid),
+        }),
+      );
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1);
+      });
+      expect(screen.getByText("Payment reserved")).toBeInTheDocument();
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(15_000);
+      });
+      expect(screen.getByText("Paid to seller")).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
   it("ignores an old chain read that arrives after a newer payment state", async () => {
     vi.useFakeTimers();
     try {

@@ -98,6 +98,25 @@ export function OrderPage({
   const inFlight = useRef(false);
   const readRevision = useRef(0);
   const busy = ["checking", "signature", "pending"].includes(tx.phase);
+  const applyVerified = useCallback(
+    (verified: OrderSnapshot) => {
+      if (verified.id !== id) return;
+      readRevision.current++;
+      setSnapshot((old) =>
+        !old || verified.block >= old.block ? verified : old,
+      );
+      setError("");
+    },
+    [id],
+  );
+  useEffect(() => {
+    const confirmed = (event: Event) => {
+      applyVerified((event as CustomEvent<OrderSnapshot>).detail);
+    };
+    window.addEventListener("dealza:confirmed-order", confirmed);
+    return () =>
+      window.removeEventListener("dealza:confirmed-order", confirmed);
+  }, [applyVerified]);
   const refresh = useCallback(async () => {
     const revision = ++readRevision.current;
     if (!api.deployment) {
@@ -112,7 +131,6 @@ export function OrderPage({
         setSnapshot((old) => (!old || next.block >= old.block ? next : old));
     } catch (e) {
       if (revision === readRevision.current) {
-        setSnapshot(null);
         setError(friendlyError(e));
       }
     } finally {
@@ -138,7 +156,6 @@ export function OrderPage({
         }
       } catch (e) {
         if (!ignore && revision === readRevision.current) {
-          setSnapshot(null);
           setError(friendlyError(e));
         }
       } finally {
@@ -173,7 +190,13 @@ export function OrderPage({
     inFlight.current = true;
     const submittedScope = activeScope.current;
     const safeUpdate = (state: TxState) => {
-      if (activeScope.current === submittedScope) setTx(state);
+      if (activeScope.current !== submittedScope) return;
+      if (state.phase === "confirmed" && state.snapshot?.id === id) {
+        // Receipt verification already read these exact financial effects.
+        // Invalidate older in-flight reads before exposing the confirmation.
+        applyVerified(state.snapshot);
+      }
+      setTx(state);
     };
     setTx({
       phase: "checking",
@@ -185,11 +208,6 @@ export function OrderPage({
       if (activeScope.current !== submittedScope) return;
       await refresh();
       refreshHistory();
-      setTx((old) => ({
-        ...old,
-        message:
-          "Transaction confirmed. The payment status above is read from the contract and payment protocol.",
-      }));
       setEvidence("");
     } catch (e) {
       if (activeScope.current !== submittedScope) return;
@@ -213,7 +231,7 @@ export function OrderPage({
   if (s) {
     try {
       status = financialStatus(s);
-      actions = allowedActions(s, wallet.session?.account);
+      actions = error ? [] : allowedActions(s, wallet.session?.account);
     } catch (e) {
       status = friendlyError(e);
     }
@@ -254,7 +272,17 @@ export function OrderPage({
           )}
           {error && (
             <div className="notice danger" role="alert">
-              <strong>We couldn’t verify this order.</strong>
+              <strong>
+                {s
+                  ? "Latest update unavailable."
+                  : "We couldn’t verify this order."}
+              </strong>
+              {s && (
+                <p>
+                  Showing the last verified payment record. Actions are paused
+                  until a fresh read succeeds. Retrying automatically.
+                </p>
+              )}
               <p>{error}</p>
               <button
                 className="button secondary"
@@ -634,7 +662,7 @@ export function OrderPage({
                       </div>
                     </>
                   )}
-                  {wallet.session && !actions.length && (
+                  {wallet.session && !actions.length && !error && (
                     <p>
                       No payment action is available to this wallet in the
                       current order state.

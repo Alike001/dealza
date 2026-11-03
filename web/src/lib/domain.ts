@@ -79,6 +79,7 @@ export type TxState = {
   phase: "idle" | "checking" | "signature" | "pending" | "confirmed" | "error";
   message: string;
   hash?: Hash;
+  snapshot?: OrderSnapshot;
 };
 export const idleTx: TxState = { phase: "idle", message: "" };
 export const sameAddress = (a?: string, b?: string) =>

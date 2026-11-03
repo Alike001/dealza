@@ -145,6 +145,11 @@ describe("submission and reconciliation using authentic financial receipts (all 
         expect.objectContaining({
           phase: "confirmed",
           hash: receipt.transactionHash,
+          snapshot: expect.objectContaining({
+            id: stateOf(action, "after").id,
+            block: receipt.blockNumber,
+            order: stateOf(action, "after").order,
+          }),
         }),
       );
       expect(wallet.writeContract).toHaveBeenCalledTimes(1);

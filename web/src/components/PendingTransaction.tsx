@@ -57,7 +57,15 @@ function ScopedPending({
       const id = await api.resumePending(
         session,
         (s) => {
-          if (active.current) setTx(s);
+          if (active.current) {
+            setTx(s);
+            if (s.phase === "confirmed" && s.snapshot)
+              window.dispatchEvent(
+                new CustomEvent("dealza:confirmed-order", {
+                  detail: s.snapshot,
+                }),
+              );
+          }
         },
         hash.trim() ? (hash.trim() as Hash) : undefined,
       );
