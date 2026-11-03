@@ -1,0 +1,77 @@
+PASS Phase 1: delivery acknowledgment and financial state
+{
+  "result": "GO_TRANSACTION_6_ONLY",
+  "block": {
+    "number": "53884288",
+    "hash": "0xb5686b247ffbdabbf1fae83d02b34a4d4f5731a3e0fd41786aeeac12c4a9e575",
+    "timestamp": "1793698726",
+    "utc": "2026-11-03T09:38:46.000Z"
+  },
+  "deadline": {
+    "authorizationExpiry": 1793898000,
+    "utc": "2026-11-05T17:00:00.000Z",
+    "chainTime": "1793698726",
+    "secondsRemaining": "199274"
+  },
+  "balances": {
+    "buyer": "20000000",
+    "seller": "0",
+    "tokenStore": "1000000",
+    "operator": "0",
+    "collector": "0",
+    "escrow": "0"
+  },
+  "preparedTransaction": {
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0x67d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+    },
+    "function": "release(bytes32)",
+    "arguments": [
+      "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f"
+    ],
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "approvedPaymentInfo": {
+      "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "maxAmount": "1000000",
+      "preApprovalExpiry": 1793725200,
+      "authorizationExpiry": 1793898000,
+      "refundExpiry": 1793898000,
+      "minFeeBps": 0,
+      "maxFeeBps": 0,
+      "feeReceiver": "0x0000000000000000000000000000000000000000",
+      "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+    },
+    "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "amountRaw": "1000000",
+    "platformFeeRaw": "0",
+    "estimatedGas": "153882",
+    "gasPriceWei": "6000000",
+    "estimatedExecutionCostWei": "923292000000",
+    "buyerEthWei": "100000000000000",
+    "buyerNonce": 1,
+    "pendingNonce": 1,
+    "routedSelfExecutionTransaction": {
+      "chainId": "0x14a34",
+      "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "to": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "value": "0x0",
+      "data": "0xe9ae5c53000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000058d798Ec27019Bba2E6411986A2D58ff3D50F8C9c8000000000000000000000000000000000000000000000000000000000000000067d42a8b610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f0000000000000000"
+    },
+    "routedEstimatedGas": "161680",
+    "routedExecutionCostWei": "970080000000",
+    "totalFeeEstimates": {
+      "directWei": "1399806237831",
+      "routedWei": "1576319997423",
+      "includes": "L1 data + L2 execution + operator fee; latest-state public estimate"
+    },
+    "feeCaveat": "Execution-only amounts are separate from totalFeeEstimates, which include Base L1 data/operator fees for these two routes; future wallet routing may differ. Review refreshed total fee in MetaMask; no fixed nonce or gas limit prescribed.",
+    "restriction": "Unsigned Transaction 6 only. Settlement remains unperformed."
+  }
+}

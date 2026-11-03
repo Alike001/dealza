@@ -1,0 +1,1 @@
+PASS: exact release calldata; JSON matches verified evidence; 1 USDC / zero fee; direct/routed complete poststate and duplicate InvalidState; final refresh both RPCs; no signing/broadcast/wallet methods or state overrides.
