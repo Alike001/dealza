@@ -1,0 +1,8 @@
+PASS: 77 pinned files and complete compiled CPP ABI
+PASS: fully verified escrow, RPC runtime, full ABI, all vendored compilation sources
+PASS: collector RPC runtime and executable source; explorer reports partial verification
+PASS: all four CPP sources at 6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9; all network operations were read-only
+PASS: locally compiled AuthCaptureEscrow matches deployed executable (10925 bytes)
+PASS: locally compiled PreApprovalPaymentCollector matches deployed executable (2350 bytes)
+PASS: locally compiled TokenStore matches deployed executable (616 bytes)
+PASS: Circle test USDC has code, symbol USDC, and 6 decimals at block 53895583

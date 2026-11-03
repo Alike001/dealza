@@ -1,0 +1,19 @@
+{
+  "mode": "PRODUCTION_PREVIEW_READ_ONLY_ROUTE_AND_LAYOUT_AUDIT",
+  "observedDateUTC": "2026-11-03",
+  "origin": "http://127.0.0.1:4173",
+  "source": "Summary of executed Playwright page navigation and DOM measurements; chain responses were not mocked.",
+  "routes": [
+    { "path": "/", "heading": "A little more trust.A much better deal.", "rendered": true },
+    { "path": "/create", "heading": "Start with clear terms.", "rendered": true },
+    { "path": "/help", "heading": "Know what you’re agreeing to.", "rendered": true },
+    { "path": "/order/0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97", "heading": "One agreement. A clear next step.", "rendered": true, "status": "Cancelled", "rawState": "Voided (5), independently read in live-gateway.json", "amountUSDC": "1", "reservedUSDC": "0", "capturedUSDC": "0", "observedBlock": "53898606" },
+    { "path": "/missing", "heading": "This link doesn’t look right.", "rendered": true, "correctUnknownRouteError": true }
+  ],
+  "layoutChecksForEveryRoute": [
+    { "width": 320, "scrollWidth": 320, "unlabelledFields": 0 },
+    { "width": 390, "scrollWidth": 390, "unlabelledFields": 0 },
+    { "width": 1440, "scrollWidth": 1440, "unlabelledFields": 0 }
+  ],
+  "limitations": "Viewport emulation and basic DOM checks only; no screen-reader audit, physical mobile wallet or signature/transaction was tested. The duplicate page was observed while its recent history was loading; its older creation/cancellation activity was independently verified through the actual frontend gateway in older-activity.json."
+}

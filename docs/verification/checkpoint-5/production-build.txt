@@ -1,0 +1,23 @@
+
+> build
+> npm run build --workspace web
+
+
+> @dealza/web@0.1.0 build
+> node scripts/sync-abi.mjs --check && tsc --noEmit && vite build
+
+Contract source / ABI provenance: PASS
+vite v8.3.5 building client environment for production...
+transforming...
+[plugin rolldown:vite-resolve] Module "node:worker_threads" has been externalized for browser compatibility, imported by "/home/ali/Desktop/vibeathon/dealza/node_modules/ox/_esm/tempo/internal/virtualMasterPool.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 1291 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                         0.66 kB │ gzip:   0.40 kB
+dist/assets/index-DgERqosV.css         18.31 kB │ gzip:   4.89 kB
+dist/assets/secp256k1-D1GeMdM8.js       0.05 kB │ gzip:   0.07 kB
+dist/assets/ccip-CrX9t_of.js            2.88 kB │ gzip:   1.33 kB
+dist/assets/chainGateway-Buh2c1hK.js  284.48 kB │ gzip:  80.22 kB
+dist/assets/index-wCo3Xo6P.js         329.45 kB │ gzip: 102.28 kB
+
+✓ built in 2.10s

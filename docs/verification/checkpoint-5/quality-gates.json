@@ -1,0 +1,44 @@
+{
+  "frontend": {
+    "passed": 144,
+    "files": 8,
+    "exitCode": 0
+  },
+  "contracts": {
+    "passed": 46,
+    "exitCode": 0
+  },
+  "fork": {
+    "passed": 36,
+    "exitCode": 0
+  },
+  "python": {
+    "passed": 13,
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "exitCode": 0,
+    "includes": [
+      "ABI source provenance",
+      "TypeScript",
+      "Vite"
+    ]
+  },
+  "offlineProtocol": {
+    "exitCode": 0,
+    "pinnedFiles": 77
+  },
+  "onlineProtocol": {
+    "exitCode": 0,
+    "sourceAndCompiledRuntimeChecks": true
+  },
+  "productionHistoryRegression": "PASS",
+  "liveReceiptIdentityComparison": "PASS",
+  "implementationCommit": "bcbbe2d",
+  "liveFrontendCheckout": "NOT TESTED \u2014 no signing permitted",
+  "routedNonCreationReceiptCompatibility": "FAIL by code inspection; existing direct outer-transaction requirement",
+  "deployment": "NOT PERFORMED",
+  "signing": "NOT PERFORMED",
+  "broadcast": "NOT PERFORMED",
+  "push": "NOT PERFORMED"
+}

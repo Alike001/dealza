@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "mode": "SIMULATED_EIP1193_IDENTITY_WITH_REAL_RPC_READS",
+  "buyerThenSeller": true,
+  "wrongNetworkOffered": true,
+  "networkRestored": true,
+  "paidStatusRemainedVisible": true,
+  "adapter": {
+    "account": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "chain": "0x14a34",
+    "writeAttempts": []
+  },
+  "limitations": "Public addresses were supplied by a read-only test adapter. This does not prove actual wallet ownership, MetaMask switching, wallet signing or end-to-end frontend checkout."
+}

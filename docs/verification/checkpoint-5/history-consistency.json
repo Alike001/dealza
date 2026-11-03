@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "source": "Independent comparison against the six already two-RPC-verified canonical receipt/event records, plus known duplicate cancellation transaction",
+  "originalActivityEventCount": 6,
+  "exactOriginalEventIdentitiesMatch": true,
+  "adjacentPages": 9,
+  "inclusivePageContinuity": true,
+  "duplicateActivityConfirmed": true,
+  "buyerAndSellerDiscoveryBothStatesVerified": true,
+  "noObservedQueryAbove200Blocks": true,
+  "limitations": "Targeted historical windows and nine adjacent payment pages, not an exhaustive deployment-to-head rescan. Observer snapshots overlap; their query counts must not be added as unique requests."
+}

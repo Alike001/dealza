@@ -1,5 +1,7 @@
 # First complete live Dealza payment — Base Sepolia
 
+Checkpoint 5 update: the historical frontend history failure recorded below has been fixed and verified with real reads. See [the current history and release audit](19-CHECKPOINT-5-HISTORY-AND-RELEASE-AUDIT.md). The original settlement evidence and its limitations remain unchanged.
+
 **PASS — the controlled end-to-end buyer-release lifecycle settled onchain.** This verifies testnet financial settlement, not physical delivery or complete frontend acceptance. All six transactions were independently retrieved again from two RPC providers. No signing, broadcast, financial transaction, redeployment, fund-moving Solidity change or GitHub push was performed during verification.
 
 ## Verification snapshot and identities
