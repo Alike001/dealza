@@ -1,0 +1,49 @@
+{
+  "receiptCompatibility": "PASS for tested direct and routed actions",
+  "implementationCommit": "af6b959",
+  "frontend": {
+    "passed": 222,
+    "files": 12,
+    "exitCode": 0
+  },
+  "contracts": {
+    "passed": 46,
+    "exitCode": 0
+  },
+  "fork": {
+    "passed": 36,
+    "exitCode": 0
+  },
+  "python": {
+    "passed": 13,
+    "exitCode": 0
+  },
+  "abiAndBuild": {
+    "exitCode": 0,
+    "includes": [
+      "ABI provenance",
+      "TypeScript",
+      "Vite production build"
+    ]
+  },
+  "protocolLocal": {
+    "exitCode": 0,
+    "pinnedFiles": 77
+  },
+  "protocolOnline": {
+    "exitCode": 0,
+    "compiledRuntimeChecks": true
+  },
+  "authenticLiveReceiptReplays": 7,
+  "productionReadOnlyReconciliation": "PASS with test identity adapter and real RPC reads",
+  "genuineMetaMask": "NOT TESTED \u2014 unavailable in automation browser",
+  "freshSignedCheckout": "NOT TESTED \u2014 signing/broadcast forbidden",
+  "freshDraft": "PASS locally saved/reviewed, not created or submitted",
+  "reviewerFundedRefundExpiryUI": "SIMULATED ONLY; local/fork and ABI tests",
+  "solidityChanges": false,
+  "newNetworkDeployments": false,
+  "mainnetOperations": false,
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "githubPushPerformed": false
+}

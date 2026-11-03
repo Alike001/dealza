@@ -1,5 +1,7 @@
 # Checkpoint 5 — bounded onchain history and release audit
 
+Checkpoint 6 update: the historical routed-receipt gap below has been fixed and verified. See [the current receipt-compatibility audit](20-CHECKPOINT-6-RECEIPT-COMPATIBILITY.md). The original Checkpoint 5 observations remain historical evidence.
+
 **History fix: PASS. Public release: not ready.** Implementation commit: `bcbbe2d`. The first live payment remains verified by evidence commit `4baf3e8`; no payment, deployment, signature, wallet delegation change or GitHub push was performed in this checkpoint.
 
 ## Root cause and implementation

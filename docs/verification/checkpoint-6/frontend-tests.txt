@@ -1,0 +1,20 @@
+
+> test
+> npm run test --workspace web
+
+
+> @dealza/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  12 passed (12)
+      Tests  222 passed (222)
+   Start at  12:19:56
+   Duration  32.33s (tests 44%, environment 32%, import 18%, setup 5%, transform 1%)
+
+Environment  jsdom was created 12 times · 22.38s total, 32% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments

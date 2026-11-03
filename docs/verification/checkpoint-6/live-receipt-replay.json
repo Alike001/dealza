@@ -1,0 +1,124 @@
+{
+  "done": true,
+  "steps": [
+    {
+      "action": "create",
+      "hash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "actor": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "result": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    },
+    {
+      "action": "approve",
+      "hash": "0x3095767bde9c695c83daf53c7fc78965559d69496ee2435612b1a873b84c782e",
+      "actor": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x3095767bde9c695c83daf53c7fc78965559d69496ee2435612b1a873b84c782e",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x3095767bde9c695c83daf53c7fc78965559d69496ee2435612b1a873b84c782e",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    },
+    {
+      "action": "preApprove",
+      "hash": "0x78cd5930a57b51edccb09a54c6c8e6edd8e85c6c78cfef7549bb9d280a26ba70",
+      "actor": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x78cd5930a57b51edccb09a54c6c8e6edd8e85c6c78cfef7549bb9d280a26ba70",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x78cd5930a57b51edccb09a54c6c8e6edd8e85c6c78cfef7549bb9d280a26ba70",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    },
+    {
+      "action": "fund",
+      "hash": "0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08",
+      "actor": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    },
+    {
+      "action": "delivery",
+      "hash": "0xacfb28da439caa95bc7d40172d01d83b20f9da64c182d4dcb073a5c3cbaad786",
+      "actor": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0xacfb28da439caa95bc7d40172d01d83b20f9da64c182d4dcb073a5c3cbaad786",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0xacfb28da439caa95bc7d40172d01d83b20f9da64c182d4dcb073a5c3cbaad786",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    },
+    {
+      "action": "release",
+      "hash": "0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53",
+      "actor": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53",
+          "message": "The saved transaction and its onchain effects are verified."
+        }
+      ]
+    }
+  ],
+  "providerRequests": [
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId"
+  ],
+  "mode": "READ_ONLY_REPLAY_THROUGH_ACTUAL_GATEWAY",
+  "limitations": "Recorded pre-operation contexts with synthetic unused gas/time fixture fields; live canonical receipts, pinned runtime/bindings and receipt-block post-state queried by the actual verifier. Read-only identity adapter, not MetaMask. No signing or broadcast."
+}

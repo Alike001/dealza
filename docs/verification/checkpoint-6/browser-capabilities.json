@@ -1,0 +1,8 @@
+{
+  "mode": "BROWSER_CAPABILITY_CHECK",
+  "origin": "http://127.0.0.1:4173",
+  "ethereumAvailable": false,
+  "metaMask": false,
+  "extensionScripts": [],
+  "actualMetaMaskAcceptance": "NOT TESTED — no injected wallet available"
+}

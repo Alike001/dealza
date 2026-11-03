@@ -1,0 +1,75 @@
+{
+  "source": "Authentic recorded receipts plus refreshed two-provider cancellation; no new transactions",
+  "routes": [
+    {
+      "action": "create",
+      "hash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "blockNumber": "53694732",
+      "status": "success",
+      "outerSender": "0xb42f812a44c22cc6b861478900401ee759ebead6",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip7702",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "approve",
+      "hash": "0x3095767bde9c695c83daf53c7fc78965559d69496ee2435612b1a873b84c782e",
+      "blockNumber": "53861912",
+      "status": "success",
+      "outerSender": "0xb42f812a44c22cc6b861478900401ee759ebead6",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip7702",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "preApprove",
+      "hash": "0x78cd5930a57b51edccb09a54c6c8e6edd8e85c6c78cfef7549bb9d280a26ba70",
+      "blockNumber": "53865872",
+      "status": "success",
+      "outerSender": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip1559",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "fund",
+      "hash": "0xd59acd2377d61f58f4dbe3d483f0dc75613d145f0484f8f665b0c8279a0c0e08",
+      "blockNumber": "53871777",
+      "status": "success",
+      "outerSender": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip1559",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "delivery",
+      "hash": "0xacfb28da439caa95bc7d40172d01d83b20f9da64c182d4dcb073a5c3cbaad786",
+      "blockNumber": "53879876",
+      "status": "success",
+      "outerSender": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip1559",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "release",
+      "hash": "0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53",
+      "blockNumber": "53885645",
+      "status": "success",
+      "outerSender": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "eip1559",
+      "liveReplay": "PASS"
+    },
+    {
+      "action": "unfunded duplicate cancellation",
+      "hash": "0x9a150e4934f63566722ce02cf20d7d2857fa774e63236eb312e8bcac237c46b2",
+      "blockNumber": "53847244",
+      "status": "success",
+      "outerSender": "0xb42f812a44c22cc6b861478900401ee759ebead6",
+      "outerTarget": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+      "transactionType": "0x2",
+      "liveReplay": "PASS"
+    }
+  ]
+}

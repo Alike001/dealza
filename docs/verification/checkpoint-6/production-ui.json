@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "mode": "PRODUCTION_UI_REAL_RPC_READS_WITH_READ_ONLY_IDENTITY_ADAPTER",
+  "original": {
+    "body": "Skip to content\nBASE SEPOLIA TESTNET\n/\nTest assets only. Real permissions.\ndealza·\nYour orders\nCreate an order\nHow it works\n0x4f7D…df25\nTransaction check\nReceipt confirmed\n\nThe saved transaction and its onchain effects are verified.\n\nView transaction 0x63f3…2c53\n← All orders\nSHARED ORDER\nOne agreement. A clear next step.\n\nReview the terms and the people involved before making a wallet transaction.\n\nORDER 0x6103…769f\nPaid to seller\n1 USDC\n\nTest USDC on Base Sepolia · Platform fee 0 USDC\n\nThe agreed terms\nThe description isn’t included in this link.\n\nAsk the seller for the original agreement and compare its fingerprint below. Do not rely on unverified text.\n\nView immutable terms fingerprint\nSeller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59\nVerify where the reserve is held\nCopy link\nShow share link\nThe payment timeline\nReserve before Nov 3, 2026, 6:00 PM\n\nThe named buyer allows USDC, authorizes these terms, and reserves funds. Reservation does not pay the seller.\n\nRelease or resolve before Nov 5, 2026, 6:00 PM\n\nThe buyer can approve release while undisputed. During a dispute, only the agreed reviewer can decide. Delivery evidence alone never pays.\n\nBuyer recovery from Nov 5, 2026, 6:00 PM\n\nUncaptured funds become reclaimable directly from the protocol, including during an unresolved dispute. Recovery needs a buyer transaction and test ETH.\n\nChain time at last read: Nov 3, 2026, 12:15 PM · Block 53913304. Refreshes every 15 seconds.\n\nVerifiable order history\n\nConfirmed contract events, including direct expiry recovery. Delivery claims are evidence submissions, not delivery verification.\n\nNo matching activity in this block range.\n\nLoad earlier activity\n\nRecent activity only. Load earlier activity to check older blocks. Latest checked block: 53912642.\n\nRefresh history\nYOUR NEXT STEP\nYou’re the buyer.\n\nNo payment action is available to this wallet in the current order state.\n\nA dispute does not pause the clock.\n\nThe reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute.\n\nWhat Dealza can’t promise\n\nNo automatic delivery check, guaranteed reviewer decision, insurance, or guaranteed refund after capture. Your reviewer is trusted and cannot be replaced.\n\ndealza·\n\nClear agreements. Human decisions.\n\nSafeguards & limitations\nBuilt on Base Payments ↗\nBase Sepolia · Zero platform fee",
+    "receiptLinks": [
+      "https://sepolia.basescan.org/tx/0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53"
+    ],
+    "wallet": {
+      "account": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "chain": "0x14a34",
+      "requests": [
+        "eth_accounts",
+        "eth_chainId",
+        "eth_accounts",
+        "eth_chainId"
+      ]
+    },
+    "pendingCleared": true,
+    "layouts": [
+      {
+        "width": 320,
+        "scrollWidth": 320
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    ]
+  },
+  "seller": {
+    "body": "Skip to content\nBASE SEPOLIA TESTNET\n/\nTest assets only. Real permissions.\ndealza·\nYour orders\nCreate an order\nHow it works\n0xF74a…E3Cf\n← All orders\nSHARED ORDER\nOne agreement. A clear next step.\n\nReview the terms and the people involved before making a wallet transaction.\n\nORDER 0x6103…769f\nPaid to seller\n1 USDC\n\nTest USDC on Base Sepolia · Platform fee 0 USDC\n\nThe agreed terms\nThe description isn’t included in this link.\n\nAsk the seller for the original agreement and compare its fingerprint below. Do not rely on unverified text.\n\nView immutable terms fingerprint\nSeller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59\nVerify where the reserve is held\nCopy link\nShow share link\nThe payment timeline\nReserve before Nov 3, 2026, 6:00 PM\n\nThe named buyer allows USDC, authorizes these terms, and reserves funds. Reservation does not pay the seller.\n\nRelease or resolve before Nov 5, 2026, 6:00 PM\n\nThe buyer can approve release while undisputed. During a dispute, only the agreed reviewer can decide. Delivery evidence alone never pays.\n\nBuyer recovery from Nov 5, 2026, 6:00 PM\n\nUncaptured funds become reclaimable directly from the protocol, including during an unresolved dispute. Recovery needs a buyer transaction and test ETH.\n\nChain time at last read: Nov 3, 2026, 12:15 PM · Block 53913304. Refreshes every 15 seconds.\n\nVerifiable order history\n\nConfirmed contract events, including direct expiry recovery. Delivery claims are evidence submissions, not delivery verification.\n\nReading confirmed activity…\n\nRefresh history\nYOUR NEXT STEP\nYou’re the seller.\n\nNo payment action is available to this wallet in the current order state.\n\nA dispute does not pause the clock.\n\nThe reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute.\n\nWhat Dealza can’t promise\n\nNo automatic delivery check, guaranteed reviewer decision, insurance, or guaranteed refund after capture. Your reviewer is trusted and cannot be replaced.\n\ndealza·\n\nClear agreements. Human decisions.\n\nSafeguards & limitations\nBuilt on Base Payments ↗\nBase Sepolia · Zero platform fee",
+    "noReleaseButton": true
+  },
+  "duplicate": {
+    "body": "Skip to content\nBASE SEPOLIA TESTNET\n/\nTest assets only. Real permissions.\ndealza·\nYour orders\nCreate an order\nHow it works\n0xF74a…E3Cf\n← All orders\nSHARED ORDER\nOne agreement. A clear next step.\n\nReview the terms and the people involved before making a wallet transaction.\n\nORDER 0x808f…1a97\nCancelled\n1 USDC\n\nTest USDC on Base Sepolia · Platform fee 0 USDC\n\nThe agreed terms\nThe description isn’t included in this link.\n\nAsk the seller for the original agreement and compare its fingerprint below. Do not rely on unverified text.\n\nView immutable terms fingerprint\nSeller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n0 USDC\nPayment hash\n0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1\nVerify where the reserve is held\nCopy link\nShow share link\nThe payment timeline\nReserve before Nov 3, 2026, 6:00 PM\n\nThe named buyer allows USDC, authorizes these terms, and reserves funds. Reservation does not pay the seller.\n\nRelease or resolve before Nov 5, 2026, 6:00 PM\n\nThe buyer can approve release while undisputed. During a dispute, only the agreed reviewer can decide. Delivery evidence alone never pays.\n\nBuyer recovery from Nov 5, 2026, 6:00 PM\n\nUncaptured funds become reclaimable directly from the protocol, including during an unresolved dispute. Recovery needs a buyer transaction and test ETH.\n\nChain time at last read: Nov 3, 2026, 12:15 PM · Block 53913364. Refreshes every 15 seconds.\n\nVerifiable order history\n\nConfirmed contract events, including direct expiry recovery. Delivery claims are evidence submissions, not delivery verification.\n\nReading confirmed activity…\n\nRefresh history\nYOUR NEXT STEP\nYou’re the seller.\n\nNo payment action is available to this wallet in the current order state.\n\nA dispute does not pause the clock.\n\nThe reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute.\n\nWhat Dealza can’t promise\n\nNo automatic delivery check, guaranteed reviewer decision, insurance, or guaranteed refund after capture. Your reviewer is trusted and cannot be replaced.\n\ndealza·\n\nClear agreements. Human decisions.\n\nSafeguards & limitations\nBuilt on Base Payments ↗\nBase Sepolia · Zero platform fee",
+    "noSubmit": true
+  },
+  "duplicateStateSurvivesRefresh": true,
+  "assets": [
+    "http://127.0.0.1:4173/assets/index-BHGvXcNB.js"
+  ],
+  "wallet": {
+    "account": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "chain": "0x14a34",
+    "requests": [
+      "eth_accounts",
+      "eth_chainId"
+    ]
+  },
+  "limitations": "No genuine MetaMask extension available. These account identities are simulated, no signing capability exists, network responses are real. Does not prove fresh signed checkout or physical mobile wallet behavior."
+}

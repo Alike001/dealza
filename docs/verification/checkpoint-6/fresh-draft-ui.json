@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "mode": "LOCAL_DRAFT_AND_REVIEW_ONLY_NOT_SUBMITTED",
+  "fundingEpoch": 1793790000,
+  "expiryEpoch": 1793962800,
+  "draft": {
+    "version": 2,
+    "form": {
+      "description": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "amount": "1",
+      "fundingCutoff": "2026-11-04T12:00",
+      "expiry": "2026-11-06T12:00"
+    }
+  },
+  "wallet": {
+    "account": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "chain": "0x14a34",
+    "requests": [
+      "eth_accounts",
+      "eth_chainId",
+      "eth_accounts",
+      "eth_chainId"
+    ]
+  },
+  "review": "REVIEW BEFORE YOU CREATE\n1 test USDC\n\nDealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.\n\nSeller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nReviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserve by\nNov 4, 2026, 12:00 PM\nRelease / review before\nNov 6, 2026, 12:00 PM\nPlatform fee\n0 USDC\nTerms fingerprint\n0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8\nA dispute does not pause the clock.\n\nThe reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute.\n\nCreate order on Base Sepolia\n\nCreation needs one wallet transaction. No buyer funds move when an order is created.",
+  "creationButtonClicked": false,
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "limitation": "Read-only test identity, no genuine MetaMask signature. Predicted ID and deadlines must be refreshed before the separately authorized live test."
+}

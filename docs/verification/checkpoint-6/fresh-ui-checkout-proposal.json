@@ -1,0 +1,81 @@
+{
+  "mode": "LOCAL_DRAFT_ONLY_NOT_SUBMITTED",
+  "queriedAt": "2026-11-03T11:14:57.012Z",
+  "rpcOrigins": [
+    "https://sepolia.base.org",
+    "https://base-sepolia-rpc.publicnode.com"
+  ],
+  "chainId": 84532,
+  "block": {
+    "number": "53913103",
+    "hash": "0xb64226efefcc70d966ed8ab72fc58015c0b5400d167f28a9ddc1da99d99b9f1c",
+    "utc": "2026-11-03T11:14:49.000Z"
+  },
+  "addresses": {
+    "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+    "collector": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+    "escrow": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+    "usdc": "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+  },
+  "amountRaw": "1000000",
+  "amountUSDC": "1",
+  "platformFeeRaw": 0,
+  "description": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+  "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+  "fundingCutoff": 1793790000,
+  "expiry": 1793962800,
+  "fundingCutoffUTC": "2026-11-04T11:00:00.000Z",
+  "expiryUTC": "2026-11-06T11:00:00.000Z",
+  "snapshot": {
+    "sellerNonce": "2",
+    "buyerUSDC": "20000000",
+    "sellerUSDC": "1000000",
+    "allowance": "0",
+    "buyerETH": "100000000000000"
+  },
+  "predictedOrderId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+  "proposedPaymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+  "payment": {
+    "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+    "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "maxAmount": "1000000",
+    "preApprovalExpiry": 1793790000,
+    "authorizationExpiry": 1793962800,
+    "refundExpiry": 1793962800,
+    "minFeeBps": 0,
+    "maxFeeBps": 0,
+    "feeReceiver": "0x0000000000000000000000000000000000000000",
+    "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+  },
+  "unused": {
+    "state": [
+      false,
+      "0",
+      "0"
+    ],
+    "preApproved": false
+  },
+  "creation": {
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "function": "createOrder",
+    "args": [
+      "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+      "1000000",
+      1793790000,
+      1793962800,
+      "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8"
+    ],
+    "data": "0x0b0c40bb0000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df2500000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aeb1030000000000000000000000000000000000000000000000000000000006aedb3300000000000000000000000007f1104f54b3957c2ace8eee6ee97489eec51b54843f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8"
+  },
+  "limitations": "Predicted ID depends on sellerNonce and can change before mining. Payment hash/terms must be reverified after actual creation. This file authorizes no signature, transaction, allowance, reservation or release.",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "created": false
+}
