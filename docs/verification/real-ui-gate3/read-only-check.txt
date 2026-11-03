@@ -1,0 +1,111 @@
+Receipt, pinned ABI/runtimes, exact fresh hash, Pending/unfunded state and complete payment history PASS
+{
+  "result": "GO_GATE_4_CHAIN_SIMULATION",
+  "block": {
+    "number": "53990520",
+    "hash": "0x41fdf5b5c5a24ce78de13f1cab282625b6a206c7278a55dd5e80fb4215a550a2",
+    "utc": "2026-11-03T15:32:52.000Z"
+  },
+  "authorization": {
+    "status": "success",
+    "blockNumber": "53987356",
+    "confirmations": "3165",
+    "type": "eip1559",
+    "from": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+    "to": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+    "events": [
+      {
+        "eventName": "PaymentPreApproved",
+        "args": {
+          "paymentInfoHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6"
+        }
+      }
+    ]
+  },
+  "current": {
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 1
+    },
+    "status": 1,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ],
+    "preApproved": true,
+    "allowance": "1000000",
+    "buyerEthWei": "100000000000000",
+    "nonce": 1,
+    "pendingNonce": 1,
+    "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "balances": {
+      "buyer": "20000000",
+      "seller": "1000000",
+      "operator": "0",
+      "collector": "0",
+      "escrow": "0",
+      "store": "0"
+    }
+  },
+  "paymentHash": {
+    "stored": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+    "locallyRecomputed": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6"
+  },
+  "reservationDeadline": {
+    "unix": 1793790000,
+    "utc": "2026-11-04T11:00:00.000Z",
+    "secondsRemaining": "70028"
+  },
+  "gas": {
+    "directGas": "144284",
+    "delegatedGas": "150936",
+    "gasPriceWei": "6000000",
+    "estimatedDelegatedExecutionWei": "905616000000",
+    "caveat": "Execution estimate only; MetaMask refreshes total fees including L1 data and actual relayer overhead."
+  },
+  "preparedTransaction": {
+    "chainId": "0x14a34",
+    "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "data": "0xb5d6529c0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd000000000000000000000000d798ec27019bba2e6411986a2d58ff3d50f8c9c80000000000000000000000004f7d38d29172f91f77d3050a9e0f75a1aae5df25000000000000000000000000f74ad341e10187073a0eef55356d136f1be5e3cf000000000000000000000000036cbd53842c5426634e7929541ec2318f3dcf7e00000000000000000000000000000000000000000000000000000000000f4240000000000000000000000000000000000000000000000000000000006aeb1030000000000000000000000000000000000000000000000000000000006aedb330000000000000000000000000000000000000000000000000000000006aedb3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+    "function": "fund",
+    "arguments": [
+      "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+      {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      }
+    ],
+    "selector": "0xb5d6529c"
+  },
+  "simulations": "PASS direct + actual delegated self-execution, no overrides"
+}

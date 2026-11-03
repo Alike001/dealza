@@ -1,0 +1,133 @@
+Gate 4 chain verification PASS; preparing seller delivery acknowledgment
+{
+  "result": "PASS_GATE_4_READY_GATE_5_CHAIN",
+  "block": {
+    "number": "53998953",
+    "hash": "0x87d00fdb8ab5f665a00f39df03e8c001adc3acf1126fe76bdc02d0244f02396b",
+    "utc": "2026-11-03T16:00:59.000Z"
+  },
+  "reservation": {
+    "hash": "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+    "block": "53991659",
+    "type": "eip1559",
+    "from": "0xb01caea8c6c47bbf4f4b4c5080ca642043359c2e",
+    "to": "0xdb9b1e94b5b69df7e401ddbede43491141047db3",
+    "events": [
+      {
+        "address": "0xf96815976523e00e65be8f34ca5e64b4f41eb19c",
+        "logIndex": 1,
+        "eventName": "PaymentAuthorized",
+        "args": {
+          "paymentInfoHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+          "paymentInfo": {
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+            "maxAmount": "1000000",
+            "preApprovalExpiry": 1793790000,
+            "authorizationExpiry": 1793962800,
+            "refundExpiry": 1793962800,
+            "minFeeBps": 0,
+            "maxFeeBps": 0,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+          },
+          "amount": "1000000",
+          "tokenCollector": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea"
+        }
+      },
+      {
+        "address": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+        "logIndex": 2,
+        "eventName": "Transfer",
+        "args": {
+          "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "to": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+          "value": "1000000"
+        }
+      },
+      {
+        "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+        "logIndex": 3,
+        "eventName": "OrderFunded",
+        "args": {
+          "orderId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+          "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6"
+        }
+      }
+    ]
+  },
+  "current": {
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 2
+    },
+    "status": 2,
+    "paymentState": [
+      true,
+      "1000000",
+      "0"
+    ],
+    "allowance": "0",
+    "balances": {
+      "buyer": "19000000",
+      "seller": "1000000",
+      "store": "1000000",
+      "operator": "0",
+      "collector": "0",
+      "escrow": "0"
+    },
+    "accounts": {
+      "buyer": {
+        "address": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "ethWei": "100000000000000",
+        "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+        "nonce": 1
+      },
+      "seller": {
+        "address": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "ethWei": "49812291697244",
+        "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b",
+        "nonce": 4
+      }
+    },
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a"
+  },
+  "gate5": {
+    "evidenceText": "Dealza Gate 5 controlled test acknowledgment for order 0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd. No physical delivery occurred.",
+    "evidenceHash": "0x01a8beb04f77d61e4883b5addc28c3e40f1fa61e4219bbe33afe1b42f02c2e6b",
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0x685839b80267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd01a8beb04f77d61e4883b5addc28c3e40f1fa61e4219bbe33afe1b42f02c2e6b"
+    },
+    "gas": {
+      "directGas": "31273",
+      "delegatedGas": "36617",
+      "gasPriceWei": "6000000",
+      "estimatedDelegatedExecutionWei": "219702000000",
+      "sellerEthWei": "49812291697244",
+      "pendingNonce": 4,
+      "caveat": "Refresh MetaMask total fees including Base L1 data and actual routing overhead."
+    }
+  }
+}

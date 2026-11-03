@@ -1,0 +1,1 @@
+Dealza Gate 5 controlled test acknowledgment for order 0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd. No physical delivery occurred.

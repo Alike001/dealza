@@ -1,0 +1,4 @@
+Error: Seller-only release did not reject Unauthorized
+    at check (file:///home/ali/Desktop/vibeathon/dealza/web/scripts/verify-ui-gate5-and-prepare-gate6.mjs:57:18)
+    at file:///home/ali/Desktop/vibeathon/dealza/web/scripts/verify-ui-gate5-and-prepare-gate6.mjs:507:3
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

@@ -1,0 +1,4 @@
+Command: npm run test --workspace web -- src/test/chainGateway.test.ts src/test/receiptProof.test.ts
+Result: PASS — 2 test files, 87 tests.
+ABI command: npm run abi:check
+Result: Contract source / ABI provenance: PASS.

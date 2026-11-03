@@ -1,0 +1,28 @@
+{
+  "transaction": {
+    "chainId": "0x14a34",
+    "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "data": "0x67d42a8b0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd"
+  },
+  "functionSignature": "release(bytes32)",
+  "arguments": [
+    "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd"
+  ],
+  "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+  "deadline": {
+    "unix": 1793962800,
+    "utc": "2026-11-06T11:00:00.000Z",
+    "secondsRemaining": "239903"
+  },
+  "gas": {
+    "directGas": "92331",
+    "delegatedGas": "98795",
+    "gasPriceWei": "6000000",
+    "estimatedDelegatedExecutionWei": "592770000000",
+    "buyerEthWei": "100000000000000",
+    "pendingNonce": 1,
+    "caveat": "Refresh MetaMask total fees including Base L1 data and actual routing overhead."
+  }
+}

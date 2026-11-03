@@ -1,0 +1,20 @@
+{
+  "done": true,
+  "providerCalls": ["eth_accounts", "eth_chainId"],
+  "updates": [
+    {
+      "phase": "pending",
+      "hash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+      "message": "Rechecking the saved transaction. No signature or payment is requested…"
+    },
+    {
+      "phase": "confirmed",
+      "hash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+      "message": "The saved transaction and its onchain effects are verified."
+    }
+  ],
+  "pendingIntentRemaining": false,
+  "result": "PASS",
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

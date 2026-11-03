@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "results": [
+    {
+      "route": "direct",
+      "result": "PASS",
+      "simulatedReceiptOnly": true,
+      "block": "54005144",
+      "duplicateError": "InvalidState"
+    },
+    {
+      "route": "currentDelegated",
+      "result": "PASS",
+      "simulatedReceiptOnly": true,
+      "block": "54005144",
+      "duplicateError": "InvalidState"
+    }
+  ],
+  "limitations": "Action-specific frontend proof run on fresh eth_simulateV1 effects and post-state. These are simulated receipts, not mined release transactions. Canonical direct/routed checks also covered by regression suite; future wallet envelope remains unverified.",
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

@@ -1,0 +1,65 @@
+{
+  "verdict": "PASS_GATE_5_GO_MANUAL_GATE_6_ONLY",
+  "block": {
+    "number": "54005143",
+    "hash": "0x19a6c267d1dc750d42273bf21c8ed65f6c5761a3726b23cfde76786ba4487401",
+    "utc": "2026-11-03T16:21:37.000Z"
+  },
+  "deliveryTransaction": "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+  "deliveryBlock": "54002282",
+  "deliveryEvidence": [
+    {
+      "address": "0xd798ec27019bba2e6411986a2d58ff3d50f8c9c8",
+      "logIndex": 1,
+      "eventName": "DeliveryNoted",
+      "args": {
+        "orderId": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+        "evidenceHash": "0x01a8beb04f77d61e4883b5addc28c3e40f1fa61e4219bbe33afe1b42f02c2e6b"
+      }
+    }
+  ],
+  "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+  "balances": {
+    "buyer": "19000000",
+    "seller": "1000000",
+    "store": "1000000",
+    "operator": "0",
+    "collector": "0",
+    "escrow": "0"
+  },
+  "orderStatus": "Reserved (2), undisputed",
+  "paymentState": [
+    true,
+    "1000000",
+    "0"
+  ],
+  "frontendDeliveryReconciliation": "PASS",
+  "frontendReleaseCapture": "PASS_REJECT_ONLY",
+  "frontendSimulatedReleaseProof": "PASS_DIRECT_AND_CURRENT_DELEGATED",
+  "duplicateRelease": "InvalidState on both simulated routes",
+  "sellerRelease": "Unauthorized",
+  "deadline": {
+    "unix": 1793962800,
+    "utc": "2026-11-06T11:00:00.000Z",
+    "secondsRemaining": "239903"
+  },
+  "nextManualTransaction": {
+    "chainId": "0x14a34",
+    "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+    "value": "0x0",
+    "data": "0x67d42a8b0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd"
+  },
+  "buyerGas": {
+    "directGas": "92331",
+    "delegatedGas": "98795",
+    "gasPriceWei": "6000000",
+    "estimatedDelegatedExecutionWei": "592770000000",
+    "buyerEthWei": "100000000000000",
+    "pendingNonce": 1,
+    "caveat": "Refresh MetaMask total fees including Base L1 data and actual routing overhead."
+  },
+  "qualityChecks": "222 frontend tests PASS; 34 operator tests PASS; ABI/typecheck/production build PASS",
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

@@ -1,0 +1,6 @@
+npm run abi:check
+Contract source / ABI provenance: PASS
+
+npm run test --workspace web -- src/test/chainGateway.test.ts src/test/receiptProof.test.ts
+Test Files: 2 passed
+Tests: 87 passed

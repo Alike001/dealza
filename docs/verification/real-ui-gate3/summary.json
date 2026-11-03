@@ -1,0 +1,28 @@
+{
+  "verdict": "GO_GATE_4_MANUAL_RESERVATION_ONLY",
+  "block": {
+    "number": "53990520",
+    "hash": "0x41fdf5b5c5a24ce78de13f1cab282625b6a206c7278a55dd5e80fb4215a550a2",
+    "utc": "2026-11-03T15:32:52.000Z"
+  },
+  "gate3": "PASS",
+  "frontendReceiptReplay": "PASS",
+  "frontendFundCapture": "PASS_CAPTURE_ONLY",
+  "balanceConsistency": true,
+  "innerPreapprovalExact": true,
+  "tests": "87/87 PASS",
+  "gas": {
+    "directGas": "144284",
+    "delegatedGas": "150936",
+    "gasPriceWei": "6000000",
+    "estimatedDelegatedExecutionWei": "905616000000",
+    "caveat": "Execution estimate only; MetaMask refreshes total fees including L1 data and actual relayer overhead."
+  },
+  "deadline": {
+    "unix": 1793790000,
+    "utc": "2026-11-04T11:00:00.000Z",
+    "secondsRemaining": "70028"
+  },
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}
