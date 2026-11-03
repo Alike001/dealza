@@ -1,0 +1,215 @@
+{
+  "queriedAt": "2026-11-03T07:18:04.550Z",
+  "rpcOrigin": "https://base-sepolia-rpc.publicnode.com",
+  "chainId": 84532,
+  "block": {
+    "number": "53842067",
+    "hash": "0xcbe77d3ec7239a8fa236c4f7e24afe60ced1d40d1141aac5d4614605907c62e8",
+    "timestamp": "1793690282"
+  },
+  "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+  "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+  "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+  "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+  "escrow": "0xf96815976523E00e65Be8f34cA5e64b4f41EB19c",
+  "collector": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+  "usdc": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  "original": {
+    "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793725200,
+        "authorizationExpiry": 1793898000,
+        "refundExpiry": 1793898000,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+      "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+      "status": 1
+    },
+    "status": 1,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ],
+    "preApproved": false,
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "fundingSecondsRemaining": "34918"
+  },
+  "duplicate": {
+    "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793725200,
+        "authorizationExpiry": 1793898000,
+        "refundExpiry": 1793898000,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+      "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+      "status": 1
+    },
+    "status": 1,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ],
+    "preApproved": false,
+    "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+    "fundingSecondsRemaining": "34918"
+  },
+  "balances": {
+    "buyerUsdc": "21000000",
+    "buyerEth": "100000000000000",
+    "sellerEth": "49812291697244",
+    "collectorAllowance": "0",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "tokenStoreUsdc": "0",
+    "operatorUsdc": "0",
+    "decimals": 6,
+    "paused": false,
+    "buyerBlacklisted": false,
+    "sellerBlacklisted": false
+  },
+  "accounts": {
+    "buyer": {
+      "nonce": 0,
+      "pendingNonce": 0,
+      "code": "0x"
+    },
+    "seller": {
+      "nonce": 4,
+      "pendingNonce": 4,
+      "code": "0xef010063c0c19a282a1b52b07dd5a65b58948a07dae32b"
+    }
+  },
+  "creationProofs": [
+    {
+      "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+      "transactionHash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "blockNumber": "53694732",
+      "confirmations": "147336",
+      "verified": true
+    },
+    {
+      "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+      "transactionHash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
+      "blockNumber": "53829603",
+      "confirmations": "12465",
+      "verified": true
+    }
+  ],
+  "history": [
+    {
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53694732",
+      "transactionHash": "0x26498aaab70c0e6fef9009b046584cf8abf5873760ba3381f336c89aed9749e6",
+      "eventName": "OrderCreated",
+      "args": {
+        "orderId": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+        "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "43880560905866266055948392929988289598113490721418948285209098488899572364959"
+        }
+      }
+    },
+    {
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53829603",
+      "transactionHash": "0x0a041cd43fd4931414cdcc4672a5621741e53fd46d20b5d0fe576439c7f0b06b",
+      "eventName": "OrderCreated",
+      "args": {
+        "orderId": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+        "seller": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "buyer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+        "descriptionHash": "0xb28c8133d0699cbe2cda54262423de1d3c2fb55227e1508afa38602334c4ced4",
+        "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+        "payment": {
+          "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+          "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+          "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+          "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          "maxAmount": "1000000",
+          "preApprovalExpiry": 1793725200,
+          "authorizationExpiry": 1793898000,
+          "refundExpiry": 1793898000,
+          "minFeeBps": 0,
+          "maxFeeBps": 0,
+          "feeReceiver": "0x0000000000000000000000000000000000000000",
+          "salt": "58148866269721860493177254132458404737147323353126009799726407441827098860183"
+        }
+      }
+    }
+  ],
+  "historyScan": {
+    "fromBlock": 53676176,
+    "toBlock": "53842067",
+    "complete": true
+  },
+  "cancellation": {
+    "confirmed": false
+  },
+  "buyerPreparation": {
+    "ready": true,
+    "paymentAttemptsObserved": false,
+    "desiredApproval": {
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "spender": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+      "amount": "1000000"
+    },
+    "blockedUntilDuplicateResolved": true
+  },
+  "nextAction": {
+    "action": "Seller manually cancels duplicate only",
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0xc4d252f5808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97"
+    },
+    "simulation": "PASS",
+    "estimatedGas": "33943",
+    "completed": false
+  },
+  "independentRpcCrosscheck": {
+    "origin": "https://base-sepolia.drpc.org",
+    "canonicalBlockAndBothOrdersAndCppState": "PASS"
+  }
+}

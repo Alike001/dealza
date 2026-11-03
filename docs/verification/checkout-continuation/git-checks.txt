@@ -1,0 +1,5 @@
+git diff --check: PASS
+git diff --cached --check: PASS
+Frontend preservation commit: dd16069
+No Solidity changes staged.
+Unrelated pre-existing README, source-verification and deployment-preparation changes excluded.

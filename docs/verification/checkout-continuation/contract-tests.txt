@@ -1,0 +1,85 @@
+No files changed, compilation skipped
+
+Ran 11 tests for test/ReviewSecurity.t.sol:ReviewSecurityTest
+[PASS] testApprovalCannotBeReplayedOnAnotherChain() (gas: 312136)
+[PASS] testCapturedAccountingDoesNotEnableRecoveryOrRefund() (gas: 559294)
+[PASS] testDirectTokenDonationDoesNotAuthorizeAnOrder() (gas: 536764)
+[PASS] testDisputeCannotBeOverriddenOrReviewerReplaced() (gas: 677159)
+[PASS] testFullExecutionPathPreservesTermsAndRequiresBuyerRelease() (gas: 582816)
+[PASS] testNoChargeRefundOrGenericExecutionBypass() (gas: 711008)
+[PASS] testPreApprovalCannotBeReplayedAcrossOperators() (gas: 766933)
+[PASS] testRevokedAllowancePreventsFundingAtomically() (gas: 334531)
+[PASS] testSharedTokenStoreCannotDivertOrConsumeOtherOrder() (gas: 1454754)
+[PASS] testTokenTransferFailureRollsBackCaptureVoidAndReclaim() (gas: 806202)
+[PASS] testUnresolvedDisputeDoesNotFreezeExpiryReclaim() (gas: 673311)
+Suite result: ok. 11 passed; 0 failed; 0 skipped; finished in 48.72ms (35.75ms CPU time)
+
+Ran 34 tests for test/DealzaOperator.t.sol:DealzaOperatorTest
+[PASS] testAllOperatorOnlyProtocolEntrypointsRejectSeller() (gas: 163537)
+[PASS] testAllowanceAloneInsufficient() (gas: 203664)
+[PASS] testBuyerReleaseExactlyOnce() (gas: 529325)
+[PASS] testCPPItselfRejectsExpiredOperatorCapture() (gas: 294401)
+[PASS] testCaptureFailsAtExpiryAndReclaimIsPayerOnly() (gas: 683400)
+[PASS] testDisputeReviewerRelease() (gas: 559181)
+[PASS] testExactHashAndCustody() (gas: 377042)
+[PASS] testFuzzConservationAcrossVerdicts(uint120,bool) (runs: 256, μ: 843370, ~: 852506)
+[PASS] testFuzzRejectEveryAlteredPaymentField(uint8,uint256) (runs: 256, μ: 86024, ~: 85162)
+[PASS] testHashDomainSeparatesChainEscrowAndOperator() (gas: 2714917)
+[PASS] testInvalidInputs() (gas: 210569)
+[PASS] testLastSecondCaptureSucceeds() (gas: 410125)
+[PASS] testNoCaptureBeforeFunding() (gas: 39449)
+[PASS] testNoMainnetOrMissingProtocolConfiguration() (gas: 4377)
+[PASS] testOperatorVoidAfterExpiryAndReclaimRace() (gas: 501708)
+[PASS] testOutsiderCannotFundReleaseCancelDisputeOrResolve() (gas: 443682)
+[PASS] testPreApprovalAloneInsufficientAndFailedFundingAtomic() (gas: 421204)
+[PASS] testPreApprovalCannotBeModifiedOrReplayedForAnotherOrder() (gas: 784872)
+[PASS] testPreApprovalExpiryBoundary() (gas: 189135)
+[PASS] testPreApprovalMustComeFromPayer() (gas: 52858)
+[PASS] testProtocolAuthorizationAndCaptureEvents() (gas: 435880)
+[PASS] testReclaimBeforeExpiryFails() (gas: 321955)
+[PASS] testReclaimThenVoidRaceIsAtomic() (gas: 490183)
+[PASS] testReentrancyDuringCaptureBlocked() (gas: 586656)
+[PASS] testReentrancyDuringCollectionBlocked() (gas: 438851)
+[PASS] testReentrancyDuringVoidBlocked() (gas: 569179)
+[PASS] testReviewerCannotReleaseUndisputedOrder() (gas: 294965)
+[PASS] testReviewerCannotResolveAtExpiryInEitherDirection() (gas: 477255)
+[PASS] testSellerCanDisputeReviewerVoid() (gas: 467280)
+[PASS] testSellerCancellationReturnsAllFundsAndBlocksRelease() (gas: 477332)
+[PASS] testSellerCannotReleaseOrDirectlyCapture() (gas: 376943)
+[PASS] testUnfundedCancellationInvalidatesPreApproval() (gas: 216847)
+[PASS] testUnknownOrderRejected() (gas: 10741)
+[PASS] testWrongSellerRejected() (gas: 184900)
+Suite result: ok. 34 passed; 0 failed; 0 skipped; finished in 464.90ms (633.66ms CPU time)
+
+Ran 1 test for test/DealzaInvariant.t.sol:DealzaInvariantTest
+[PASS]
+DealzaInvariantTest invariants:
+[PASS] invariantConservationAndOnlyPermittedPayouts
+[PASS] invariantProtocolStateAgreesWithOrders
+ DealzaInvariantTest invariants (runs: 128, calls: 4096, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| LifecycleHandler | advanceTime  | 497   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | attack       | 457   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | buyerRelease | 490   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | cancel       | 433   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | create       | 420   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | fund         | 450   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | openDispute  | 458   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | reclaim      | 461   | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| LifecycleHandler | resolve      | 430   | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 8.41s (8.38s CPU time)
+
+Ran 3 test suites in 8.43s (8.92s CPU time): 46 tests passed, 0 failed, 0 skipped (46 total tests)

@@ -1,0 +1,73 @@
+{
+  "block": {
+    "number": "53842067",
+    "hash": "0xcbe77d3ec7239a8fa236c4f7e24afe60ced1d40d1141aac5d4614605907c62e8",
+    "timestamp": "1793690282"
+  },
+  "original": {
+    "id": "0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+    "paymentHash": "0xa10594af1b0f41399573bb2c493a03df0736cf8ff8b96bdfb1cf007da0996b59",
+    "status": 1,
+    "preApproved": false,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ],
+    "fundingSecondsRemaining": "34918"
+  },
+  "duplicate": {
+    "id": "0x808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97",
+    "paymentHash": "0xe7c74172a0e4ac536de9ba8b8d5af15a9b54eca20041cc7d7fec8e67f9134de1",
+    "status": 1,
+    "preApproved": false,
+    "paymentState": [
+      false,
+      "0",
+      "0"
+    ]
+  },
+  "balances": {
+    "buyerUsdc": "21000000",
+    "buyerEth": "100000000000000",
+    "sellerEth": "49812291697244",
+    "collectorAllowance": "0",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "tokenStoreUsdc": "0",
+    "operatorUsdc": "0",
+    "decimals": 6,
+    "paused": false,
+    "buyerBlacklisted": false,
+    "sellerBlacklisted": false
+  },
+  "cancellation": {
+    "confirmed": false
+  },
+  "buyerPreparation": {
+    "ready": true,
+    "paymentAttemptsObserved": false,
+    "desiredApproval": {
+      "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "spender": "0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea",
+      "amount": "1000000"
+    },
+    "blockedUntilDuplicateResolved": true
+  },
+  "nextAction": {
+    "action": "Seller manually cancels duplicate only",
+    "transaction": {
+      "chainId": "0x14a34",
+      "from": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+      "to": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "value": "0x0",
+      "data": "0xc4d252f5808f178c3b45536f8ff74e05d8ae13392f0a8ce7330985b4f865b0e27ed51a97"
+    },
+    "simulation": "PASS",
+    "estimatedGas": "33943",
+    "completed": false
+  },
+  "crosscheck": {
+    "origin": "https://base-sepolia.drpc.org",
+    "canonicalBlockAndBothOrdersAndCppState": "PASS"
+  }
+}
