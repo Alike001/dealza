@@ -1,0 +1,43 @@
+{
+  "mode": "CAPTURE_ONLY_IDENTITY_ADAPTER_NO_SIGNER_NO_BROADCAST",
+  "calls": [
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_chainId",
+    "eth_sendTransaction"
+  ],
+  "captured": {
+    "data": "0x095ea7b3000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000f4240",
+    "from": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+  },
+  "error": "User rejected the request.\n\nRequest Arguments:\n  chain:  Base Sepolia (id: 84532)\n  from:   0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\n  to:     0x036CbD53842c5426634e7929541eC2318f3dCF7e\n  data:   0x095ea7b3000000000000000000000000f1f9c408c787b2bc6caeb91e5bbec434a5c8d2ea00000000000000000000000000000000000000000000000000000000000f4240\n \nContract Call:\n  address:   0x036CbD53842c5426634e7929541eC2318f3dCF7e\n  function:  approve(address spender, uint256 amount)\n  args:             (0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea, 1000000)\n  sender:    0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\n\nDocs: https://viem.sh/docs/contract/writeContract\nDetails: Capture only: no wallet or broadcasting endpoint\nVersion: viem@2.57.14",
+  "updates": [
+    {
+      "phase": "checking",
+      "message": "Checking your wallet and simulating this action…"
+    },
+    {
+      "phase": "signature",
+      "message": "Review the recipient, amount, and network in your wallet."
+    }
+  ],
+  "allowedBuyerActions": ["cancel", "approve", "preApprove"],
+  "before": {
+    "allowance": "0",
+    "balance": "20000000",
+    "held": "0",
+    "preApproved": false
+  },
+  "after": {
+    "allowance": "0",
+    "balance": "20000000",
+    "held": "0",
+    "preApproved": false
+  },
+  "pending": null
+}

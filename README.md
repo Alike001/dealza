@@ -28,6 +28,8 @@ Try these flows:
 
 These browsing and draft checks require no signatures or spending. To inspect the settled order locally, open `/#/order/0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f`. It reads **Paid to seller**, 0 reserved and 1 captured. **History now passes real Base Sepolia checks:** both orders show current Released/Voided state, and older activity links to the verified final receipt. Use **Load earlier activity** to reach older records; refreshing starts a fresh recent window. [Checkpoint 5 evidence and audit](docs/19-CHECKPOINT-5-HISTORY-AND-RELEASE-AUDIT.md). [Prioritized release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). Any new payment tests require separate transaction authorization.
 
+Fresh real-UI checkout **Gate 1 PASS**: the seller created order `0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd` through Dealza and MetaMask (user-reported), independently verified on two RPCs in [transaction 0x057a…4567](https://sepolia.basescan.org/tx/0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567). It is Pending and unfunded; the wallet-free checkout survives refresh. Buyer allowance remains zero. [Verified terms, receipt proof and next single Gate 2 approval](docs/23-REAL-UI-GATE-1-AND-BUYER-APPROVAL.md). The remaining signed buyer/seller gates and public publication are outstanding.
+
 ### Automated frontend verification
 
 ```sh

@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-11-03T12:55:44.296Z",
+  "mode": "READ_ONLY_REAL_RECEIPT_REPLAY_IDENTITY_ADAPTER_NOT_METAMASK",
+  "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+  "updates": [
+    {
+      "phase": "pending",
+      "hash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+      "message": "Rechecking the saved transaction. No signature or payment is requested…"
+    },
+    {
+      "phase": "confirmed",
+      "hash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+      "message": "The saved transaction and its onchain effects are verified."
+    }
+  ],
+  "pendingCleared": true
+}

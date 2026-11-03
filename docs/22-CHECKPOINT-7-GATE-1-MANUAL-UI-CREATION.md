@@ -1,5 +1,7 @@
 # Checkpoint 7 — Gate 1 manual UI creation
 
+**Historical preflight. Gate 1 subsequently PASSED: see [actual creation evidence and Gate 2](23-REAL-UI-GATE-1-AND-BUYER-APPROVAL.md). Do not repeat creation. Statements below describe the earlier snapshot.**
+
 **Read-only preflight PASS. Gate 1 NOT EXECUTED.** No real MetaMask connection, signature, transaction hash or newly created order is asserted. No buyer USDC allowance/preapproval/reservation/release, delegation change, deployment, Solidity change or GitHub push was performed.
 
 ## Verified preflight
