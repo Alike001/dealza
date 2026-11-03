@@ -1,0 +1,35 @@
+{
+  "mode": "LOCAL_PRODUCTION_PREVIEW_REAL_RPC_READS_NO_WALLET",
+  "origin": "http://127.0.0.1:4173",
+  "route": "/#/order/0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f",
+  "observedDateUTC": "2026-11-03",
+  "injectedWalletPresent": false,
+  "walletConnected": false,
+  "signaturesRequested": false,
+  "transactionsSent": [],
+  "observed": {
+    "paidToSeller": true,
+    "amountUSDC": "1",
+    "reservedUSDC": "0",
+    "capturedAccountingUSDC": "1",
+    "platformFeeUSDC": "0",
+    "correctBuyerSellerReviewerAndPaymentHash": true,
+    "missingDescriptionDisclosure": true,
+    "historyLoaded": false,
+    "historyError": "History could not load: eth_getLogs is limited to a 200 range",
+    "repeatedConsoleErrorsFromHistoryRPC": true
+  },
+  "mobileWidths": [
+    {
+      "viewportWidth": 390,
+      "documentScrollWidth": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "viewportWidth": 320,
+      "documentScrollWidth": 320,
+      "horizontalOverflow": false
+    }
+  ],
+  "limitation": "Viewport emulation and read-only inspection only. No real mobile device, wallet switching, wallet confirmations or frontend-originated payment tested. The six live transactions do not establish live frontend checkout acceptance."
+}

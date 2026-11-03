@@ -1,0 +1,27 @@
+curl: (28) Operation timed out after 30000 milliseconds with 638877 out of 666033 bytes received
+PASS: 77 pinned files and complete compiled CPP ABI
+Traceback (most recent call last):
+  File "/home/ali/Desktop/vibeathon/dealza/contracts/scripts/verify_protocol.py", line 189, in <module>
+    main()
+    ~~~~^^
+  File "/home/ali/Desktop/vibeathon/dealza/contracts/scripts/verify_protocol.py", line 159, in main
+    verified = get_json(f"https://base-sepolia.blockscout.com/api/v2/smart-contracts/{address}")
+  File "/home/ali/Desktop/vibeathon/dealza/contracts/scripts/verify_protocol.py", line 27, in get_json
+    return json.loads(get_bytes(url))
+                      ~~~~~~~~~^^^^^
+  File "/home/ali/Desktop/vibeathon/dealza/contracts/scripts/verify_protocol.py", line 21, in get_bytes
+    return subprocess.check_output(
+           ~~~~~~~~~~~~~~~~~~~~~~~^
+        ["curl", "--fail", "--silent", "--show-error", "--location", "--max-time", "30", url], timeout=35
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '30', 'https://base-sepolia.blockscout.com/api/v2/smart-contracts/0xf96815976523E00e65Be8f34cA5e64b4f41EB19c']' returned non-zero exit status 28.

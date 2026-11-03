@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "note": "Operator and TokenStore native ETH zero immediately before/after release and at the recorded readback block, independently on both RPCs. Test-USDC accounting and balances are in evidence.json.",
+  "reads": [
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53885644",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53885645",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53888428",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53885644",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53885645",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://base-sepolia-rpc.publicnode.com",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53888428",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53885644",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53885645",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "operator",
+      "address": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+      "blockNumber": "53888428",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53885644",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53885645",
+      "ethWei": "0"
+    },
+    {
+      "rpc": "https://sepolia.base.org",
+      "account": "tokenStore",
+      "address": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+      "blockNumber": "53888428",
+      "ethWei": "0"
+    }
+  ]
+}

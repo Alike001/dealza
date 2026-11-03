@@ -2,9 +2,9 @@
 
 ## How to Test
 
-Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). The 1 USDC lifecycle passed on a local fork of the deployed operator; a real payment still requires separate authorization and receipt-based acceptance.
+Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). **The first controlled live 1 test-USDC lifecycle passed independent two-RPC verification**: buyer 20 USDC, seller 1 USDC, original Released, duplicate Voided, zero reserved balance and zero platform fee. [All six transactions and settlement proof](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md).
 
-Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live payment execution and frontend publication remain separate steps.
+Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live buyer-release settlement is verified; frontend publication and full wallet/browser acceptance remain outstanding.
 
 ### Run the web application
 
@@ -25,7 +25,7 @@ Try these flows:
 4. Enable Base Sepolia in the wallet. Another network shows a switch prompt and blocks payment actions. Test USDC/ETH balances, when connected, are real public contract reads; missing reads show an error or dash, never an invented zero.
 5. Open **How it works** to review the reviewer/expiry/cancellation rules. Checkout URLs load real orders from the configured deployment; an unknown or invalid ID shows an error.
 
-These browsing and draft checks require no signatures or spending. Follow the [first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) only after separate authorization of the listed transactions.
+These browsing and draft checks require no signatures or spending. To inspect the settled order locally, open `/#/order/0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f`. It reads **Paid to seller**, 0 reserved and 1 captured. **Known release blocker:** event history currently fails because the default RPC limits log queries to 200 blocks and the app requests 1,000. [Prioritized release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). Any new payment tests require separate transaction authorization.
 
 ### Automated frontend verification
 
@@ -80,21 +80,21 @@ The application cannot verify physical delivery and does not guarantee reviewer 
 
 ## Centralized Base Sepolia configuration
 
-| Configuration | Value |
-| --- | --- |
-| Chain | Base Sepolia, `84532` |
-| Existing CPP escrow | `0xf96815976523E00e65Be8f34cA5e64b4f41EB19c` |
-| Existing pre-approval collector | `0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea` |
-| Circle test USDC | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` (6 decimals) |
-| CPP version | v1.1.0, commit `6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9` |
-| DealzaOperator | `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block `53676176` |
-| Deployment transaction | `0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1` |
+| Configuration                   | Value                                                                |
+| ------------------------------- | -------------------------------------------------------------------- |
+| Chain                           | Base Sepolia, `84532`                                                |
+| Existing CPP escrow             | `0xf96815976523E00e65Be8f34cA5e64b4f41EB19c`                         |
+| Existing pre-approval collector | `0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea`                         |
+| Circle test USDC                | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` (6 decimals)            |
+| CPP version                     | v1.1.0, commit `6b0a5ef3f0df973857f558e2d6b5dd645b5e97f9`            |
+| DealzaOperator                  | `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block `53676176`       |
+| Deployment transaction          | `0x73c6b79e93387e6e0f69ceae5185f6a9049ef8fbb2526ada2c70f145e1b96fe1` |
 
 Frontend network configuration: `web/src/lib/config.ts`. Deployment identity: `contracts/config/base-sepolia.deployment.json`. Protocol identity is reused from the verified protocol evidence; ABIs/runtime hash are in `web/src/lib/contracts.generated.ts`.
 
 An optional **public browser RPC** can be set as `VITE_BASE_SEPOLIA_RPC_URL` in `web/.env.local`. `VITE_` values are exposed to every browser visitor: never put a wallet key, seed phrase, secret API credential, or backend token there. The default is `https://sepolia.base.org`. The app verifies chain ID and contract code/configuration before writes; there is no mainnet execution path.
 
-## First real payment and remaining acceptance
+## Verified first live payment and remaining acceptance
 
 The deployed runtime, creation input, receipt, pinned protocol configuration, USDC implementation, and absence of operator admin/upgrade powers are independently checked. The frontend reads the actual address and block from the shared deployment record. Reproduce the read-only verification and isolated simulation:
 
@@ -106,7 +106,9 @@ python3 scripts/verify_live_deployment.py --simulate --output-dir ../docs/verifi
 
 This tool has no public send/sign mode. Its six payment transactions run only on an internally allocated loopback fork, with actual funded participant balances and the existing deployed operator. It neither redeploys nor adds gas/tokens.
 
-[The first-payment runbook](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) gives the six MetaMask confirmations, the two seller rejection checks that use read-only calls, expected balances/events, and recovery rules. Run it after separate authorization, record genuine live receipts, and complete browser acceptance before calling the application fully validated. Other real lifecycle branches and frontend publication remain outstanding.
+[The completed live lifecycle](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md) records all six canonical transactions, decoded events, historical balances, buyer authorization and duplicate-release rejection. Release [`0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53`](https://base-sepolia.blockscout.com/tx/0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53) mined in block **53885645** on **2026-11-03 at 09:43:17 UTC**. CPP `PaymentCaptured`, a single TokenStore-to-seller transfer of **1,000,000 raw USDC**, and buyer-authorized `OrderReleased` prove settlement. CPP remaining refundable accounting is not retained refund liquidity.
+
+Reproduce the read-only settlement verification after `forge build`: `node web/scripts/verify-complete-payment.mjs`. [The earlier runbook](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md) is historical preparation. Real frontend checkout, wallet switching, physical mobile acceptance, funded cancellation/dispute/expiry-recovery live branches and frontend publication remain outstanding; see the [release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md).
 
 For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Publishing commands have deliberately not been run.
 

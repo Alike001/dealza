@@ -1,0 +1,62 @@
+{
+  "contractTests": {
+    "command": "forge test",
+    "exitCode": 0,
+    "passed": 46
+  },
+  "forkTests": {
+    "command": "FOUNDRY_PROFILE=fork forge test",
+    "exitCode": 0,
+    "passed": 36
+  },
+  "frontendTests": {
+    "command": "npm test",
+    "exitCode": 0,
+    "passed": 121
+  },
+  "scriptTests": {
+    "command": "python3 -m unittest discover -s contracts/scripts -p 'test_*.py'",
+    "exitCode": 0,
+    "passed": 13
+  },
+  "productionBuild": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "includes": [
+      "ABI source checks",
+      "TypeScript",
+      "Vite production build"
+    ]
+  },
+  "offlineProtocol": {
+    "command": "python3 scripts/verify_protocol.py",
+    "exitCode": 0,
+    "pinnedFiles": 77
+  },
+  "onlineProtocolInitial": {
+    "exitCode": 1,
+    "reason": "Explorer curl timeout; retained protocol-check.txt"
+  },
+  "onlineProtocolIPv4Retry": {
+    "exitCode": 0,
+    "log": "protocol-online-retry.txt",
+    "runtimeReport": "protocol-runtime.json"
+  },
+  "settlementVerifier": {
+    "command": "node web/scripts/verify-complete-payment.mjs",
+    "exitCode": 0,
+    "result": "PASS"
+  },
+  "browser": {
+    "result": "INCOMPLETE_PUBLIC_RELEASE_ACCEPTANCE",
+    "liveOrderState": "Paid to seller",
+    "knownFailure": "Default RPC rejects frontend 1000-block eth_getLogs requests; 200-block limit",
+    "walletPresent": false
+  },
+  "git": {
+    "diffWhitespaceCheck": "PASS",
+    "solidityChangedByThisTask": false,
+    "preexistingWorkPreserved": true,
+    "pushPerformed": false
+  }
+}
