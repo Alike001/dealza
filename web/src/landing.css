@@ -429,3 +429,82 @@
     padding: 22px;
   }
 }
+
+/* A direct path to genuine evidence for first-time visitors. */
+.real-payment-entry {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  max-width: 540px;
+}
+.real-payment-entry > a {
+  min-height: 44px;
+  font-weight: 600;
+  text-underline-offset: 5px;
+}
+.real-payment-entry p {
+  font-size: 0.87rem;
+  color: var(--muted);
+  margin: 8px 0 0;
+  line-height: 1.65;
+}
+.faq-list > details {
+  border-top: 1px solid var(--border);
+}
+.faq-list summary {
+  padding: 18px 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.faq-list summary:hover {
+  color: #466335;
+}
+.faq-list details[open] summary {
+  padding-bottom: 8px;
+}
+.faq-list details > p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 0 4px 20px;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .landing-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 58px;
+  }
+  .landing-hero-copy {
+    max-width: 650px;
+  }
+  .landing-hero h1 {
+    max-width: 650px;
+    font-size: clamp(2.6rem, 6.6vw, 4rem);
+  }
+  .agreement-diagram {
+    width: calc(100% - 12px);
+    max-width: 530px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 390px) {
+  .agreement-diagram {
+    padding: 18px;
+  }
+  .diagram-terms {
+    padding: 20px 16px;
+  }
+  .diagram-terms h2 {
+    font-size: 1.75rem;
+  }
+  .diagram-money {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .landing-hero .button-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

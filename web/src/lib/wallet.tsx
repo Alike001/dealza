@@ -33,7 +33,7 @@ export type WalletState = {
   connecting: boolean;
   error: string;
   select(id: string): void;
-  connect(): Promise<void>;
+  connect(id?: string): Promise<void>;
   switchNetwork(): Promise<void>;
   disconnect(): void;
 };
@@ -75,16 +75,24 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState("");
   const [connecting, setConnecting] = useState(false);
-  const ignored = useRef(false);
+  // Discovery never selects an account or restores a different provider implicitly.
+  const ignored = useRef(true);
   const generation = useRef(0);
+  const connectionPending = useRef(false);
   const provider = choices.find((choice) => choice.id === selected)?.provider;
   useEffect(() => {
     const add = (choice: WalletChoice) => {
-      setChoices((old) =>
-        old.some((x) => x.provider === choice.provider)
-          ? old
-          : [...old, choice],
-      );
+      setChoices((old) => {
+        const existing = old.find((x) => x.provider === choice.provider);
+        // Late EIP-6963 announcements improve the fallback label without changing identity.
+        if (existing)
+          return choice.id.startsWith("injected-")
+            ? old
+            : old.map((x) =>
+                x === existing ? { ...x, name: choice.name } : x,
+              );
+        return [...old, choice];
+      });
       setSelected((old) => old || choice.id);
     };
     const announced = (event: Event) => {
@@ -108,7 +116,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     injected.forEach((p, i) =>
       add({
         id: `injected-${i}`,
-        name: window.ethereum?.isMetaMask
+        name: (p as InjectedProvider & { isMetaMask?: boolean }).isMetaMask
           ? "MetaMask"
           : `Browser wallet ${i + 1}`,
         provider: p,
@@ -118,68 +126,113 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       window.removeEventListener("eip6963:announceProvider", announced);
   }, []);
   const refresh = useCallback(
-    async (requestAccess = false) => {
-      if (!provider)
+    async (target = provider, requestAccess = false) => {
+      if (!target)
         throw new Error(
           "Install MetaMask or another compatible browser wallet, then reload this page.",
         );
       const version = ++generation.current;
-      const accounts = await provider.request({
-        method: requestAccess ? "eth_requestAccounts" : "eth_accounts",
-      });
-      const chainId = Number(await provider.request({ method: "eth_chainId" }));
+      let accounts: unknown;
+      let chainId: number;
+      try {
+        accounts = await target.request({
+          method: requestAccess ? "eth_requestAccounts" : "eth_accounts",
+        });
+        chainId = Number(await target.request({ method: "eth_chainId" }));
+      } catch (e) {
+        if (version !== generation.current || ignored.current) return;
+        throw e;
+      }
       if (version !== generation.current || ignored.current) return;
       if (
         Array.isArray(accounts) &&
         typeof accounts[0] === "string" &&
         isAddress(accounts[0])
       )
-        setSession({ account: getAddress(accounts[0]), chainId, provider });
-      else setSession(null);
+        setSession({
+          account: getAddress(accounts[0]),
+          chainId,
+          provider: target,
+        });
+      else {
+        setSession(null);
+        if (requestAccess)
+          throw new Error(
+            "No account was shared. Choose an account in your wallet and try again.",
+          );
+      }
     },
     [provider],
   );
   useEffect(() => {
-    ignored.current = false;
     setSession(null);
     const change = () => {
-      if (!ignored.current)
+      if (!ignored.current) {
+        setSession(null);
         void refresh().catch((e) => {
           setSession(null);
           setError(friendlyError(e));
         });
+      }
     };
     const disconnect = () => {
+      ignored.current = true;
       generation.current++;
       setSession(null);
     };
     if (provider) {
-      change();
+      if (!connectionPending.current && !ignored.current) change();
       provider.on?.("accountsChanged", change);
       provider.on?.("chainChanged", change);
       provider.on?.("disconnect", disconnect);
     }
     return () => {
-      generation.current++;
       provider?.removeListener?.("accountsChanged", change);
       provider?.removeListener?.("chainChanged", change);
       provider?.removeListener?.("disconnect", disconnect);
     };
   }, [provider, refresh]);
-  const connect = async () => {
+  useEffect(
+    () => () => {
+      generation.current++;
+    },
+    [],
+  );
+  const select = (id: string) => {
+    if (connectionPending.current) return;
+    generation.current++;
+    ignored.current = true;
+    setSession(null);
+    setError("");
+    setSelected(id);
+  };
+  const connect = async (id = selected) => {
+    if (connectionPending.current) return;
+    const target = choices.find((choice) => choice.id === id)?.provider;
+    if (!target) {
+      setError(
+        "That wallet is no longer available. Choose a detected wallet and try again.",
+      );
+      return;
+    }
+    connectionPending.current = true;
+    setSelected(id);
+    setSession(null);
     setConnecting(true);
     setError("");
     ignored.current = false;
     try {
-      await refresh(true);
+      await refresh(target, true);
     } catch (e) {
       setError(friendlyError(e));
     } finally {
+      connectionPending.current = false;
       setConnecting(false);
     }
   };
   const switchNetwork = async () => {
     if (!provider) return;
+    const version = generation.current;
     setError("");
     try {
       try {
@@ -206,9 +259,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
           params: [{ chainId: "0x14a34" }],
         });
       }
-      await refresh();
+      if (version === generation.current && !ignored.current) await refresh();
     } catch (e) {
-      setError(friendlyError(e));
+      if (version === generation.current && !ignored.current)
+        setError(friendlyError(e));
     }
   };
   return (
@@ -219,7 +273,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         selected,
         connecting,
         error,
-        select: setSelected,
+        select,
         connect,
         switchNetwork,
         disconnect: () => {

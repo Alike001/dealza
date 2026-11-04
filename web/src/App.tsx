@@ -1,3 +1,4 @@
+import { completedPaymentHref } from "./lib/completedPayment";
 import { useEffect, useState } from "react";
 import { PendingTransaction } from "./components/PendingTransaction";
 import { WalletControl } from "./components/WalletControl";
@@ -33,6 +34,28 @@ function Help({ api }: { api: PaymentGateway }) {
         </p>
       </SectionTitle>
       <section className="panel help-content">
+        <h2>How to test in two minutes</h2>
+        <ol>
+          <li>
+            <a href={completedPaymentHref}>View a real completed payment</a>. No
+            wallet is needed. Check the matching terms, buyer, seller, reviewer
+            and verified payment state.
+          </li>
+          <li>
+            Inspect the transaction history and receipt links. The controlled
+            test captured 1 test USDC; no physical delivery occurred.
+          </li>
+          <li>
+            Try <a href="#/create">creating a local draft</a>. Saving a draft
+            does not create an onchain order.
+          </li>
+        </ol>
+        <p>
+          Wallet connection only shares an address. Allowance, payment terms
+          authorization, reservation, seller acknowledgment and buyer release
+          are separate wallet transactions. A submitted request is not verified
+          settlement.
+        </p>
         <h2>For sellers</h2>
         <p>
           Create an agreement for a specific buyer wallet. You choose a reviewer
@@ -252,6 +275,7 @@ export default function App({ api = gateway }: { api?: PaymentGateway }) {
         </div>
         <div className="footer-links">
           <a href="#/orders">Your orders</a>
+          <a href={completedPaymentHref}>View a real completed payment</a>
           <a href="#/help">Safeguards & limitations</a>
           <a
             href="https://github.com/base/commerce-payments/tree/v1.1.0"

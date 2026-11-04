@@ -2,13 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import type { PaymentGateway } from "../lib/gateway";
 import { useWallet } from "../lib/wallet";
 import { friendlyError, money, shortAddress } from "../lib/domain";
-import { AddressLink, eth, Icon } from "./common";
+import { AddressLink, CopyButton, eth, Icon } from "./common";
 
 export function WalletControl({ api }: { api: PaymentGateway }) {
   const wallet = useWallet();
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
+  const container = useRef<HTMLDivElement>(null);
+  const requested = useRef(false);
+  const [balanceAttempt, setBalanceAttempt] = useState(0);
+  useEffect(() => {
+    if (requested.current && !wallet.connecting) {
+      requested.current = false;
+      if (wallet.session && open) {
+        setOpen(false);
+        trigger.current?.focus();
+      }
+    }
+  }, [wallet.connecting, wallet.session, open]);
   const close = () => {
     setOpen(false);
     trigger.current?.focus();
@@ -22,10 +34,20 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
         trigger.current?.focus();
       }
     };
+    const outside = (event: PointerEvent) => {
+      if (!container.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const focusAway = (event: FocusEvent) => {
+      if (!container.current?.contains(event.target as Node)) setOpen(false);
+    };
     const navigate = () => setOpen(false);
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("focusin", focusAway);
     window.addEventListener("keydown", escape);
     window.addEventListener("hashchange", navigate);
     return () => {
+      document.removeEventListener("pointerdown", outside);
+      document.removeEventListener("focusin", focusAway);
       window.removeEventListener("keydown", escape);
       window.removeEventListener("hashchange", navigate);
     };
@@ -56,17 +78,29 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
     wallet.session?.account,
     wallet.session?.chainId,
     wallet.session?.provider,
+    balanceAttempt,
   ]);
   return (
-    <div className="wallet-control">
+    <div className="wallet-control" ref={container}>
       <button
         ref={trigger}
         className="button wallet-button"
+        aria-label={
+          wallet.session
+            ? `Wallet connected: ${wallet.session.account}. Open wallet details`
+            : "Connect wallet"
+        }
         aria-controls="wallet-panel"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
-        <Icon name="wallet" size={17} />
+        {wallet.session ? (
+          <span
+            className={`wallet-dot ${wallet.session.chainId !== 84532 ? "wrong-network" : ""}`}
+          />
+        ) : (
+          <Icon name="wallet" size={17} />
+        )}
         {wallet.session
           ? shortAddress(wallet.session.account)
           : "Connect wallet"}
@@ -80,6 +114,14 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
           aria-label="Wallet connection"
         >
           <h2>{wallet.session ? "Your wallet" : "Choose your wallet"}</h2>
+          {wallet.session && (
+            <p className="wallet-connected" role="status">
+              Connected ·{" "}
+              {wallet.choices.find(
+                (c) => c.provider === wallet.session?.provider,
+              )?.name || "Browser wallet"}
+            </p>
+          )}
           {!wallet.choices.length && (
             <p>
               No injected wallet found. Install{" "}
@@ -90,33 +132,39 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
               >
                 MetaMask
               </a>{" "}
-              or another compatible browser wallet, then reload. On mobile, open
-              this page inside your wallet’s browser.
+              or another compatible browser wallet, then reload. External
+              mobile-wallet connection is not integrated. Wallet in-app browsers
+              have not been verified.
             </p>
           )}
           {!wallet.session && wallet.choices.length > 0 && (
             <>
-              <label htmlFor="wallet-choice">Browser wallet</label>
-              <select
-                id="wallet-choice"
-                value={wallet.selected}
-                onChange={(e) => wallet.select(e.target.value)}
+              <div
+                className="wallet-choices"
+                aria-label="Detected browser wallets"
               >
                 {wallet.choices.map((choice) => (
-                  <option key={choice.id} value={choice.id}>
-                    {choice.name}
-                  </option>
+                  <button
+                    key={choice.id}
+                    className="button secondary wallet-choice"
+                    disabled={wallet.connecting}
+                    onClick={() => {
+                      requested.current = true;
+                      void wallet.connect(choice.id);
+                    }}
+                  >
+                    <Icon name="wallet" size={18} />
+                    {wallet.connecting && wallet.selected === choice.id
+                      ? `Connecting to ${choice.name}…`
+                      : `Connect ${choice.name}`}
+                  </button>
                 ))}
-              </select>
-              <button
-                className="button"
-                disabled={wallet.connecting}
-                onClick={() => void wallet.connect()}
-              >
-                {wallet.connecting
-                  ? "Waiting for wallet…"
-                  : "Connect selected wallet"}
-              </button>
+              </div>
+              {wallet.connecting && (
+                <p role="status">
+                  Choose an account in your wallet. Waiting for permission…
+                </p>
+              )}
               <p className="field-help">
                 Connection shares your public address. It does not sign or pay
                 anything.
@@ -126,6 +174,11 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
           {wallet.session && (
             <>
               <AddressLink value={wallet.session.account} full />
+              <CopyButton
+                key={wallet.session.account}
+                value={wallet.session.account}
+                label="Copy wallet address"
+              />
               <p className="field-help">
                 {wallet.session.chainId === 84532
                   ? "Connected to Base Sepolia"
@@ -157,6 +210,14 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
                   Balance read failed: {error}
                 </p>
               )}
+              {error && (
+                <button
+                  className="text-button"
+                  onClick={() => setBalanceAttempt((n) => n + 1)}
+                >
+                  Retry balances
+                </button>
+              )}
               <button
                 className="button secondary"
                 onClick={() => {
@@ -167,13 +228,14 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
                 Disconnect this session
               </button>
               <p className="field-help">
+                To use another wallet, disconnect this session and choose again.
                 You can revoke this site’s access separately in your wallet.
               </p>
             </>
           )}
           {wallet.error && (
             <p role="alert" className="inline-error">
-              {wallet.error}
+              {wallet.error} You can choose a wallet and try again.
             </p>
           )}
           <button className="text-button close-wallet" onClick={close}>

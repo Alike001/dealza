@@ -1,3 +1,4 @@
+import { completedPaymentHref } from "../lib/completedPayment";
 import { useState, type FormEvent } from "react";
 import type { Address } from "viem";
 import type { PaymentGateway } from "../lib/gateway";
@@ -147,6 +148,11 @@ export function OrdersDashboard({ api }: { api: PaymentGateway }) {
           records from Base Sepolia.
         </p>
       </SectionTitle>
+      <p className="judge-entry">
+        First visit?{" "}
+        <a href={completedPaymentHref}>View a real completed payment</a> without
+        connecting, or paste a shared checkout link below.
+      </p>
       {!api.deployment && <PendingIntegration />}
       <section className="workspace panel">
         <div className="workspace-heading">

@@ -114,7 +114,9 @@ export function CopyButton({
       await navigator.clipboard.writeText(value);
       setMessage("Copied");
     } catch {
-      setMessage("Copy is unavailable. Select the link below.");
+      setMessage(
+        "Copy is unavailable. Select and copy the displayed address or link.",
+      );
     }
   };
   return (

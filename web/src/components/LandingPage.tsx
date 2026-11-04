@@ -1,3 +1,4 @@
+import { completedPaymentHref } from "../lib/completedPayment";
 import type { PaymentGateway } from "../lib/gateway";
 import { LandingDetails } from "./LandingDetails";
 import { Icon, PendingIntegration } from "./common";
@@ -48,6 +49,16 @@ export function LandingPage({ api }: { api: PaymentGateway }) {
             <a className="underlined-link" href="#/orders">
               Open your orders
             </a>
+          </div>
+          <div className="real-payment-entry">
+            <a className="underlined-link" href={completedPaymentHref}>
+              View a real completed payment <Icon name="arrow" size={18} />
+            </a>
+            <p>
+              No wallet needed. Inspect the terms, participants and onchain
+              receipts of a controlled 1 test-USDC payment. No physical delivery
+              occurred.
+            </p>
           </div>
           <p className="hero-caption">
             Base Sepolia demo · Test USDC only · No platform fee

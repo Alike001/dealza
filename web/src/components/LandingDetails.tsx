@@ -184,14 +184,14 @@ export function LandingDetails() {
             <em>Clear answers.</em>
           </h2>
         </div>
-        <dl className="faq-list">
+        <div className="faq-list">
           {questions.map(([question, answer]) => (
-            <div key={question}>
-              <dt>{question}</dt>
-              <dd>{answer}</dd>
-            </div>
+            <details key={question}>
+              <summary>{question}</summary>
+              <p>{answer}</p>
+            </details>
           ))}
-        </dl>
+        </div>
       </section>
     </>
   );

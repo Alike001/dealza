@@ -1,3 +1,4 @@
+import { CompletedPaymentEvidence } from "./CompletedPaymentEvidence";
 import {
   ActionExplanation,
   FundingSteps,
@@ -459,6 +460,7 @@ export function OrderPage({
                     {loading ? "Refreshing…" : "Refreshes every 15 seconds."}
                   </p>
                 </section>
+                <CompletedPaymentEvidence id={id} />
                 <section className="panel">
                   <div className="panel-heading">
                     <Icon name="link" />
@@ -546,26 +548,35 @@ export function OrderPage({
                 <section className="panel action-panel">
                   <span className="eyebrow">YOUR NEXT STEP</span>
                   <h2>
-                    {!wallet.session
-                      ? "Connect to take part."
-                      : sameAddress(
-                            wallet.session.account,
-                            s.order.payment.payer,
-                          )
-                        ? "You’re the buyer."
+                    {s.order.status === 4
+                      ? "Payment complete."
+                      : !wallet.session
+                        ? "Connect to take part."
                         : sameAddress(
                               wallet.session.account,
-                              s.order.payment.receiver,
+                              s.order.payment.payer,
                             )
-                          ? "You’re the seller."
+                          ? "You’re the buyer."
                           : sameAddress(
                                 wallet.session.account,
-                                s.order.reviewer,
+                                s.order.payment.receiver,
                               )
-                            ? "You’re the reviewer."
-                            : "Viewing this order."}
+                            ? "You’re the seller."
+                            : sameAddress(
+                                  wallet.session.account,
+                                  s.order.reviewer,
+                                )
+                              ? "You’re the reviewer."
+                              : "Viewing this order."}
                   </h2>
-                  {!wallet.session && (
+                  {s.order.status === 4 && (
+                    <p>
+                      The seller has been paid. Inspect the terms, participants
+                      and receipts; no further payment is needed. Payment
+                      receipts do not prove physical delivery.
+                    </p>
+                  )}
+                  {!wallet.session && s.order.status !== 4 && (
                     <p>
                       You can read this order without connecting. Use the named
                       buyer, seller, or reviewer wallet to take its permitted
