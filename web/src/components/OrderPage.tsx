@@ -1,3 +1,8 @@
+import {
+  ActionExplanation,
+  FundingSteps,
+  StateExplanation,
+} from "./PaymentGuidance";
 import { usePendingRequest } from "../lib/usePendingRequest";
 import { useHistory } from "../lib/useHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -237,8 +242,8 @@ export function OrderPage({
     }
   }
   return (
-    <main id="main" className="page">
-      <a href="#/" className="back">
+    <main id="main" tabIndex={-1} className="page">
+      <a href="#/orders" className="back">
         ← All orders
       </a>
       <SectionTitle
@@ -310,6 +315,26 @@ export function OrderPage({
                   <p className="price-caption">
                     Test USDC on Base Sepolia · Platform fee 0 USDC
                   </p>
+                  <div className="checkout-deadline">
+                    <Icon name="clock" size={18} />
+                    <div>
+                      <span>Release / review deadline</span>
+                      <strong>
+                        {dateTime(s.order.payment.authorizationExpiry)}
+                      </strong>
+                    </div>
+                  </div>
+                  {!error &&
+                    [
+                      "Paid to seller",
+                      "Cancelled",
+                      "Recovered by buyer",
+                      "Recovery available",
+                      "In review",
+                      "Payment reserved",
+                      "Payment window closed",
+                      "Awaiting payment",
+                    ].includes(status) && <StateExplanation snapshot={s} />}
                   <div className="terms-block">
                     <h2>The agreed terms</h2>
                     {matchedTerms ? (
@@ -440,9 +465,9 @@ export function OrderPage({
                     <h2>Verifiable order history</h2>
                   </div>
                   <p className="field-help">
-                    Confirmed contract events, including direct expiry recovery.
-                    Delivery claims are evidence submissions, not delivery
-                    verification.
+                    Confirmed contract events from the configured operator and
+                    protocol, including direct expiry recovery. Delivery claims
+                    are evidence submissions, not delivery verification.
                   </p>
                   {historyLoading && (
                     <p role="status">Reading confirmed activity…</p>
@@ -565,11 +590,7 @@ export function OrderPage({
                     s.order.status === 1 && (
                       <div className="funding-checklist">
                         <h3>Reserve in three wallet steps</h3>
-                        <p>
-                          {s.allowance >= s.order.payment.maxAmount ? "✓" : "1"}{" "}
-                          Exact allowance · {s.preApproved ? "✓" : "2"} Terms
-                          authorization · 3 Reserve
-                        </p>
+                        <FundingSteps snapshot={s} />
                         <p>
                           Buyer balance: {money(s.buyerBalance)} test USDC.{" "}
                           {s.buyerGas === 0n
@@ -675,17 +696,7 @@ export function OrderPage({
                       aria-label="Review wallet action"
                     >
                       <h3>{labels[proposed]}</h3>
-                      <p>
-                        {["release", "resolveRelease"].includes(proposed)
-                          ? `This sends ${money(s.order.payment.maxAmount)} USDC to the seller. After capture, Dealza cannot guarantee a refund.`
-                          : proposed === "fund"
-                            ? `This reserves ${money(s.order.payment.maxAmount)} USDC in the payment protocol. It does not release payment to the seller.`
-                            : ["reclaim", "resolveVoid", "cancel"].includes(
-                                  proposed,
-                                )
-                              ? "Any uncaptured reserved USDC returns to the recorded buyer. Already captured funds cannot be returned through this action."
-                              : "Review the exact recipient and details in your wallet before confirming."}
-                      </p>
+                      <ActionExplanation action={proposed} snapshot={s} />
                       <div className="button-row">
                         <button
                           className="button"

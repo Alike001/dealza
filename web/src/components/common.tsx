@@ -141,8 +141,14 @@ export function TransactionNotice({ tx }: { tx: TxState }) {
         {tx.phase === "error"
           ? "Action not completed"
           : tx.phase === "confirmed"
-            ? "Receipt confirmed"
-            : "Your transaction"}
+            ? tx.hash
+              ? "Receipt and effects verified"
+              : "Agreement verified"
+            : tx.phase === "pending"
+              ? "Transaction submitted — verification pending"
+              : tx.phase === "signature"
+                ? "Review in your wallet"
+                : "Checking before continuing"}
       </strong>
       <p>{tx.message}</p>
       {tx.hash && (

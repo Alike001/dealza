@@ -27,6 +27,7 @@ import {
 
 describe("pending integration and routing", () => {
   it("shows an explicit pending state without inventing orders or balances", () => {
+    window.location.hash = "/orders";
     const gateway = api({ deployment: null });
     render(
       <WalletContext.Provider value={wallet(null)}>
@@ -53,6 +54,7 @@ describe("pending integration and routing", () => {
     expect(gateway.loadOrder).not.toHaveBeenCalled();
   });
   it("rejects malformed order links instead of making a chain request", async () => {
+    window.location.hash = "/orders";
     const user = userEvent.setup(),
       gateway = api({ deployment: null });
     render(

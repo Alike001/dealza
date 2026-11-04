@@ -133,6 +133,9 @@ function ScopedCreateOrder({
       );
     }
   };
+  useEffect(() => {
+    if (terms) document.getElementById("review-heading")?.focus();
+  }, [terms]);
   const create = async () => {
     if (
       !terms ||
@@ -181,8 +184,8 @@ function ScopedCreateOrder({
     }
   };
   return (
-    <main id="main" className="page narrow-page">
-      <a className="back" href="#/">
+    <main id="main" tabIndex={-1} className="page narrow-page">
+      <a className="back" href="#/orders">
         ← All orders
       </a>
       <SectionTitle eyebrow="FOR THE SELLER" title="Start with clear terms.">
@@ -222,7 +225,7 @@ function ScopedCreateOrder({
           <form className="panel order-form" onSubmit={review}>
             <div className="panel-heading">
               <span className="step-number">01</span>
-              <h2>The agreement</h2>
+              <h2>The agreement & amount</h2>
             </div>
             <label htmlFor="description">What is this order for?</label>
             <textarea
@@ -289,7 +292,7 @@ function ScopedCreateOrder({
             </p>
             <div className="panel-heading sub">
               <span className="step-number">03</span>
-              <h2>The time window</h2>
+              <h2>The deadlines</h2>
             </div>
             <label htmlFor="funding">Buyer must reserve by</label>
             <input
@@ -367,7 +370,9 @@ function ScopedCreateOrder({
           aria-labelledby="review-heading"
         >
           <span className="eyebrow">REVIEW BEFORE YOU CREATE</span>
-          <h2 id="review-heading">{money(terms.amount)} test USDC</h2>
+          <h2 id="review-heading" tabIndex={-1}>
+            {money(terms.amount)} test USDC
+          </h2>
           <p className="terms-text">{terms.description}</p>
           <dl className="details">
             <dt>Seller receives</dt>

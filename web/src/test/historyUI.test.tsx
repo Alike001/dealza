@@ -100,6 +100,7 @@ describe("history presentation and interruption", () => {
     await waitFor(() => expect(gateway.activity).toHaveBeenCalledTimes(2));
   });
   it("renders current Released and Voided summaries and prevents stale discovery after switching", async () => {
+    window.location.hash = "/orders";
     const user = userEvent.setup();
     let finish!: (x: unknown) => void;
     const item = {
