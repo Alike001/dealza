@@ -1,0 +1,31 @@
+{
+  "testedSourceCommit": "aa33e2f815a8ed831e2c38948a130b60b1b0115b",
+  "branch": "main",
+  "nodeVersion": "v24.14.1",
+  "frontendTests": 234,
+  "originalFrontendBaseline": 226,
+  "contractTests": 46,
+  "forkTests": 36,
+  "pythonTests": 13,
+  "build": "PASS",
+  "abiProvenance": "PASS",
+  "format": "PASS",
+  "genuineHistoricalCheckoutReceiptReplay": "6 of 6 PASS, no signing or broadcast",
+  "browserWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "publicPublication": "PENDING: no remote, push or deployment",
+  "buildArtifactsSHA256": {
+    "_headers": "8eee0f17f993febb060664d8de04227a8a1f06c13f50dd5fd6b02b8fa4c21bd7",
+    "assets/ccip-DJHf6OSm.js": "242263e8076f624d76857a8b09056a96bafce14a51024ee62ceb5cdab02f1689",
+    "assets/chainGateway-C0P9VEQ0.js": "a68e27666096ca0ec4357deae032339a67fd8a05f3cbc439e34fbe6e38abdf63",
+    "assets/index-B3Wrsfnx.css": "bf25ce7f773ed0eac0dda58bbf96f95204dcdde0097620e7e5823a4eef952645",
+    "assets/index-D6KE517v.js": "52022469069b6edff8c0b59607ec92a3866e1c1018ff8916a8b06216712a8dcd",
+    "assets/secp256k1-BzUQgJ5z.js": "0aef05206185a330e6e2e1458df65bf6f886cf44e169ee34a18c9828ecedad2a",
+    "favicon.svg": "088dc5a22c5d6a99cf1f7333a75a26208818a2ee89ec59d3b83e437b967c422a",
+    "index.html": "d936c377481045ea2f9411893afcf157e2f34704c0aaa7053d399c9a785dbf01"
+  }
+}

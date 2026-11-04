@@ -1,5 +1,9 @@
 # Dealza
 
+**Clear agreements. Human decisions.** Make online deals clearer before money moves. Dealza gives social-commerce buyers and sellers explicit USDC payment terms, a shareable checkout, and a named reviewer. This release is a **Base Sepolia testnet demo**.
+
+Repository target: **Alike001/dealza** · default/production branch: **main**. Publication remains manual.
+
 **Complete real MetaMask UI checkout verified on Base Sepolia: all six gates PASS.** Final release [`0x6408…c023`](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023): buyer **19 USDC**, seller **2 USDC**, reserve **0**, captured **1 USDC**, fee **0**, order **Released**. Controlled test; no physical delivery occurred. [Complete evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) · [Release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). **Website and GitHub publication have not been performed by this audit.**
 
 ## How to Test
@@ -23,7 +27,7 @@ Open the Local URL printed by Vite, normally `http://127.0.0.1:5173`. No wallet,
 
 Try these flows:
 
-1. Open the home page: the verified operator is configured. Connect a wallet to discover its real orders.
+1. Open `/#/` for the public product explanation. Open **Your orders** (`/#/orders`) to connect a wallet and discover its real orders. The verified operator is already configured.
 2. Select **Create an order**, enter terms, amount, named buyer/reviewer addresses and deadlines, and **Save draft**. The draft stays on this device; it creates no order or payment.
 3. Open **Connect wallet**. Without an injected wallet, the app explains how to use MetaMask or a compatible wallet. Mobile users can open the page in their wallet’s browser. Connection shares a public address; it does not sign a transaction.
 4. Enable Base Sepolia in the wallet. Another network shows a switch prompt and blocks payment actions. Test USDC/ETH balances, when connected, are real public contract reads; missing reads show an error or dash, never an invented zero.
@@ -33,6 +37,25 @@ Try these flows:
 These browsing and draft checks require no signatures or spending. To inspect the settled order locally, open `/#/order/0x610384701397935f144496cca9496417e029c7d9089f019993da4373a618769f`. It reads **Paid to seller**, 0 reserved and 1 captured. **History now passes real Base Sepolia checks:** both orders show current Released/Voided state, and older activity links to the verified final receipt. Use **Load earlier activity** to reach older records; refreshing starts a fresh recent window. [Checkpoint 5 evidence and audit](docs/19-CHECKPOINT-5-HISTORY-AND-RELEASE-AUDIT.md). [Prioritized release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). Any new payment tests require separate transaction authorization.
 
 Fresh real UI checkout **Gates 1–6 PASS** for order `0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd`. The buyer/seller report using the actual Dealza frontend and MetaMask; canonical receipts, exact inner routed calls, pinned events, historical/current state and balances are independently verified. The settled shared checkout survives refresh; its history exposes the genuine final transaction and the completed buyer has no release action. [Six transaction hashes, balance movements, screenshot and frontend fix](docs/27-COMPLETE-REAL-UI-CHECKOUT.md). No further payment is needed for this demonstration.
+
+### Base Sepolia setup and roles
+
+- Enable **Base Sepolia (chain 84532)** in MetaMask or a compatible injected wallet. Never send mainnet funds to test this demo.
+- Obtain test ETH using the [official Base faucet guide](https://docs.base.org/get-started/get-funds), and test USDC from [Circle’s faucet](https://faucet.circle.com/); select **Base Sepolia**. Your wallet estimates gas. Faucet availability and limits depend on the provider.
+- Use different wallet addresses for **seller**, **named buyer**, and **agreed reviewer**. Agree on the reviewer together; the reviewer cannot be replaced.
+- The seller creates and shares the agreement. The buyer separately approves the exact collector allowance, authorizes the payment terms, and reserves USDC. Seller evidence does not release funds. The buyer releases an undisputed payment; the reviewer decides a disputed full release/return before expiry.
+- Deployed DealzaOperator: `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`. The deployment, CPP bindings, and financial contracts are unchanged.
+- No signatures are required to inspect the genuine completed checkout. Fresh payment tests require your own explicit authorization; the recorded demonstration needs no new payment.
+
+| Route                   | Purpose                                                |
+| ----------------------- | ------------------------------------------------------ |
+| `/#/`                   | Public landing page                                    |
+| `/#/orders`             | Wallet-scoped orders and shared-link opener            |
+| `/#/create`             | Draft, review, create, share                           |
+| `/#/order/<id>?terms=…` | Wallet-free checkout inspection and authorized actions |
+| `/#/help`               | Setup, safeguards, privacy and recovery limitations    |
+
+The interface distinguishes submitted transactions from receipt-and-effect verification. Preserve the full shared `terms` query. History is partial until its older windows have been checked. [Public UI implementation and validation](docs/29-PUBLIC-UI-AND-MAIN.md).
 
 ### Automated frontend verification
 
@@ -45,7 +68,7 @@ npm run preview --workspace web
 
 Production output: **`web/dist/`**. The preview command serves that output locally, normally at `http://127.0.0.1:4173`.
 
-Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. Current verification passes **226 frontend tests**, including bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
+Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. Current verification passes **234 frontend tests** (the original 226 plus eight public UI regressions). Coverage includes route and draft persistence, exact approval disclosure, keyboard focus, bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
 
 The committed frontend ABIs are generated from the existing Solidity artifacts and pinned CPP v1.1.0 ABI. Their source hashes are checked during the production build. A clean frontend build does not need generated Foundry outputs. If Solidity interfaces intentionally change, run:
 
@@ -115,7 +138,7 @@ This tool has no public send/sign mode. Its six payment transactions run only on
 
 [The completed live lifecycle](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md) records all six canonical transactions, decoded events, historical balances, buyer authorization and duplicate-release rejection. Release [`0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53`](https://base-sepolia.blockscout.com/tx/0x63f302e19c08ffae721c7b9705e322eb331132b5216dd05256a6a4789f472c53) mined in block **53885645** on **2026-11-03 at 09:43:17 UTC**. CPP `PaymentCaptured`, a single TokenStore-to-seller transfer of **1,000,000 raw USDC**, and buyer-authorized `OrderReleased` prove settlement. CPP remaining refundable accounting is not retained refund liquidity.
 
-Reproduce the current fresh-order settlement verification without a wallet: `node web/scripts/verify-ui-gate6-settlement.mjs`. It checks two RPCs, exact events/state/balances, all seven lifecycle events, the original exact approval and duplicate-release rejection. The earlier first-payment verifier/runbooks are historical and use earlier balance assumptions. [Complete real UI checkout](docs/27-COMPLETE-REAL-UI-CHECKOUT.md).
+The original settlement verifier is `web/scripts/verify-ui-gate6-settlement.mjs`; it writes to historical evidence and should not be rerun in place. Use the isolated read-only browser replay described in [the public UI report](docs/29-PUBLIC-UI-AND-MAIN.md), saving new results separately. It checks two RPCs, exact events/state/balances, all seven lifecycle events, the original exact approval and duplicate-release rejection. The earlier first-payment verifier/runbooks are historical and use earlier balance assumptions. [Complete real UI checkout](docs/27-COMPLETE-REAL-UI-CHECKOUT.md).
 
 The confirmation UI now applies the already-verified receipt-block snapshot immediately. Lagging RPC reads cannot roll it back; a failed refresh retains the last verified record, explains the delay, pauses actions and retries automatically. Saved receipt reconciliation also updates the visible order. No optimistic payment success or financial-contract changes were introduced.
 

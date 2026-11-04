@@ -1,0 +1,15 @@
+{
+  "originalHead": "f23ea57c0aca9a27c3d7494d68927b779b2c0832",
+  "historicalCommits": 22,
+  "historicalTrackedFiles": 472,
+  "originalUntrackedFiles": 54,
+  "originalUntrackedChecksumsMatch": true,
+  "privateBackupChecksumsMatch": true,
+  "backupBranch": "backup/pre-public-ui-f23ea57",
+  "mainPreservesOriginalHead": true,
+  "historicalEvidenceFilesUnchanged": 278,
+  "financialCoreUnchanged": true,
+  "remoteConfigured": false,
+  "pushPerformed": false,
+  "deploymentPerformed": false
+}

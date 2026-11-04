@@ -4,9 +4,9 @@
 
 ## Shortest path: public GitHub repository, then Vercel
 
-1. Review the final local commits and the [repository audit](verification/real-ui-gate6/repository-audit.json). The repository initially had one branch, `master`, and no remotes. Current publication commits contain the app fix, verified checkout evidence and production configuration. Historical local files outside those commits are inventoried; an ordinary Git push does not include untracked files. Do not upload the whole working directory or ignored `.env`, caches, dependencies or build folders as a repository archive.
-2. Manually create an empty **public GitHub repository** under the intended account, connect it as the remote and publish the reviewed `master` branch with your Git client. This step remains unexecuted. Do not initialize a conflicting README remotely or rewrite the reviewed history.
-3. In Vercel, create a project by importing that repository. Use repository root **`.`**, production branch **master**, Node **24.x**, and the exact settings below. Review the resulting deployment settings before manually starting publication.
+1. Review the final local commits and [public UI report](29-PUBLIC-UI-AND-MAIN.md). Local `main` preserves the original 22 commits; `backup/pre-public-ui-f23ea57` retains the original tip. All 54 historical untracked files were copied with checksums to a private directory outside the repository and remain unchanged locally. Never upload that backup or the entire working directory.
+2. Verify the intended **Alike001/dealza** repository and access first. If absent, manually create an empty public repository without a conflicting README. If it already contains history, inspect it before integrating; do not overwrite it. No remote, repository creation, push, or default-branch change on GitHub was performed by this implementation.
+3. When publication is separately authorized, connect the intended remote and publish the reviewed **main** branch without force. Verify GitHub’s default branch is **main**. In Vercel import that repository with root **`.`**, production branch **main**, Node **24.x**, and the exact settings below. Review the resulting deployment settings before manually starting publication.
 4. Use the generated HTTPS `vercel.app` production URL first. A custom domain is optional and does not block the demonstration. Confirm the production URL is accessible in a signed-out/incognito browser without Vercel authentication.
 5. Complete the public acceptance checks below, save the actual URL and screenshots, then use that URL and the genuine settlement receipt in the Vibeathon demo/submission.
 
@@ -35,7 +35,7 @@ These settings follow current [Vercel configuration documentation](https://verce
 
 ## Public acceptance — read-only, no new financial action
 
-- Open home, create/draft and help routes on the production URL. Reload them; shared order links must retain their hash/query. Check a narrow mobile viewport and copy/share behavior.
+- Open home (`/#/`), orders (`/#/orders`), create/draft and help routes on the production URL. Reload them; shared order links must retain their hash/query. Check a narrow mobile viewport and copy/share behavior.
 - Open `/#/order/0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd` with the original matching description: `Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.` Expected: **Paid to seller**, **0 USDC reserved**, **1 captured**, fee **0**.
 - Reload the settled checkout. Connect the named buyer only to inspect it; no signature or payment is needed. The completed order must expose no release/fund action. Wrong networks must remain blocked. Do not create a replacement order to test the existing result.
 - Use **Load earlier activity** until the release appears. **Release recorded** and **USDC paid to seller** must link to `0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023`, block **54007444**. Recent history is explicitly incomplete until older pages load.

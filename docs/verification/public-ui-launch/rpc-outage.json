@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "environment": "local production preview",
+  "method": "Temporarily abort real sepolia.base.org requests, observe the automatic read failure, remove interception and select Try again.",
+  "duringFailure": {
+    "status": "Paid to seller",
+    "warning": "Showing the last verified payment record. Actions are paused until a fresh read succeeds. Retrying automatically.",
+    "signatureButtons": 0
+  },
+  "afterRetry": "Paid to seller; latest-update warning cleared",
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

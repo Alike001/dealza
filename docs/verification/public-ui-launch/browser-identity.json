@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "mode": "isolated read-only identity adapter with real production frontend and public RPC; not MetaMask acceptance",
+  "completedBuyerNoRelease": true,
+  "wrongNetwork": true,
+  "sellerRoleAfterAccountChange": true,
+  "draftRetained": true,
+  "providerMethods": [
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_chainId"
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}
