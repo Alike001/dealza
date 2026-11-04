@@ -1,0 +1,86 @@
+{
+  "mode": "SIMULATED EIP-6963 providers; real production preview and public balances; no actual extension or physical wallet",
+  "widths": [
+    {
+      "width": 320,
+      "bounds": {
+        "x": 16,
+        "y": 100,
+        "width": 288,
+        "height": 324.359375
+      },
+      "scrollWidth": 320
+    },
+    {
+      "width": 390,
+      "bounds": {
+        "x": 16,
+        "y": 100,
+        "width": 358,
+        "height": 324.359375
+      },
+      "scrollWidth": 390
+    },
+    {
+      "width": 768,
+      "bounds": {
+        "x": 380,
+        "y": 55,
+        "width": 360,
+        "height": 334.359375
+      },
+      "scrollWidth": 768
+    },
+    {
+      "width": 1440,
+      "bounds": {
+        "x": 936,
+        "y": 116,
+        "width": 360,
+        "height": 334.359375
+      },
+      "scrollWidth": 1440
+    }
+  ],
+  "initialRequests": 0,
+  "connectionPanelClosed": true,
+  "accountSwitch": true,
+  "wrongNetwork": true,
+  "providerSwitch": true,
+  "requests": [
+    {
+      "wallet": "MetaMask",
+      "method": "eth_requestAccounts"
+    },
+    {
+      "wallet": "MetaMask",
+      "method": "eth_chainId"
+    },
+    {
+      "wallet": "MetaMask",
+      "method": "eth_accounts"
+    },
+    {
+      "wallet": "MetaMask",
+      "method": "eth_chainId"
+    },
+    {
+      "wallet": "MetaMask",
+      "method": "eth_accounts"
+    },
+    {
+      "wallet": "MetaMask",
+      "method": "eth_chainId"
+    },
+    {
+      "wallet": "Rabby",
+      "method": "eth_requestAccounts"
+    },
+    {
+      "wallet": "Rabby",
+      "method": "eth_chainId"
+    }
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

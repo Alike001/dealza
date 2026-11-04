@@ -1,0 +1,36 @@
+{
+  "faqKeyboardOpened": true,
+  "faqKeyboardClosed": true,
+  "completedHeading": true,
+  "receipts": [
+    {
+      "label": "Agreement created receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567"
+    },
+    {
+      "label": "Exact USDC allowance receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133"
+    },
+    {
+      "label": "Payment terms preapproved receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c"
+    },
+    {
+      "label": "USDC reserved receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b"
+    },
+    {
+      "label": "Seller acknowledgment receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0"
+    },
+    {
+      "label": "Buyer release receipt on Base Sepolia explorer (opens a new tab) ↗",
+      "href": "https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023"
+    }
+  ],
+  "retainedSettlement": true,
+  "paused": true,
+  "rpcRecovery": true,
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

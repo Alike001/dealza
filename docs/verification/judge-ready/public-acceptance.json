@@ -1,0 +1,28 @@
+{
+  "url": "https://dealza-drab.vercel.app/",
+  "version": "existing public release; UX polish remains local",
+  "checked": "2026-11-04",
+  "httpStatus": 200,
+  "walletPresent": false,
+  "completedOrder": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+  "status": "Paid to seller / Released",
+  "reservedUSDC": "0",
+  "capturedUSDC": "1",
+  "participantsVisible": true,
+  "originalTermsVisible": true,
+  "refresh": "PASS",
+  "rpcCORS": {
+    "endpoint": "https://sepolia.base.org",
+    "browserOrigin": "https://dealza-drab.vercel.app",
+    "method": "eth_chainId",
+    "httpStatus": 200,
+    "result": "0x14a34",
+    "observedRPCResponses": 47,
+    "observedStatuses": [200]
+  },
+  "pageErrors": [],
+  "securityHeaders": "See public-headers.txt: CSP, HSTS, nosniff, referrer-policy, permissions-policy present in fresh curl HEAD response",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "physicalWalletTested": false
+}

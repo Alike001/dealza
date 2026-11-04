@@ -1,0 +1,255 @@
+{
+  "result": "PASS",
+  "origin": "http://127.0.0.1:4174/",
+  "mode": "production preview, live RPC, no injected wallet",
+  "results": [
+    {
+      "route": "#/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": "Make online deals clearer before money moves.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/orders",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": "Every deal, in view.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/create",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": "Start with clear terms.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/help",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": "Know what you’re agreeing to.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Make online deals clearer before money moves.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/orders",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Every deal, in view.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/create",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Start with clear terms.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/help",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Know what you’re agreeing to.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": "Make online deals clearer before money moves.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/orders",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": "Every deal, in view.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/create",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": "Start with clear terms.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/help",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": "Know what you’re agreeing to.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Make online deals clearer before money moves.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/orders",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Every deal, in view.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/create",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Start with clear terms.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "route": "#/help",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Know what you’re agreeing to.",
+      "unlabelledFields": 0,
+      "navTouchHeights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    }
+  ],
+  "checkout": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "status": "Paid to seller",
+      "details": "Seller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "terms": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "signatureButtons": 0
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "status": "Paid to seller",
+      "details": "Seller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "terms": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "signatureButtons": 0
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "status": "Paid to seller",
+      "details": "Seller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "terms": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "signatureButtons": 0
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "status": "Paid to seller",
+      "details": "Seller receives\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)\nNamed buyer\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)\nAgreed reviewer\n0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548\non Base Sepolia explorer (opens a new tab)\nReserved in protocol\n0 USDC\nCaptured (accounting)\n1 USDC\nPayment hash\n0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "terms": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "signatureButtons": 0
+    }
+  ],
+  "refresh": "PASS",
+  "walletEscapeFocusReturned": true,
+  "pageErrors": [],
+  "physicalMobileWalletTested": false,
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

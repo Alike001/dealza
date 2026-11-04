@@ -2,15 +2,17 @@
 
 **Clear agreements. Human decisions.** Make online deals clearer before money moves. Dealza gives social-commerce buyers and sellers explicit USDC payment terms, a shareable checkout, and a named reviewer. This release is a **Base Sepolia testnet demo**.
 
-Repository target: **Alike001/dealza** · default/production branch: **main**. Publication remains manual.
+Public website: **https://dealza-drab.vercel.app/** · [GitHub: Alike001/dealza](https://github.com/Alike001/dealza) · default/production branch: **main**. Further pushes and deployments remain manual.
 
-**Complete real MetaMask UI checkout verified on Base Sepolia: all six gates PASS.** Final release [`0x6408…c023`](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023): buyer **19 USDC**, seller **2 USDC**, reserve **0**, captured **1 USDC**, fee **0**, order **Released**. Controlled test; no physical delivery occurred. [Complete evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) · [Release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). **Website and GitHub publication have not been performed by this audit.**
+**Complete real MetaMask UI checkout verified on Base Sepolia: all six gates PASS.** Final release [`0x6408…c023`](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023): buyer **19 USDC**, seller **2 USDC**, reserve **0**, captured **1 USDC**, fee **0**, order **Released**. Controlled test; no physical delivery occurred. [Complete evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) · [Release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). The website and repository are publicly available. This UX polish is committed locally; it has not been pushed or deployed.
 
 ## How to Test
 
 Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). **The first controlled live 1 test-USDC lifecycle passed independent two-RPC verification**: buyer 20 USDC, seller 1 USDC, original Released, duplicate Voided, zero reserved balance and zero platform fee. [All six transactions and settlement proof](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md).
 
-Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live buyer-release settlement is verified; frontend publication and full wallet/browser acceptance remain outstanding.
+For judges, start with **[View a real completed payment](https://dealza-drab.vercel.app/#/order/0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd?terms=Dealza%20Checkpoint%206%3A%20fresh%20UI-only%201%20test-USDC%20checkout%3B%20controlled%20test%2C%20no%20physical%20delivery.)**. No wallet is needed. Inspect matching terms, participants, **Released / Paid to seller**, **0 reserved**, **1 USDC captured**, and genuine transaction receipts. No physical delivery occurred. No further payment is needed.
+
+Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live buyer-release settlement and frontend publication are verified; broader physical-wallet/browser acceptance remains limited as described below.
 
 Public source is now verified with exact creation/runtime matches on Sourcify and fully verified on Blockscout. [Source-verification evidence and public links](docs/10-PUBLIC-SOURCE-VERIFICATION.md). BaseScan-specific status remains unconfirmed; the prepared first-payment procedure is unchanged.
 
@@ -29,7 +31,7 @@ Try these flows:
 
 1. Open `/#/` for the public product explanation. Open **Your orders** (`/#/orders`) to connect a wallet and discover its real orders. The verified operator is already configured.
 2. Select **Create an order**, enter terms, amount, named buyer/reviewer addresses and deadlines, and **Save draft**. The draft stays on this device; it creates no order or payment.
-3. Open **Connect wallet**. Without an injected wallet, the app explains how to use MetaMask or a compatible wallet. Mobile users can open the page in their wallet’s browser. Connection shares a public address; it does not sign a transaction.
+3. Open **Connect wallet**. Without an injected wallet, the app explains how to use MetaMask or a compatible wallet. External mobile-wallet connection is not integrated, and physical wallet in-app browsers have not been verified. Connection shares a public address; it does not sign a transaction.
 4. Enable Base Sepolia in the wallet. Another network shows a switch prompt and blocks payment actions. Test USDC/ETH balances, when connected, are real public contract reads; missing reads show an error or dash, never an invented zero.
 5. Open **How it works** to review the reviewer/expiry/cancellation rules. Checkout URLs load real orders from the configured deployment; an unknown or invalid ID shows an error.
 6. If a transaction is interrupted, use **Recheck saved transaction — no signature**. The saved account/network/operator intent prevents another submission while uncertain. Paste the actual hash from wallet history if needed; do not repeat a payment because of a timeout or an unverified wallet response.
@@ -68,7 +70,7 @@ npm run preview --workspace web
 
 Production output: **`web/dist/`**. The preview command serves that output locally, normally at `http://127.0.0.1:4173`.
 
-Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. Current verification passes **234 frontend tests** (the original 226 plus eight public UI regressions). Coverage includes route and draft persistence, exact approval disclosure, keyboard focus, bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
+Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. The pre-polish baseline passed **234 frontend tests**. See [judge-ready verification](docs/30-JUDGE-READY-RELEASE.md) for the updated results. Coverage includes route and draft persistence, exact approval disclosure, keyboard focus, bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
 
 The committed frontend ABIs are generated from the existing Solidity artifacts and pinned CPP v1.1.0 ABI. Their source hashes are checked during the production build. A clean frontend build does not need generated Foundry outputs. If Solidity interfaces intentionally change, run:
 
@@ -144,7 +146,7 @@ The confirmation UI now applies the already-verified receipt-block snapshot imme
 
 The full happy-path UI checkout is verified. Physical mobile wallets, broader wrong-network/account-switch behavior and live signed funded-cancellation/reviewer/disputed-expiry-recovery branches remain acceptance limits. Contract/fork/fixture coverage for these branches passes; it is not live UI acceptance or an independent audit. Publish as a **Base Sepolia controlled-test demo**, with these limits explicit.
 
-For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Node 24 is pinned in `.nvmrc` and the root package engine. The [public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) has exact hosting settings and public acceptance checks. Publishing commands have deliberately not been run.
+For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Node 24 is pinned in `.nvmrc` and the root package engine. The [public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) has exact hosting settings and public acceptance checks. The current public release is hosted on Vercel at the URL above. This polish does not push or deploy automatically.
 
 ## Repository and evidence
 

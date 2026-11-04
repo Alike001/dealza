@@ -1,0 +1,364 @@
+{
+  "done": true,
+  "steps": [
+    {
+      "action": "create",
+      "hash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 1
+            },
+            "derived": 1,
+            "collected": false,
+            "held": "0",
+            "captured": "0",
+            "allowance": "0",
+            "preApproved": false,
+            "buyerBalance": "20000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "0",
+            "chainTime": 1793709547,
+            "block": "53938394"
+          }
+        }
+      ]
+    },
+    {
+      "action": "approve",
+      "hash": "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 1
+            },
+            "derived": 1,
+            "collected": false,
+            "held": "0",
+            "captured": "0",
+            "allowance": "1000000",
+            "preApproved": false,
+            "buyerBalance": "20000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "0",
+            "chainTime": 1793717789,
+            "block": "53979603"
+          }
+        }
+      ]
+    },
+    {
+      "action": "preApprove",
+      "hash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 1
+            },
+            "derived": 1,
+            "collected": false,
+            "held": "0",
+            "captured": "0",
+            "allowance": "1000000",
+            "preApproved": true,
+            "buyerBalance": "20000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "0",
+            "chainTime": 1793719340,
+            "block": "53987356"
+          }
+        }
+      ]
+    },
+    {
+      "action": "fund",
+      "hash": "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 2
+            },
+            "derived": 2,
+            "collected": true,
+            "held": "1000000",
+            "captured": "0",
+            "allowance": "0",
+            "preApproved": true,
+            "buyerBalance": "19000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "1000000",
+            "chainTime": 1793720200,
+            "block": "53991659"
+          }
+        }
+      ]
+    },
+    {
+      "action": "delivery",
+      "hash": "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 2
+            },
+            "derived": 2,
+            "collected": true,
+            "held": "1000000",
+            "captured": "0",
+            "allowance": "0",
+            "preApproved": true,
+            "buyerBalance": "19000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "1000000",
+            "chainTime": 1793722325,
+            "block": "54002282"
+          }
+        }
+      ]
+    },
+    {
+      "action": "release",
+      "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+      "updates": [
+        {
+          "phase": "pending",
+          "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+          "message": "Rechecking the saved transaction. No signature or payment is requested…"
+        },
+        {
+          "phase": "confirmed",
+          "hash": "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023",
+          "message": "The saved transaction and its onchain effects are verified.",
+          "snapshot": {
+            "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+            "order": {
+              "payment": {
+                "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+                "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+                "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+                "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxAmount": "1000000",
+                "preApprovalExpiry": 1793790000,
+                "authorizationExpiry": 1793962800,
+                "refundExpiry": 1793962800,
+                "minFeeBps": 0,
+                "maxFeeBps": 0,
+                "feeReceiver": "0x0000000000000000000000000000000000000000",
+                "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+              },
+              "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+              "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+              "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+              "status": 4
+            },
+            "derived": 4,
+            "collected": true,
+            "held": "0",
+            "captured": "1000000",
+            "allowance": "0",
+            "preApproved": true,
+            "buyerBalance": "19000000",
+            "buyerGas": "100000000000000",
+            "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+            "storeBalance": "0",
+            "chainTime": 1793723357,
+            "block": "54007444"
+          }
+        }
+      ]
+    }
+  ],
+  "providerRequests": [
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId",
+    "eth_accounts",
+    "eth_chainId"
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "freshWalletCheckout": false,
+  "current": {
+    "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+    "order": {
+      "payment": {
+        "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+        "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+        "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+        "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "maxAmount": "1000000",
+        "preApprovalExpiry": 1793790000,
+        "authorizationExpiry": 1793962800,
+        "refundExpiry": 1793962800,
+        "minFeeBps": 0,
+        "maxFeeBps": 0,
+        "feeReceiver": "0x0000000000000000000000000000000000000000",
+        "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109"
+      },
+      "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+      "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+      "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+      "status": 4
+    },
+    "derived": 4,
+    "collected": true,
+    "held": "0",
+    "captured": "1000000",
+    "allowance": "0",
+    "preApproved": true,
+    "buyerBalance": "19000000",
+    "buyerGas": "100000000000000",
+    "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+    "storeBalance": "0",
+    "chainTime": 1793780282,
+    "block": "54292069"
+  },
+  "result": "PASS"
+}

@@ -1,0 +1,17 @@
+{
+  "initialCommit": "36e5899",
+  "branch": "main",
+  "initialTrackedEdits": 0,
+  "initialRemoteAheadBehind": [
+    0,
+    0
+  ],
+  "originalUntrackedDiagnostics": 54,
+  "diagnosticsHashUnchanged": true,
+  "protectedFinancialPathsUnchanged": true,
+  "historicalBackupBranch": "backup/pre-public-ui-f23ea57",
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "pushPerformed": false,
+  "deployPerformed": false
+}
