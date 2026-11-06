@@ -141,7 +141,9 @@ export function TransactionNotice({ tx }: { tx: TxState }) {
     >
       <strong>
         {tx.phase === "error"
-          ? "Action not completed"
+          ? /declined|reject/i.test(tx.message)
+            ? "Wallet request rejected"
+            : "Action not completed — failed or unverified"
           : tx.phase === "confirmed"
             ? tx.hash
               ? "Receipt and effects verified"

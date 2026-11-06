@@ -63,5 +63,26 @@ export function writeOrderDraft(key: string | null, value: OrderForm) {
   localStorage.setItem(key, JSON.stringify({ version: 2, form }));
 }
 export function removeOrderDraft(key: string | null) {
-  if (key) localStorage.removeItem(key);
+  if (key) {
+    localStorage.removeItem(key);
+    localStorage.removeItem(`${key}:progress`);
+  }
+}
+
+// Progress is only a navigation hint. It never restores review or authorization.
+export function readDraftStage(key: string | null): number {
+  if (!key) return 0;
+  try {
+    const stage = JSON.parse(localStorage.getItem(`${key}:progress`) ?? "null");
+    return Number.isInteger(stage) && stage >= 0 && stage <= 2 ? stage : 0;
+  } catch {
+    return 0;
+  }
+}
+export function writeDraftStage(key: string | null, stage: number) {
+  if (key)
+    localStorage.setItem(
+      `${key}:progress`,
+      JSON.stringify(Math.min(2, Math.max(0, stage))),
+    );
 }

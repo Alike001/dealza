@@ -8,10 +8,14 @@ import {
   money,
   shareLink,
   validateTerms,
+  validateAgreement,
+  validatePeople,
   type CreateTerms,
   type TxState,
 } from "../lib/domain";
 import {
+  readDraftStage,
+  writeDraftStage,
   emptyOrderForm,
   orderDraftKey,
   readOrderDraft,
@@ -50,6 +54,25 @@ function ScopedCreateOrder({
   const pending = usePendingRequest(wallet.session, api.deployment?.operator);
   const [restored] = useState(() => readOrderDraft(draftKey));
   const [form, setForm] = useState(restored ?? emptyOrderForm());
+  const [stage, setStage] = useState(() => {
+    const hint = restored ? readDraftStage(draftKey) : 0;
+    if (hint > 0) {
+      try {
+        validateAgreement(form);
+      } catch {
+        return 0;
+      }
+    }
+    if (hint > 1) {
+      try {
+        validatePeople(form, wallet.session?.account);
+      } catch {
+        return 1;
+      }
+    }
+    return hint;
+  });
+  const heading = useRef<HTMLHeadingElement>(null);
   const [terms, setTerms] = useState<CreateTerms | null>(null);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(
@@ -65,7 +88,9 @@ function ScopedCreateOrder({
     active.current = true;
     if (restored) {
       try {
-        validateTerms(restored, wallet.session?.account);
+        validateAgreement(restored);
+        if (stage >= 1) validatePeople(restored, wallet.session?.account);
+        if (stage >= 2) validateTerms(restored, wallet.session?.account);
       } catch (e) {
         setError(friendlyError(e));
       }
@@ -106,12 +131,33 @@ function ScopedCreateOrder({
       if (draftKey) persist(next);
     },
   });
+  const go = (next: number) => {
+    setTerms(null);
+    setError("");
+    setStage(next);
+    try {
+      writeDraftStage(draftKey, next);
+    } catch {
+      setSaved(
+        "Progress could not be saved. Keep a separate copy of your terms.",
+      );
+    }
+  };
+  useEffect(() => {
+    heading.current?.focus();
+  }, [stage, created]);
   const review = (event: FormEvent) => {
     event.preventDefault();
     setTerms(null);
     setError("");
     try {
-      setTerms(validateTerms(form, wallet.session?.account));
+      if (stage === 0) validateAgreement(form);
+      if (stage === 1) validatePeople(form, wallet.session?.account);
+      if (stage === 2) {
+        const reviewed = validateTerms(form, wallet.session?.account);
+        go(3);
+        setTerms(reviewed);
+      } else go(stage + 1);
     } catch (e) {
       setError(friendlyError(e));
     }
@@ -123,6 +169,7 @@ function ScopedCreateOrder({
     try {
       removeOrderDraft(draftKey);
       setForm(emptyOrderForm());
+      setStage(0);
       setTerms(null);
       setError("");
       setTx(idleTx);
@@ -173,7 +220,6 @@ function ScopedCreateOrder({
       }));
     } catch (e) {
       if (!active.current) return;
-      setTerms(null);
       setTx((old) => ({
         phase: "error",
         hash: (e as { hash?: Hash }).hash ?? old.hash,
@@ -195,12 +241,43 @@ function ScopedCreateOrder({
         </p>
       </SectionTitle>
       {!api.deployment && <PendingIntegration />}
+      <nav aria-label="Agreement progress" className="wizard-progress">
+        <ol>
+          {[
+            "Agreement details",
+            "People involved",
+            "Payment deadlines",
+            "Review and create",
+            "Confirmed and sharing",
+          ].map((label, index) => (
+            <li
+              key={label}
+              aria-current={
+                (created ? 4 : stage) === index ? "step" : undefined
+              }
+              data-complete={index < (created ? 4 : stage)}
+            >
+              <button
+                type="button"
+                disabled={!!created || busy || index >= stage}
+                onClick={() => go(index)}
+                aria-label={`Return to ${label}`}
+              >
+                <span>{index + 1}</span>
+                <span>{label}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>
       {created ? (
         <section className="panel success-panel">
           <span className="round-icon">
             <Icon name="check" />
           </span>
-          <h2>Your order link is ready.</h2>
+          <h2 ref={heading} tabIndex={-1}>
+            Your order link is ready.
+          </h2>
           <p>
             Only the named buyer can reserve funds. They’ll see and accept the
             reviewer before paying.
@@ -220,106 +297,156 @@ function ScopedCreateOrder({
           </div>
           <TransactionNotice tx={tx} />
         </section>
-      ) : (
+      ) : stage < 3 ? (
         <div className="create-layout">
-          <form className="panel order-form" onSubmit={review}>
+          <form className="panel order-form" onSubmit={review} noValidate>
             <div className="panel-heading">
-              <span className="step-number">01</span>
-              <h2>The agreement & amount</h2>
+              <span className="step-number">0{stage + 1}</span>
+              <h2 ref={heading} tabIndex={-1}>
+                {
+                  ["Agreement details", "People involved", "Payment deadlines"][
+                    stage
+                  ]
+                }
+              </h2>
             </div>
-            <label htmlFor="description">What is this order for?</label>
-            <textarea
-              id="description"
-              {...field("description")}
-              maxLength={1600}
-              required
-              rows={4}
-              placeholder="Describe the item or service, delivery expectations, and agreed review terms."
-              aria-describedby="description-help"
-            />
-            <p id="description-help" className="field-help">
-              These terms travel in the share link. Only their fingerprint goes
-              onchain. Don’t include home addresses or private delivery details.
-            </p>
-            <label htmlFor="amount">
-              Order amount <span>USDC</span>
-            </label>
-            <div className="amount-input">
-              <span className="coin">$</span>
-              <input
-                id="amount"
-                {...field("amount")}
-                required
-                inputMode="decimal"
-                placeholder="0.00"
-                autoComplete="off"
-              />
-              <span>test USDC</span>
-            </div>
-            <p className="field-help">
-              Platform fee: 0 USDC. Wallet transactions may also require test
-              ETH for gas.
-            </p>
-            <div className="panel-heading sub">
-              <span className="step-number">02</span>
-              <h2>The people</h2>
-            </div>
-            <label htmlFor="buyer">Buyer’s wallet address</label>
-            <input
-              id="buyer"
-              {...field("buyer")}
-              required
-              spellCheck={false}
-              autoComplete="off"
-              placeholder="0x…"
-            />
-            <p className="field-help">
-              Only this wallet can reserve the payment and approve ordinary
-              release.
-            </p>
-            <label htmlFor="reviewer">Agreed reviewer’s wallet address</label>
-            <input
-              id="reviewer"
-              {...field("reviewer")}
-              required
-              spellCheck={false}
-              autoComplete="off"
-              placeholder="0x…"
-            />
-            <p className="field-help">
-              Agree on this person together. They can release or return disputed
-              funds before expiry. You can’t replace them after creation.
-            </p>
-            <div className="panel-heading sub">
-              <span className="step-number">03</span>
-              <h2>The deadlines</h2>
-            </div>
-            <label htmlFor="funding">Buyer must reserve by</label>
-            <input
-              id="funding"
-              type="datetime-local"
-              {...field("fundingCutoff")}
-              required
-            />
-            <label htmlFor="expiry">Payment release & review deadline</label>
-            <input
-              id="expiry"
-              type="datetime-local"
-              {...field("expiry")}
-              required
-            />
-            <p className="field-help">
-              Times use your device’s timezone. Allow time for delivery and
-              review. Expiry must be within 30 days.
-            </p>
+            {stage === 0 && (
+              <>
+                <label htmlFor="description">What is this order for?</label>
+                <textarea
+                  id="description"
+                  {...field("description")}
+                  maxLength={1600}
+                  required
+                  rows={4}
+                  placeholder="Describe the item or service, delivery expectations, and agreed review terms."
+                  aria-describedby="description-help"
+                />
+                <p id="description-help" className="field-help">
+                  These terms travel in the share link. Only their fingerprint
+                  goes onchain. Don’t include home addresses or private delivery
+                  details.
+                </p>
+                <label htmlFor="amount">
+                  Order amount <span>USDC</span>
+                </label>
+                <div className="amount-input">
+                  <span className="coin">$</span>
+                  <input
+                    id="amount"
+                    {...field("amount")}
+                    required
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    autoComplete="off"
+                  />
+                  <span>test USDC</span>
+                </div>
+                <p className="field-help">
+                  Platform fee: 0 USDC. Wallet transactions may also require
+                  test ETH for gas.
+                </p>
+              </>
+            )}
+            {stage === 1 && (
+              <>
+                <p className="field-help">
+                  You are the seller. You set the terms and record delivery
+                  evidence; a delivery claim never releases payment.
+                </p>
+                <p className="mono">
+                  {wallet.session?.account ||
+                    "Connect the seller wallet to continue."}
+                </p>
+                <label htmlFor="buyer">Buyer’s wallet address</label>
+                <input
+                  id="buyer"
+                  {...field("buyer")}
+                  required
+                  spellCheck={false}
+                  autoComplete="off"
+                  placeholder="0x…"
+                />
+                <p className="field-help">
+                  Only this wallet can reserve the payment and approve ordinary
+                  release.
+                </p>
+                <label htmlFor="reviewer">
+                  Agreed reviewer’s wallet address
+                </label>
+                <input
+                  id="reviewer"
+                  {...field("reviewer")}
+                  required
+                  spellCheck={false}
+                  autoComplete="off"
+                  placeholder="0x…"
+                />
+                <p className="field-help">
+                  Agree on this person together. They can release or return
+                  disputed funds before expiry. You can’t replace them after
+                  creation.
+                </p>
+              </>
+            )}
+            {stage === 2 && (
+              <>
+                <label htmlFor="funding">Buyer must reserve by</label>
+                <input
+                  id="funding"
+                  type="datetime-local"
+                  {...field("fundingCutoff")}
+                  required
+                />
+                <label htmlFor="expiry">
+                  Payment release & review deadline
+                </label>
+                <input
+                  id="expiry"
+                  type="datetime-local"
+                  {...field("expiry")}
+                  required
+                />
+                <p className="field-help">
+                  Device timezone:{" "}
+                  {Intl.DateTimeFormat().resolvedOptions().timeZone}. Allow time
+                  for delivery and review. Expiry must be within 30 days.
+                </p>
+                <dl className="details" aria-live="polite">
+                  <dt>Reserve by</dt>
+                  <dd>
+                    {form.fundingCutoff
+                      ? new Date(form.fundingCutoff).toString()
+                      : "Choose a deadline"}
+                  </dd>
+                  <dt>Release / review before</dt>
+                  <dd>
+                    {form.expiry
+                      ? new Date(form.expiry).toString()
+                      : "Choose a deadline"}
+                  </dd>
+                </dl>
+              </>
+            )}
             {error && (
               <p className="inline-error" role="alert">
                 {error}
               </p>
             )}
             <div className="button-row">
+              {stage > 0 && (
+                <button
+                  type="button"
+                  className="button secondary"
+                  disabled={busy}
+                  onClick={() => go(stage - 1)}
+                >
+                  Back
+                </button>
+              )}
               <button className="button" disabled={busy} type="submit">
-                Review order <Icon name="arrow" size={17} />
+                {stage === 2 ? "Review order" : "Continue"}{" "}
+                <Icon name="arrow" size={17} />
               </button>
               <button
                 type="button"
@@ -344,6 +471,26 @@ function ScopedCreateOrder({
             </p>
           </form>
           <aside className="create-aside">
+            <section
+              className="draft-preview"
+              aria-label="Agreement summary"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <span className="eyebrow">YOUR AGREEMENT SO FAR</span>
+              <h2>
+                {form.amount || "0"} <small>test USDC</small>
+              </h2>
+              <p className="terms-text">
+                {form.description ||
+                  "Your agreement starts here. Describe what you’ll deliver and how the buyer will review it."}
+              </p>
+              <p className="field-help">
+                {form.buyer
+                  ? `Buyer: ${form.buyer}`
+                  : "Add the buyer in the next step."}
+              </p>
+            </section>
             <div className="aside-note">
               <Icon name="shield" size={30} />
               <h2>Your wallet. Your agreement.</h2>
@@ -363,14 +510,14 @@ function ScopedCreateOrder({
             <RiskNote />
           </aside>
         </div>
-      )}
-      {terms && !created && (
+      ) : null}
+      {stage === 3 && terms && !created && (
         <section
           className="panel review-panel"
           aria-labelledby="review-heading"
         >
           <span className="eyebrow">REVIEW BEFORE YOU CREATE</span>
-          <h2 id="review-heading" tabIndex={-1}>
+          <h2 id="review-heading" ref={heading} tabIndex={-1}>
             {money(terms.amount)} test USDC
           </h2>
           <p className="terms-text">{terms.description}</p>
@@ -398,7 +545,54 @@ function ScopedCreateOrder({
             <dt>Terms fingerprint</dt>
             <dd className="mono">{descriptionHash(terms.description)}</dd>
           </dl>
+          <p className="field-help">
+            These terms, participants, amount and deadlines are immutable after
+            creation. Device timezone:{" "}
+            {Intl.DateTimeFormat().resolvedOptions().timeZone}.
+          </p>
+          <div className="button-row">
+            {["Agreement details", "People involved", "Payment deadlines"].map(
+              (label, i) => (
+                <button
+                  className="text-button"
+                  disabled={busy}
+                  key={label}
+                  onClick={() => go(i)}
+                >
+                  Edit {label}
+                </button>
+              ),
+            )}
+          </div>
+          <div className="button-row">
+            <button
+              type="button"
+              className="text-button"
+              disabled={busy}
+              onClick={save}
+            >
+              Save draft
+            </button>
+            <button
+              type="button"
+              className="text-button"
+              disabled={busy}
+              onClick={clear}
+            >
+              Clear draft
+            </button>
+          </div>
+          <p role="status" className="field-help">
+            {saved}
+          </p>
           <RiskNote />
+          <button
+            className="button secondary"
+            disabled={busy}
+            onClick={() => go(2)}
+          >
+            Back
+          </button>{" "}
           <button
             className="button"
             onClick={() => void create()}
@@ -420,6 +614,11 @@ function ScopedCreateOrder({
             order is created.
           </p>
         </section>
+      )}
+      {!created && stage === 3 && error && (
+        <p role="alert" className="inline-error">
+          {error}
+        </p>
       )}
       {!created && <TransactionNotice tx={tx} />}
     </main>

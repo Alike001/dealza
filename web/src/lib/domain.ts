@@ -99,18 +99,10 @@ export function amountFromText(text: string): bigint {
     throw new Error("Enter a positive amount within the payment limit.");
   return amount;
 }
-export function validateTerms(
-  input: {
-    buyer: string;
-    reviewer: string;
-    amount: string;
-    description: string;
-    fundingCutoff: string;
-    expiry: string;
-  },
+export function validatePeople(
+  input: { buyer: string; reviewer: string },
   seller?: Address,
-  now = Date.now() / 1000,
-): CreateTerms {
+) {
   if (!seller) throw new Error("Connect the seller wallet first.");
   if (!isAddress(input.buyer) || /^0x0{40}$/i.test(input.buyer))
     throw new Error("Enter the buyer’s complete wallet address.");
@@ -122,6 +114,11 @@ export function validateTerms(
     sameAddress(input.buyer, input.reviewer)
   )
     throw new Error("Seller, buyer, and reviewer must use different wallets.");
+}
+export function validateDeadlines(
+  input: { fundingCutoff: string; expiry: string },
+  now = Date.now() / 1000,
+) {
   const fundingCutoff = Math.floor(
     new Date(input.fundingCutoff).getTime() / 1000,
   );
@@ -136,11 +133,35 @@ export function validateTerms(
     throw new Error(
       "Choose future deadlines, with funding before expiry and expiry within 30 days. Leave time to sign.",
     );
+  return { fundingCutoff, expiry };
+}
+export function validateAgreement(input: {
+  description: string;
+  amount: string;
+}) {
   const description = input.description.normalize("NFC").trim();
   if (!description || description.length > 1600)
     throw new Error(
       "Describe the order and agreed terms in 1–1,600 characters.",
     );
+  return { description, amount: amountFromText(input.amount) };
+}
+
+export function validateTerms(
+  input: {
+    buyer: string;
+    reviewer: string;
+    amount: string;
+    description: string;
+    fundingCutoff: string;
+    expiry: string;
+  },
+  seller?: Address,
+  now = Date.now() / 1000,
+): CreateTerms {
+  validatePeople(input, seller);
+  const { fundingCutoff, expiry } = validateDeadlines(input, now);
+  const { description } = validateAgreement(input);
   return {
     buyer: getAddress(input.buyer),
     reviewer: getAddress(input.reviewer),

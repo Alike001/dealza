@@ -246,3 +246,88 @@ export function StateExplanation({ snapshot: s }: { snapshot: OrderSnapshot }) {
     </p>
   );
 }
+
+export function CheckoutProgress({ snapshot: s }: { snapshot: OrderSnapshot }) {
+  const reserved = s.collected;
+  const terminal = [4, 5, 7].includes(s.derived);
+  const current = terminal
+    ? -1
+    : reserved
+      ? 4
+      : s.preApproved
+        ? 3
+        : s.allowance === s.order.payment.maxAmount
+          ? 2
+          : 1;
+  const steps = [
+    "Review agreement",
+    "Exact USDC allowance",
+    "Pre-approve terms",
+    "Reserve USDC",
+    "Delivery and decision",
+  ];
+  const expired = s.chainTime >= s.order.payment.authorizationExpiry;
+  const reserveClosed = s.chainTime >= s.order.payment.preApprovalExpiry;
+  return (
+    <section className="panel checkout-progress" aria-label="Payment progress">
+      <span className="eyebrow">YOUR PAYMENT JOURNEY</span>
+      <ol>
+        {steps.map((label, i) => (
+          <li key={label} aria-current={i === current ? "step" : undefined}>
+            <span className="step-number">{i + 1}</span>
+            <div>
+              <strong>{label}</strong>
+              <p>
+                {i === 0
+                  ? "Check the terms and acknowledge below"
+                  : i === 1
+                    ? s.allowance === s.order.payment.maxAmount
+                      ? "Exact cap verified onchain"
+                      : "Separate wallet transaction"
+                    : i === 2
+                      ? s.preApproved
+                        ? "Authorization verified onchain"
+                        : "Separate wallet transaction"
+                      : i === 3
+                        ? reserved
+                          ? "Reservation verified onchain"
+                          : reserveClosed
+                            ? "Reserve deadline passed"
+                            : "Separate wallet transaction"
+                        : terminal
+                          ? "See verified financial outcome below"
+                          : reserved
+                            ? "Buyer release or reviewer decision required"
+                            : "After reservation"}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p className="field-help">
+        Progress reflects the last verified chain read. Submitted transactions
+        do not complete a step.
+      </p>
+      <p
+        className={
+          !terminal &&
+          (expired ||
+            (s.held > 0n &&
+              s.order.payment.authorizationExpiry - s.chainTime < 86400))
+            ? "notice warning"
+            : "field-help"
+        }
+      >
+        {terminal
+          ? "This payment has reached its verified financial outcome. No active reserve deadline remains."
+          : expired
+            ? "Expiry has passed. Uncaptured funds require buyer recovery; release and reviewer decisions are closed."
+            : s.held > 0n
+              ? "Reserved funds can expire, including during a dispute. Complete release or review before the deadline; recovery is not automatic."
+              : reserveClosed
+                ? "The reserve deadline has passed. This agreement can no longer be funded."
+                : "Reserve before the funding deadline, then allow time for delivery and review."}
+      </p>
+    </section>
+  );
+}

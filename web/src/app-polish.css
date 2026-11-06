@@ -502,3 +502,160 @@ summary {
   gap: 8px;
   font-weight: 500;
 }
+
+/* Guided agreement and checkout flows, using Dealza's existing palette. */
+.wizard-progress {
+  margin: 0 0 32px;
+}
+.wizard-progress ol {
+  display: flex;
+  padding: 0;
+  list-style: none;
+  gap: 8px;
+}
+.wizard-progress li {
+  flex: 1;
+  border-top: 3px solid var(--line, #dce3db);
+  padding-top: 12px;
+}
+.wizard-progress li[aria-current] {
+  border-color: #426338;
+}
+.wizard-progress li[data-complete="true"] {
+  border-color: #a3be7c;
+}
+.wizard-progress button {
+  background: none;
+  border: 0;
+  text-align: left;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-height: 44px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.wizard-progress button:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+.wizard-progress [aria-current] button {
+  opacity: 1;
+  font-weight: 600;
+}
+.wizard-progress button span:first-child {
+  font-variant-numeric: tabular-nums;
+  color: #426338;
+}
+.draft-preview {
+  background: #edf2e5;
+  padding: 28px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  overflow-wrap: anywhere;
+}
+.draft-preview h2 {
+  font-size: 2rem;
+  margin: 16px 0;
+}
+.draft-preview small {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.order-form h2:focus,
+.review-panel h2:focus,
+.success-panel h2:focus {
+  outline-offset: 7px;
+}
+.review-panel {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.review-panel .terms-text {
+  white-space: pre-wrap;
+}
+.checkout-progress {
+  margin-bottom: 28px;
+}
+.checkout-progress > ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+.checkout-progress li {
+  display: flex;
+  gap: 10px;
+  border-top: 2px solid #dce3db;
+  padding-top: 16px;
+}
+.checkout-progress li[aria-current] {
+  border-color: #426338;
+}
+.checkout-progress strong {
+  font-size: 0.85rem;
+}
+.checkout-progress li p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+.confirm-action {
+  border-left: 3px solid #426338;
+  padding: 24px;
+  margin-top: 24px;
+  background: #f1f5ec;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.confirm-action .button {
+  min-height: 48px;
+}
+@media (max-width: 768px) {
+  .wizard-progress button {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.72rem;
+  }
+  .checkout-progress > ol {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .checkout-progress li {
+    padding-top: 12px;
+  }
+  .checkout-progress li p {
+    margin-top: 4px;
+  }
+}
+@media (max-width: 390px) {
+  .wizard-progress ol {
+    gap: 4px;
+  }
+  .wizard-progress button {
+    padding: 0;
+    font-size: 0.65rem;
+    overflow-wrap: anywhere;
+  }
+  .draft-preview,
+  .confirm-action {
+    padding: 20px;
+  }
+  .review-panel .button {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

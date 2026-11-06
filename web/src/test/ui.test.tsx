@@ -395,11 +395,13 @@ async function fillOrderForm() {
   const user = userEvent.setup();
   await user.type(screen.getByLabelText("What is this order for?"), text);
   await user.type(screen.getByLabelText(/Order amount/), "1.000001");
+  await user.click(screen.getByRole("button", { name: "Continue" }));
   await user.type(screen.getByLabelText("Buyer’s wallet address"), buyer);
   await user.type(
     screen.getByLabelText("Agreed reviewer’s wallet address"),
     reviewer,
   );
+  await user.click(screen.getByRole("button", { name: "Continue" }));
   fireEvent.change(screen.getByLabelText("Buyer must reserve by"), {
     target: {
       value: new Date(Date.now() + 86400_000).toISOString().slice(0, 16),
@@ -586,16 +588,24 @@ describe("seller draft recovery", () => {
     const saved = JSON.parse(localStorage.getItem(draftKey())!).form;
     view.unmount();
     createView(gateway);
+    expect(screen.getByLabelText("Buyer must reserve by")).toHaveValue(
+      saved.fundingCutoff,
+    );
+    await userEvent.click(
+      screen.getByRole("button", { name: "Return to Agreement details" }),
+    );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(
       saved.description,
     );
     expect(screen.getByLabelText(/Order amount/)).toHaveValue(saved.amount);
+    await userEvent.click(screen.getByRole("button", { name: "Continue" }));
     expect(screen.getByLabelText("Buyer’s wallet address")).toHaveValue(
       saved.buyer,
     );
     expect(
       screen.getByLabelText("Agreed reviewer’s wallet address"),
     ).toHaveValue(saved.reviewer);
+    await userEvent.click(screen.getByRole("button", { name: "Continue" }));
     expect(screen.getByLabelText("Buyer must reserve by")).toHaveValue(
       saved.fundingCutoff,
     );
@@ -630,6 +640,9 @@ describe("seller draft recovery", () => {
       ).not.toBeInTheDocument();
     }
     rerender(wallet(session(seller)));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Return to Agreement details" }),
+    );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(gateway.create).not.toHaveBeenCalled();
   });
@@ -695,12 +708,15 @@ describe("seller draft recovery", () => {
       screen.getByRole("button", { name: "Create order on Base Sepolia" }),
     );
     await screen.findByRole("alert");
-    expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
+    expect(screen.getByText(text)).toBeInTheDocument();
     expect(
       screen.queryByText("Your order link is ready."),
     ).not.toBeInTheDocument();
     view.unmount();
     createView(gateway);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Return to Agreement details" }),
+    );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(gateway.create).toHaveBeenCalledTimes(1);
   });
@@ -720,7 +736,9 @@ describe("seller draft recovery", () => {
       screen.getByRole("button", { name: "Create order on Base Sepolia" }),
     );
     expect(localStorage.getItem(draftKey())).toContain(text);
-    expect(screen.getByLabelText("What is this order for?")).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Return to Agreement details" }),
+    ).toBeDisabled();
     expect(screen.getByRole("button", { name: "Clear draft" })).toBeDisabled();
     view.rerender(
       <WalletContext.Provider value={wallet(session(buyer))}>
@@ -752,6 +770,9 @@ describe("seller draft recovery", () => {
     );
     view.unmount();
     createView(gateway);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Return to Agreement details" }),
+    );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(
       screen.queryByText("REVIEW BEFORE YOU CREATE"),

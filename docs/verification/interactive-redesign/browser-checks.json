@@ -1,0 +1,135 @@
+{
+  "mode": "Local browser walkthrough; identity-only provider; signing and broadcasting blocked",
+  "walletMethodsRequested": [
+    "eth_requestAccounts",
+    "eth_chainId"
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false,
+  "responsiveChecks": [
+    {
+      "screen": "details",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "details",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "details",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "details",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "people",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "people",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "people",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "people",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "deadlines",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "deadlines",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "deadlines",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "deadlines",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "review",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "review",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "review",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "review",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "checkout",
+      "width": 320,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "checkout",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "checkout",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "screen": "checkout",
+      "width": 1440,
+      "horizontalOverflow": false
+    }
+  ],
+  "refresh": {
+    "reconnectRequired": true,
+    "restoredStage": "Payment deadlines",
+    "fundingLocal": "2026-11-07T17:00",
+    "reviewNotRestored": true
+  },
+  "checkpoint8": {
+    "descriptionReentered": "Dealza Checkpoint 8: buyer dispute and reviewer return; controlled test, no physical delivery.",
+    "fingerprint": "0xccd6ceec3d964158dcbaa50098864f3879fa227175ee1283189a9417e67b6d32",
+    "amount": "1 test USDC",
+    "originalFundingUTC": "2026-11-06T17:00:00Z",
+    "originalDeadlineExpired": true,
+    "futureDeadlinesUsedInWalkthrough": true
+  },
+  "completedPayment": {
+    "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+    "source": "Authentic live Base Sepolia reads through unchanged gateway",
+    "status": "Paid to seller",
+    "reserved": "0 USDC",
+    "captured": "1 USDC",
+    "historicalReceiptLinks": 6
+  },
+  "newCreationOnchain": false,
+  "confirmationScreenCoverage": "Automated isolated gateway fixture; no new live receipt fabricated"
+}
