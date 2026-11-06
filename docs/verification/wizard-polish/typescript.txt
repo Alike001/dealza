@@ -1,0 +1,2 @@
+Command: node_modules/.bin/tsc --noEmit -p web/tsconfig.json
+Exit code: 0

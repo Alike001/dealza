@@ -73,6 +73,8 @@ function ScopedCreateOrder({
     return hint;
   });
   const heading = useRef<HTMLHeadingElement>(null);
+  const progress = useRef<HTMLElement>(null);
+  const previousStage = useRef(stage);
   const [terms, setTerms] = useState<CreateTerms | null>(null);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(
@@ -144,7 +146,16 @@ function ScopedCreateOrder({
     }
   };
   useEffect(() => {
-    heading.current?.focus();
+    heading.current?.focus({
+      preventScroll: previousStage.current !== stage || !!created,
+    });
+    if (previousStage.current !== stage || created) {
+      progress.current?.scrollIntoView?.({
+        block: "start",
+        behavior: "instant",
+      });
+    }
+    previousStage.current = stage;
   }, [stage, created]);
   const review = (event: FormEvent) => {
     event.preventDefault();
@@ -181,7 +192,8 @@ function ScopedCreateOrder({
     }
   };
   useEffect(() => {
-    if (terms) document.getElementById("review-heading")?.focus();
+    if (terms)
+      document.getElementById("review-heading")?.focus({ preventScroll: true });
   }, [terms]);
   const create = async () => {
     if (
@@ -229,6 +241,43 @@ function ScopedCreateOrder({
       inFlight.current = false;
     }
   };
+  const steps = [
+    "Agreement details",
+    "People involved",
+    "Payment deadlines",
+    "Review and create",
+    "Confirmed and sharing",
+  ];
+  const currentStep = created ? 4 : stage;
+  const draftControls = (
+    <div className="draft-controls">
+      <p role="status" className="field-help">
+        {saved ||
+          "Drafts save automatically for the connected wallet and network on this device. Keep private information out of the terms."}
+      </p>
+      <details>
+        <summary>Draft options</summary>
+        <div className="button-row">
+          <button
+            type="button"
+            className="text-button"
+            onClick={save}
+            disabled={busy}
+          >
+            Save draft
+          </button>
+          <button
+            type="button"
+            className="text-button"
+            onClick={clear}
+            disabled={busy}
+          >
+            Clear draft
+          </button>
+        </div>
+      </details>
+    </div>
+  );
   return (
     <main id="main" tabIndex={-1} className="page narrow-page">
       <a className="back" href="#/orders">
@@ -241,29 +290,43 @@ function ScopedCreateOrder({
         </p>
       </SectionTitle>
       {!api.deployment && <PendingIntegration />}
-      <nav aria-label="Agreement progress" className="wizard-progress">
+      <nav
+        ref={progress}
+        aria-label="Agreement progress"
+        className="wizard-progress"
+      >
+        <p className="wizard-status" role="status">
+          <strong>
+            {created
+              ? "Agreement confirmed"
+              : `Step ${currentStep + 1} of 5 · ${steps[currentStep]}`}
+          </strong>
+          <span>
+            {created
+              ? "5 of 5 steps complete"
+              : `${currentStep} of 5 steps complete`}
+          </span>
+        </p>
         <ol>
-          {[
-            "Agreement details",
-            "People involved",
-            "Payment deadlines",
-            "Review and create",
-            "Confirmed and sharing",
-          ].map((label, index) => (
+          {steps.map((label, index) => (
             <li
               key={label}
-              aria-current={
-                (created ? 4 : stage) === index ? "step" : undefined
-              }
-              data-complete={index < (created ? 4 : stage)}
+              aria-current={currentStep === index ? "step" : undefined}
+              data-complete={!!created || index < currentStep}
             >
               <button
                 type="button"
                 disabled={!!created || busy || index >= stage}
                 onClick={() => go(index)}
-                aria-label={`Return to ${label}`}
+                aria-label={
+                  index < currentStep && !created
+                    ? `Return to ${label}, complete`
+                    : `${label}, ${created ? "complete" : index === currentStep ? "current step" : "upcoming"}`
+                }
               >
-                <span>{index + 1}</span>
+                <span aria-hidden="true">
+                  {created || index < currentStep ? "✓" : index + 1}
+                </span>
                 <span>{label}</span>
               </button>
             </li>
@@ -448,27 +511,8 @@ function ScopedCreateOrder({
                 {stage === 2 ? "Review order" : "Continue"}{" "}
                 <Icon name="arrow" size={17} />
               </button>
-              <button
-                type="button"
-                className="button secondary"
-                onClick={save}
-                disabled={busy}
-              >
-                Save draft
-              </button>
-              <button
-                type="button"
-                className="button secondary"
-                onClick={clear}
-                disabled={busy}
-              >
-                Clear draft
-              </button>
             </div>
-            <p role="status" className="field-help">
-              {saved ||
-                "Drafts save automatically for the connected wallet and network on this device. Keep private information out of the terms."}
-            </p>
+            {draftControls}
           </form>
           <aside className="create-aside">
             <section
@@ -485,11 +529,31 @@ function ScopedCreateOrder({
                 {form.description ||
                   "Your agreement starts here. Describe what you’ll deliver and how the buyer will review it."}
               </p>
-              <p className="field-help">
-                {form.buyer
-                  ? `Buyer: ${form.buyer}`
-                  : "Add the buyer in the next step."}
-              </p>
+              <dl className="preview-details">
+                <dt>Buyer</dt>
+                <dd className="preview-address" title={form.buyer || undefined}>
+                  {form.buyer || "Add in People involved"}
+                </dd>
+                <dt>Agreed reviewer</dt>
+                <dd
+                  className="preview-address"
+                  title={form.reviewer || undefined}
+                >
+                  {form.reviewer || "Add in People involved"}
+                </dd>
+                {form.fundingCutoff && (
+                  <>
+                    <dt>Reserve by</dt>
+                    <dd>{new Date(form.fundingCutoff).toLocaleString()}</dd>
+                  </>
+                )}
+                {form.expiry && (
+                  <>
+                    <dt>Release / review before</dt>
+                    <dd>{new Date(form.expiry).toLocaleString()}</dd>
+                  </>
+                )}
+              </dl>
             </section>
             <div className="aside-note">
               <Icon name="shield" size={30} />
@@ -520,31 +584,60 @@ function ScopedCreateOrder({
           <h2 id="review-heading" ref={heading} tabIndex={-1}>
             {money(terms.amount)} test USDC
           </h2>
-          <p className="terms-text">{terms.description}</p>
-          <dl className="details">
-            <dt>Seller receives</dt>
-            <dd>
-              {wallet.session && (
-                <AddressLink value={wallet.session.account} full />
-              )}
-            </dd>
-            <dt>Named buyer</dt>
-            <dd>
-              <AddressLink value={terms.buyer} full />
-            </dd>
-            <dt>Reviewer</dt>
-            <dd>
-              <AddressLink value={terms.reviewer} full />
-            </dd>
-            <dt>Reserve by</dt>
-            <dd>{dateTime(terms.fundingCutoff)}</dd>
-            <dt>Release / review before</dt>
-            <dd>{dateTime(terms.expiry)}</dd>
-            <dt>Platform fee</dt>
-            <dd>0 USDC</dd>
-            <dt>Terms fingerprint</dt>
-            <dd className="mono">{descriptionHash(terms.description)}</dd>
-          </dl>
+          <section className="review-group" aria-labelledby="agreement-review">
+            <h3 id="agreement-review">Agreement details</h3>
+            <p className="terms-text">{terms.description}</p>
+            <dl className="details">
+              <dt>Terms fingerprint</dt>
+              <dd className="mono">{descriptionHash(terms.description)}</dd>
+            </dl>
+          </section>
+          <section
+            className="review-group"
+            aria-labelledby="participants-review"
+          >
+            <h3 id="participants-review">Participants</h3>
+            <dl className="details">
+              <dt>Seller receives</dt>
+              <dd>
+                {wallet.session && (
+                  <AddressLink value={wallet.session.account} full />
+                )}
+              </dd>
+              <dt>Named buyer</dt>
+              <dd>
+                <AddressLink value={terms.buyer} full />
+              </dd>
+              <dt>Reviewer</dt>
+              <dd>
+                <AddressLink value={terms.reviewer} full />
+              </dd>
+            </dl>
+          </section>
+          <section className="review-group" aria-labelledby="deadlines-review">
+            <h3 id="deadlines-review">Deadlines</h3>
+            <dl className="details">
+              <dt>Reserve by</dt>
+              <dd>{dateTime(terms.fundingCutoff)}</dd>
+              <dt>Release / review before</dt>
+              <dd>{dateTime(terms.expiry)}</dd>
+            </dl>
+          </section>
+          <section className="review-group" aria-labelledby="safeguards-review">
+            <h3 id="safeguards-review">Financial safeguards</h3>
+            <dl className="details">
+              <dt>Platform fee</dt>
+              <dd>0 USDC</dd>
+              <dt>Buyer funds</dt>
+              <dd>No buyer funds move on creation.</dd>
+              <dt>Release or return</dt>
+              <dd>
+                The buyer can release payment. The agreed reviewer can decide a
+                dispute before expiry. Expired funds require buyer recovery.
+              </dd>
+            </dl>
+            <RiskNote />
+          </section>
           <p className="field-help">
             These terms, participants, amount and deadlines are immutable after
             creation. Device timezone:{" "}
@@ -564,28 +657,7 @@ function ScopedCreateOrder({
               ),
             )}
           </div>
-          <div className="button-row">
-            <button
-              type="button"
-              className="text-button"
-              disabled={busy}
-              onClick={save}
-            >
-              Save draft
-            </button>
-            <button
-              type="button"
-              className="text-button"
-              disabled={busy}
-              onClick={clear}
-            >
-              Clear draft
-            </button>
-          </div>
-          <p role="status" className="field-help">
-            {saved}
-          </p>
-          <RiskNote />
+          {draftControls}
           <button
             className="button secondary"
             disabled={busy}

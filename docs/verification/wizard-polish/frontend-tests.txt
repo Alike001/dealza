@@ -1,0 +1,16 @@
+
+> @dealza/web@0.1.0 test
+> vitest run --maxWorkers=1 --testTimeout=15000
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  15 passed (15)
+      Tests  258 passed (258)
+   Start at  22:57:29
+   Duration  66.02s (tests 54%, environment 25%, import 16%, setup 4%, transform 1%)
+
+Environment  jsdom was created 15 times · 15.82s total, 25% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments

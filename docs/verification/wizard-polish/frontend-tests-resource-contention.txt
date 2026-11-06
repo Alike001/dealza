@@ -1,0 +1,522 @@
+
+> @dealza/web@0.1.0 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+ ❯ src/test/ui.test.tsx (41 tests | 6 failed) 68116ms
+   ❯ seller order creation (4)
+     × keeps a failed seller signature from producing an order link 5031ms
+     × creates a shareable checkout link only when the confirmed gateway returns an order ID 5014ms
+     × requires a new review when the selected seller wallet changes 5489ms
+   ❯ seller draft recovery (17)
+     × restores every edited field after refresh without restoring review or sending a transaction 8645ms
+     × isolates account/network/disconnect changes and restores the original account's draft 1063ms
+     × revalidates restored amount without trusting a previous review 5015ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/ui.test.tsx > seller order creation > keeps a failed seller signature from producing an order link
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/test/ui.test.tsx:434:3
+    432|     expect(gateway.create).not.toHaveBeenCalled();
+    433|   });
+    434|   it("keeps a failed seller signature from producing an order link", a…
+       |   ^
+    435|     const gateway = api({
+    436|       create: vi.fn(async () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/test/ui.test.tsx > seller order creation > creates a shareable checkout link only when the confirmed gateway returns an order ID
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/test/ui.test.tsx:456:3
+    454|     ).not.toBeInTheDocument();
+    455|   });
+    456|   it("creates a shareable checkout link only when the confirmed gatewa…
+       |   ^
+    457|     const gateway = api();
+    458|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/test/ui.test.tsx > seller order creation > requires a new review when the selected seller wallet changes
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/test/ui.test.tsx:483:3
+    481|     );
+    482|   });
+    483|   it("requires a new review when the selected seller wallet changes", …
+       |   ^
+    484|     const gateway = api();
+    485|     const view = render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/test/ui.test.tsx > seller draft recovery > restores every edited field after refresh without restoring review or sending a transaction
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/test/ui.test.tsx:585:3
+    583|       </WalletContext.Provider>,
+    584|     );
+    585|   it("restores every edited field after refresh without restoring revi…
+       |   ^
+    586|     const gateway = api();
+    587|     const view = createView(gateway);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/test/ui.test.tsx > seller draft recovery > isolates account/network/disconnect changes and restores the original account's draft
+TestingLibraryElementError: Unable to find a label with the text of: Buyer’s wallet address
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<main[39m
+      [33mclass[39m=[32m"page narrow-page"[39m
+      [33mid[39m=[32m"main"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<a[39m
+        [33mclass[39m=[32m"back"[39m
+        [33mhref[39m=[32m"#/orders"[39m
+      [36m>[39m
+        [0m← All orders[0m
+      [36m</a>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"section-title"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"eyebrow"[39m
+        [36m>[39m
+          [0mFOR THE SELLER[0m
+        [36m</span>[39m
+        [36m<h1>[39m
+          [0mStart with clear terms.[0m
+        [36m</h1>[39m
+        [36m<p>[39m
+          [0mOne agreement. One payment link. Choose who pays, what they’re paying for, and who can help if there’s a disagreement.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<nav[39m
+        [33maria-label[39m=[32m"Agreement progress"[39m
+        [33mclass[39m=[32m"wizard-progress"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"wizard-status"[39m
+          [33mrole[39m=[32m"status"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mStep 1 of 5 · Agreement details[0m
+          [36m</strong>[39m
+          [36m<span>[39m
+            [0m0 of 5 steps complete[0m
+          [36m</span>[39m
+        [36m</p>[39m
+        [36m<ol>[39m
+          [36m<li[39m
+            [33maria-current[39m=[32m"step"[39m
+            [33mdata-complete[39m=[32m"false"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Agreement details, current step"[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+              [36m>[39m
+                [0m1[0m
+              [36m</span>[39m
+              [36m<span>[39m
+                [0mAgreement details[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</li>[39m
+          [36m<li[39m
+            [33mdata-complete[39m=[32m"false"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"People involved, upcoming"[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+              [36m>[39m
+                [0m2[0m
+              [36m</span>[39m
+              [36m<span>[39m
+                [0mPeople involved[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</li>[39m
+          [36m<li[39m
+            [33mdata-complete[39m=[32m"false"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Payment deadlines, upcoming"[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+              [36m>[39m
+                [0m3[0m
+              [36m</span>[39m
+              [36m<span>[39m
+                [0mPayment deadlines[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</li>[39m
+          [36m<li[39m
+            [33mdata-complete[39m=[32m"false"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Review and create, upcoming"[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+              [36m>[39m
+                [0m4[0m
+              [36m</span>[39m
+              [36m<span>[39m
+                [0mReview and create[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</li>[39m
+          [36m<li[39m
+            [33mdata-complete[39m=[32m"false"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Confirmed and sharing, upcoming"[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+              [36m>[39m
+                [0m5[0m
+              [36m</span>[39m
+              [36m<span>[39m
+                [0mConfirmed and sharing[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</li>[39m
+        [36m</ol>[39m
+      [36m</nav>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"create-layout"[39m
+      [36m>[39m
+        [36m<form[39m
+          [33mclass[39m=[32m"panel order-form"[39m
+          [33mnovalidate[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"panel-heading"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"step-number"[39m
+            [36m>[39m
+              [0m0[0m
+              [0m1[0m
+            [36m</span>[39m
+            [36m<h2[39m
+              [33mtabindex[39m=[32m"-1"[39m
+            [36m>[39m
+              [0mAgreement details[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<label[39m
+            [33mfor[39m=[32m"description"[39m
+          [36m>[39m
+            [0mWhat is this order for?[0m
+          [36m</label>[39m
+          [36m<textarea[39m
+            [33maria-describedby[39m=[32m"description-help"[39m
+            [33mid[39m=[32m"description"[39m
+            [33mmaxlength[39m=[32m"1600"[39m
+            [33mplaceholder[39m=[32m"Describe the item or service, delivery expectations, and agreed review terms."[39m
+            [33mrequired[39m=[32m""[39m
+            [33mrows[39m=[32m"4"[39m
+          [36m/>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"field-help"[39m
+            [33mid[39m=[32m"description-help"[39m
+          [36m>[39m
+            [0mThese terms travel in the share link. Only their fingerprint goes onchain. Don’t include home addresses or private delivery details.[0m
+          [36m</p>[39m
+          [36m<label[39m
+            [33mfor[39m=[32m"amount"[39m
+          [36m>[39m
+            [0mOrder amount [0m
+            [36m<span>[39m
+              [0mUSDC[0m
+            [36m</span>[39m
+          [36m</label>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"amount-input"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"coin"[39m
+            [36m>[39m
+              [0m$[0m
+            [36m</span>[39m
+            [36m<input[39m
+              [33mautocomplete[39m=[32m"off"[39m
+              [33mid[39m=[32m"amount"[39m
+              [33minputmode[39m=[32m"decimal"[39m
+              [33mplaceholder[39m=[32m"0.00"[39m
+              [33mrequired[39m=[32m""[39m
+              [33mvalue[39m=[32m"1.000001"[39m
+            [36m/>[39m
+            [36m<span>[39m
+              [0mtest USDC[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"field-help"[39m
+          [36m>[39m
+            [0mPlatform fee: 0 USDC. Wallet transactions may also require test ETH for gas.[0m
+          [36m</p>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"inline-error"[39m
+            [33mrole[39m=[32m"alert"[39m
+          [36m>[39m
+            [0mDescribe the order and agreed terms in 1–1,600 characters.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"button-row"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"button"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mContinue[0m
+              [0m [0m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"17"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"1.7"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"17"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M4 12h15M13 6l6 6-6 6"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"draft-controls"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"field-help"[39m
+              [33mrole[39m=[32m"status"[39m
+            [36m>[39m
+              [0mDraft saved on this device. No order or payment has been created.[0m
+            [36m</p>[39m
+            [36m<details>[39m
+              [36m<summary>[39m
+                [0mDraft options[0m
+              [36m</summary>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"button-row"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"text-button"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mSave draft[0m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"text-button"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mClear draft[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</details>[39m
+          [36m</div>[39m
+        [36m</form>[39m
+        [36m<aside[39m
+          [33mclass[39m=[32m"create-aside"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-atomic[39m=[32m"true"[39m
+            [33maria-label[39m=[32m"Agreement summary"[39m
+            [33maria-live[39m=[32m"polite"[39m
+            [33mclass[39m=[32m"draft-preview"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"eyebrow"[39m
+            [36m>[39m
+              [0mYOUR AGREEMENT SO FAR[0m
+            [36m</span>[39m
+            [36m<h2>[39m
+              [0m1.000001[0m
+              [0m [0m
+              [36m<small>[39m
+                [0mtest USDC[0m
+              [36m</small>[39m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"terms-text"[39m
+            [36m>[39m
+              [0mYour agreement starts here. Describe what you’ll deliver and how the buyer will review it.[0m
+            [36m</p>[39m
+            [36m<dl[39m
+              [33mclass[39m=[32m"preview-details"[39m
+            [36m>[39m
+              [36m<dt>[39m
+                [0mBuyer[0m
+              [36m</dt>[39m
+              [36m<dd[39m
+                [33mclass[39m=[32m"preview-address"[39m
+              [36m>[39m
+                [0mAdd in People involved[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mAgreed reviewer[0m
+              [36m</dt>[39m
+              [36m<dd[39m
+                [33mclass[39m=[32m"preview-address"[39m
+              [36m>[39m
+                [0mAdd in People involved[0m
+              [36m</dd>[39m
+            [36m</dl>[39m
+          [36m</section>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"aside-note"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"30"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"1.7"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"30"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m8 12 3 3 5-6"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<h2>[39m
+              [0mYour wallet. Your agreement.[0m
+            [36m</h2>[39m
+            [36m<p>[39m
+              [0mDealza never holds the reserved USDC. It stays in Base’s payment protocol until an allowed release or return.[0m
+            [36m</p>[39m
+            [36m<ol>[39m
+              [36m<li>[39m
+                [0mBuyer reserves test USDC.[0m
+              [36m</li>[39m
+              [36m<li>[39m
+                [0mSeller shares delivery evidence.[0m
+              [36m</li>[39m
+              [36m<li>[39m
+                [0mBuyer releases payment, or the reviewer decides a dispute.[0m
+              [36m</li>[39m
+            [36m</ol>[39m
+            [36m<a[39m
+              [33mhref[39m=[32m"#/help"[39m
+            [36m>[39m
+              [0mUnderstand the safeguards ↗[0m
+            [36m</a>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"notice warning"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"20"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"1.7"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"20"[39m
+            [36m>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"12"[39m
+                [33mr[39m=[32m"9"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 7v5l3 2"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<div>[39m
+              [36m<strong>[39m
+                [0mA dispute does not pause the clock.[0m
+              [36m</strong>[39m
+              [36m<p>[39m
+                [0mThe reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</aside>[39m
+      [36m</div>[39m
+    [36m</main>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getAllByLabelText ../node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
+ ❯ ../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ fillOrderForm src/test/ui.test.tsx:400:26
+    398|   await user.type(screen.getByLabelText(/Order amount/), "1.000001");
+    399|   await user.click(screen.getByRole("button", { name: "Continue" }));
+    400|   await user.type(screen.getByLabelText("Buyer’s wallet address"), buy…
+       |                          ^
+    401|   await user.type(
+    402|     screen.getByLabelText("Agreed reviewer’s wallet address"),
+ ❯ src/test/ui.test.tsx:625:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/test/ui.test.tsx > seller draft recovery > revalidates restored amount without trusting a previous review
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/test/ui.test.tsx:657:5
+    655|     ["fundingCutoff", "2000-01-01T12:00", "future deadlines"],
+    656|     ["expiry", "2099-01-01T12:00", "future deadlines"],
+    657|   ])(
+       |     ^
+    658|     "revalidates restored %s without trusting a previous review",
+    659|     async (name, value, message) => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed | 14 passed (15)
+      Tests  6 failed | 252 passed (258)
+   Start at  22:55:43
+   Duration  78.85s (tests 65%, environment 19%, import 13%, setup 3%, transform 1%)
+
+    Isolate  15 workers spawned · ~2.29s startup each (spawn + environment, per file)
+             at least ~14.87s faster with isolate: false — reuses workers across files instead of one per file
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /home/ali/Desktop/vibeathon/dealza/web
+npm error workspace @dealza/web@0.1.0
+npm error location /home/ali/Desktop/vibeathon/dealza/web
+npm error command failed
+npm error command sh -c vitest run --maxWorkers=2

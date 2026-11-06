@@ -1,0 +1,1672 @@
+{
+  "mode": "Local Chromium; simulated identity only; all signing/broadcast methods blocked",
+  "responsive": [
+    {
+      "state": "details",
+      "width": 320,
+      "height": 740,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Agreement details, current step",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "People involved, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 242,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Agreement details, current step",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "People involved, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 312,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Agreement details, current step",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "People involved, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 354.828125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Agreement details, current step",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "People involved, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 540.390625,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 320,
+      "height": 740,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "People involved, current step",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 242,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "People involved, current step",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 312,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "People involved, current step",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 354.828125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "People involved, current step",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Continue",
+          "width": 127.53125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 540.390625,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 320,
+      "height": 740,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, current step",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Review order",
+          "width": 152.953125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 242,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, current step",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Review order",
+          "width": 152.953125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 312,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, current step",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Review order",
+          "width": 152.953125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 354.828125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Payment deadlines, current step",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Review and create, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Review order",
+          "width": 152.953125,
+          "height": 47
+        },
+        {
+          "label": "Draft options",
+          "width": 540.390625,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 320,
+      "height": 740,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Return to Payment deadlines, complete",
+          "width": 50.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, current step",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 50.40625,
+          "height": 44
+        },
+        {
+          "label": "Edit Agreement details",
+          "width": 145.59375,
+          "height": 44
+        },
+        {
+          "label": "Edit People involved",
+          "width": 133.546875,
+          "height": 44
+        },
+        {
+          "label": "Edit Payment deadlines",
+          "width": 151.96875,
+          "height": 44
+        },
+        {
+          "label": "Draft options",
+          "width": 242,
+          "height": 44
+        },
+        {
+          "label": "Save draft",
+          "width": 76.125,
+          "height": 44
+        },
+        {
+          "label": "Clear draft",
+          "width": 77.53125,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 242,
+          "height": 47
+        },
+        {
+          "label": "Create order on Base Sepolia",
+          "width": 242,
+          "height": 47
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Return to Payment deadlines, complete",
+          "width": 64.390625,
+          "height": 44
+        },
+        {
+          "label": "Review and create, current step",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 64.40625,
+          "height": 44
+        },
+        {
+          "label": "Edit Agreement details",
+          "width": 145.59375,
+          "height": 44
+        },
+        {
+          "label": "Edit People involved",
+          "width": 133.546875,
+          "height": 44
+        },
+        {
+          "label": "Edit Payment deadlines",
+          "width": 151.96875,
+          "height": 44
+        },
+        {
+          "label": "Draft options",
+          "width": 312,
+          "height": 44
+        },
+        {
+          "label": "Save draft",
+          "width": 76.125,
+          "height": 44
+        },
+        {
+          "label": "Clear draft",
+          "width": 77.53125,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 312,
+          "height": 47
+        },
+        {
+          "label": "Create order on Base Sepolia",
+          "width": 312,
+          "height": 47
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Return to Payment deadlines, complete",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Review and create, current step",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 136,
+          "height": 44
+        },
+        {
+          "label": "Edit Agreement details",
+          "width": 145.59375,
+          "height": 44
+        },
+        {
+          "label": "Edit People involved",
+          "width": 133.546875,
+          "height": 44
+        },
+        {
+          "label": "Edit Payment deadlines",
+          "width": 151.96875,
+          "height": 44
+        },
+        {
+          "label": "Draft options",
+          "width": 662,
+          "height": 44
+        },
+        {
+          "label": "Save draft",
+          "width": 76.125,
+          "height": 44
+        },
+        {
+          "label": "Clear draft",
+          "width": 77.53125,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Create order on Base Sepolia",
+          "width": 224,
+          "height": 47
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "targets": [
+        {
+          "label": "Return to Agreement details, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Return to People involved, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Return to Payment deadlines, complete",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Review and create, current step",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Confirmed and sharing, upcoming",
+          "width": 200,
+          "height": 44
+        },
+        {
+          "label": "Edit Agreement details",
+          "width": 145.59375,
+          "height": 44
+        },
+        {
+          "label": "Edit People involved",
+          "width": 133.546875,
+          "height": 44
+        },
+        {
+          "label": "Edit Payment deadlines",
+          "width": 151.96875,
+          "height": 44
+        },
+        {
+          "label": "Draft options",
+          "width": 738,
+          "height": 44
+        },
+        {
+          "label": "Save draft",
+          "width": 76.125,
+          "height": 44
+        },
+        {
+          "label": "Clear draft",
+          "width": 77.53125,
+          "height": 44
+        },
+        {
+          "label": "Back",
+          "width": 73.203125,
+          "height": 47
+        },
+        {
+          "label": "Create order on Base Sepolia",
+          "width": 224,
+          "height": 47
+        }
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "state": "details",
+      "width": 320,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "#description"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 390,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "#description"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 768,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "#description"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "details",
+      "width": 1440,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "#description"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 320,
+      "passes": 47,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"] > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 390,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"] > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 768,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"] > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "people",
+      "width": 1440,
+      "passes": 48,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"] > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 320,
+      "passes": 46,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 390,
+      "passes": 47,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 768,
+      "passes": 47,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "deadlines",
+      "width": 1440,
+      "passes": 47,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 320,
+      "passes": 42,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(3) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 390,
+      "passes": 42,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(3) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 768,
+      "passes": 42,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(3) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "state": "review",
+      "width": 1440,
+      "passes": 42,
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "targets": [
+            [
+              ".testnet-bar"
+            ]
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "a[aria-label=\"Dealza home\"] > span"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(1) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(2) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li[data-complete=\"true\"]:nth-child(3) > button[type=\"button\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "div:nth-child(1) > .wordmark[href=\"#/\"] > span"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "action": "Draft options Enter/Tab/Enter",
+      "passed": true
+    },
+    {
+      "action": "Continue",
+      "text": "People involved",
+      "top": 198.859375,
+      "bottom": 218.65625,
+      "scrollY": 485
+    },
+    {
+      "action": "Continue",
+      "text": "Payment deadlines",
+      "top": 198.859375,
+      "bottom": 218.65625,
+      "scrollY": 485
+    },
+    {
+      "action": "Review order",
+      "text": "1 test USDC",
+      "top": 222.953125,
+      "bottom": 258.953125,
+      "scrollY": 485
+    },
+    {
+      "action": "Edit People involved",
+      "text": "People involved",
+      "top": 198.859375,
+      "bottom": 218.65625,
+      "scrollY": 485
+    },
+    {
+      "action": "Back",
+      "text": "Agreement details",
+      "top": 198.859375,
+      "bottom": 218.65625,
+      "scrollY": 485
+    }
+  ],
+  "wallet": [
+    {
+      "width": 320,
+      "height": 740,
+      "metrics": {
+        "top": 84,
+        "bottom": 644,
+        "scrollTop": 0,
+        "clientHeight": 558,
+        "scrollHeight": 625,
+        "headingTop": 117.828125,
+        "headingBottom": 146.171875,
+        "overflowX": false
+      },
+      "visited": [
+        {
+          "label": "×",
+          "inside": true,
+          "top": 105,
+          "bottom": 159
+        },
+        {
+          "label": "0x1111111111111111111111111111111111111111 on Base Sepolia explorer (opens a new tab)",
+          "inside": true,
+          "top": 206.09375,
+          "bottom": 263.375
+        },
+        {
+          "label": "Copy wallet address",
+          "inside": true,
+          "top": 275.375,
+          "bottom": 322.375
+        },
+        {
+          "label": "Disconnect this session",
+          "inside": true,
+          "top": 561.0625,
+          "bottom": 608.0625
+        }
+      ],
+      "axeViolations": [],
+      "escapeRestoresFocus": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "metrics": {
+        "top": 84,
+        "bottom": 644,
+        "scrollTop": 0,
+        "clientHeight": 558,
+        "scrollHeight": 625,
+        "headingTop": 117.828125,
+        "headingBottom": 146.171875,
+        "overflowX": false
+      },
+      "visited": [
+        {
+          "label": "×",
+          "inside": true,
+          "top": 105,
+          "bottom": 159
+        },
+        {
+          "label": "0x1111111111111111111111111111111111111111 on Base Sepolia explorer (opens a new tab)",
+          "inside": true,
+          "top": 206.09375,
+          "bottom": 263.375
+        },
+        {
+          "label": "Copy wallet address",
+          "inside": true,
+          "top": 275.375,
+          "bottom": 322.375
+        },
+        {
+          "label": "Disconnect this session",
+          "inside": true,
+          "top": 561.0625,
+          "bottom": 608.0625
+        }
+      ],
+      "axeViolations": [],
+      "escapeRestoresFocus": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "metrics": {
+        "top": 116,
+        "bottom": 676,
+        "scrollTop": 0,
+        "clientHeight": 558,
+        "scrollHeight": 625,
+        "headingTop": 149.828125,
+        "headingBottom": 178.171875,
+        "overflowX": false
+      },
+      "visited": [
+        {
+          "label": "×",
+          "inside": true,
+          "top": 137,
+          "bottom": 191
+        },
+        {
+          "label": "0x1111111111111111111111111111111111111111 on Base Sepolia explorer (opens a new tab)",
+          "inside": true,
+          "top": 238.09375,
+          "bottom": 295.375
+        },
+        {
+          "label": "Copy wallet address",
+          "inside": true,
+          "top": 307.375,
+          "bottom": 354.375
+        },
+        {
+          "label": "Disconnect this session",
+          "inside": true,
+          "top": 593.0625,
+          "bottom": 640.0625
+        }
+      ],
+      "axeViolations": [],
+      "escapeRestoresFocus": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "metrics": {
+        "top": 55,
+        "bottom": 615,
+        "scrollTop": 0,
+        "clientHeight": 558,
+        "scrollHeight": 625,
+        "headingTop": 88.828125,
+        "headingBottom": 117.171875,
+        "overflowX": false
+      },
+      "visited": [
+        {
+          "label": "×",
+          "inside": true,
+          "top": 76,
+          "bottom": 130
+        },
+        {
+          "label": "0x1111111111111111111111111111111111111111 on Base Sepolia explorer (opens a new tab)",
+          "inside": true,
+          "top": 177.09375,
+          "bottom": 234.375
+        },
+        {
+          "label": "Copy wallet address",
+          "inside": true,
+          "top": 246.375,
+          "bottom": 293.375
+        },
+        {
+          "label": "Disconnect this session",
+          "inside": true,
+          "top": 532.0625,
+          "bottom": 579.0625
+        }
+      ],
+      "axeViolations": [],
+      "escapeRestoresFocus": true
+    },
+    {
+      "width": 390,
+      "height": 400,
+      "metrics": {
+        "top": 16,
+        "bottom": 384,
+        "scrollTop": 0,
+        "clientHeight": 366,
+        "scrollHeight": 625,
+        "headingTop": 49.828125,
+        "headingBottom": 78.171875,
+        "overflowX": false
+      },
+      "visited": [
+        {
+          "label": "×",
+          "inside": true,
+          "top": 37,
+          "bottom": 91
+        },
+        {
+          "label": "0x1111111111111111111111111111111111111111 on Base Sepolia explorer (opens a new tab)",
+          "inside": true,
+          "top": 138.09375,
+          "bottom": 195.375
+        },
+        {
+          "label": "Copy wallet address",
+          "inside": true,
+          "top": 207.375,
+          "bottom": 254.375
+        },
+        {
+          "label": "Disconnect this session",
+          "inside": true,
+          "top": 234.0625,
+          "bottom": 281.0625
+        }
+      ],
+      "axeViolations": [],
+      "escapeRestoresFocus": true
+    }
+  ],
+  "longTerms": {
+    "characters": 1104,
+    "previewHeight": 114,
+    "fullTextHeight": 684,
+    "noHorizontalOverflow": true
+  },
+  "recovery": {
+    "restoredStage": "Payment deadlines",
+    "reviewNotRestored": true
+  },
+  "walletMethods": [
+    "eth_requestAccounts",
+    "eth_chainId"
+  ],
+  "signingPerformed": false,
+  "broadcastPerformed": false
+}

@@ -70,7 +70,7 @@ summary {
   font-size: 0.85rem;
 }
 .wallet-popover {
-  max-height: calc(100dvh - 100px);
+  max-height: min(560px, calc(100dvh - 160px));
   overflow-y: auto;
 }
 .wallet-popover:focus {
@@ -472,9 +472,9 @@ summary {
   }
   .wallet-popover {
     position: fixed;
-    top: 100px;
+    top: 84px;
     right: 16px;
-    max-height: calc(100dvh - 116px);
+    max-height: min(560px, calc(100dvh - 100px));
     width: min(360px, calc(100vw - 32px));
     padding: 20px;
   }
@@ -530,23 +530,36 @@ summary {
   text-align: left;
   display: flex;
   gap: 8px;
-  align-items: baseline;
+  align-items: center;
   min-height: 44px;
   color: var(--ink);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 6px 4px;
+  width: 100%;
 }
 .wizard-progress button:disabled {
   cursor: default;
-  opacity: 0.65;
+  opacity: 1;
+  color: var(--muted);
 }
 .wizard-progress [aria-current] button {
   opacity: 1;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--ink);
+  background: #e6eddc;
+  border-radius: 8px;
 }
 .wizard-progress button span:first-child {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #8b9f7b;
+  border-radius: 50%;
   font-variant-numeric: tabular-nums;
   color: #426338;
 }
@@ -617,11 +630,6 @@ summary {
   min-height: 48px;
 }
 @media (max-width: 768px) {
-  .wizard-progress button {
-    flex-direction: column;
-    gap: 4px;
-    font-size: 0.72rem;
-  }
   .checkout-progress > ol {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -634,14 +642,6 @@ summary {
   }
 }
 @media (max-width: 390px) {
-  .wizard-progress ol {
-    gap: 4px;
-  }
-  .wizard-progress button {
-    padding: 0;
-    font-size: 0.65rem;
-    overflow-wrap: anywhere;
-  }
   .draft-preview,
   .confirm-action {
     padding: 20px;
@@ -658,4 +658,139 @@ summary {
     scroll-behavior: auto !important;
     transition: none !important;
   }
+}
+
+/* Small-screen progress keeps the full active label above reachable step targets. */
+.wizard-progress {
+  scroll-margin-top: 20px;
+}
+.wizard-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.wizard-status > span {
+  color: var(--muted);
+}
+.wizard-progress [aria-current] button span:first-child,
+.wizard-progress [data-complete="true"] button span:first-child {
+  background: #426338;
+  color: white;
+  border-color: #426338;
+}
+.preview-details {
+  margin: 20px 0 0;
+  font-size: 0.86rem;
+}
+.preview-details dt {
+  color: var(--muted);
+  margin-top: 12px;
+}
+.preview-details dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+.preview-address {
+  font-family: monospace;
+}
+.draft-preview .terms-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+.draft-controls {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  padding-top: 16px;
+}
+.draft-controls p {
+  margin-bottom: 4px;
+}
+.draft-controls summary {
+  color: var(--muted);
+  cursor: pointer;
+}
+.review-group {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 24px;
+}
+.review-group .details {
+  border: 0;
+  padding: 0;
+  margin: 16px 0 24px;
+}
+.review-group .address {
+  display: inline;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.review-group .address svg {
+  vertical-align: middle;
+}
+.wallet-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.wallet-panel-heading h2 {
+  margin: 0;
+  line-height: 1.35;
+}
+.wallet-panel-heading .text-button {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.wallet-popover {
+  padding: 20px;
+  scroll-padding-block: 16px;
+}
+.wallet-popover .field-help {
+  margin-block: 10px;
+}
+.wallet-balances {
+  margin-block: 12px;
+  padding-block: 12px;
+}
+@media (max-width: 768px) {
+  .wizard-progress button {
+    justify-content: center;
+  }
+  .wizard-progress button span + span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .wizard-status {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+@media (max-height: 500px) {
+  .wallet-popover {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    max-height: calc(100dvh - 32px);
+  }
+}
+.step-number,
+.create-aside .aside-note p,
+.create-aside .aside-note li {
+  color: #526344;
+}
+.create-layout > .order-form {
+  align-self: start;
 }

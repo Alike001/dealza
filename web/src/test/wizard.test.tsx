@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { CreateOrder } from "../components/CreateOrder";
 import { CheckoutProgress } from "../components/PaymentGuidance";
@@ -85,6 +86,77 @@ describe("guided agreement creation", () => {
     ).not.toBeInTheDocument();
     click("Continue");
     expect(screen.getByRole("alert")).toHaveTextContent("buyer’s complete");
+  });
+  it("announces completion, previews reviewer and deadlines, and groups the final review", () => {
+    mount();
+    details();
+    click("Continue");
+    expect(
+      screen.getByText("Step 2 of 5 · People involved"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("1 of 5 steps complete")).toBeInTheDocument();
+    people();
+    const summary = screen.getByRole("region", { name: "Agreement summary" });
+    expect(within(summary).getByText(buyer)).toBeInTheDocument();
+    expect(within(summary).getByText(reviewer)).toBeInTheDocument();
+    click("Continue");
+    fireEvent.change(screen.getByLabelText("Buyer must reserve by"), {
+      target: {
+        value: new Date(Date.now() + 86400000).toISOString().slice(0, 16),
+      },
+    });
+    fireEvent.change(
+      screen.getByLabelText("Payment release & review deadline"),
+      {
+        target: {
+          value: new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 16),
+        },
+      },
+    );
+    expect(within(summary).getByText("Reserve by")).toBeInTheDocument();
+    expect(
+      within(summary).getByText("Release / review before"),
+    ).toBeInTheDocument();
+    click("Review order");
+    for (const name of [
+      "Agreement details",
+      "Participants",
+      "Deadlines",
+      "Financial safeguards",
+    ]) {
+      expect(screen.getByRole("region", { name })).toBeInTheDocument();
+    }
+    expect(
+      screen.getByRole("heading", { level: 2, name: "1 test USDC" }),
+    ).toHaveFocus();
+  });
+  it("keeps draft actions tucked away and supports keyboard step changes", async () => {
+    mount();
+    expect(
+      screen.getByText("Draft options").closest("details"),
+    ).not.toHaveAttribute("open");
+    details();
+    const continueButton = screen.getByRole("button", { name: "Continue" });
+    continueButton.focus();
+    await userEvent.keyboard("{Enter}");
+    expect(
+      screen.getByRole("heading", { name: "People involved" }),
+    ).toHaveFocus();
+    await userEvent.tab();
+    expect(screen.getByLabelText("Buyer’s wallet address")).toHaveFocus();
+    const back = screen.getByRole("button", {
+      name: /Return to Agreement details/,
+    });
+    back.focus();
+    await userEvent.keyboard("{Enter}");
+    expect(
+      screen.getByRole("heading", { name: "Agreement details" }),
+    ).toHaveFocus();
+    await userEvent.click(screen.getByText("Draft options"));
+    expect(
+      screen.getByText("Draft options").closest("details"),
+    ).toHaveAttribute("open");
+    expect(screen.getByRole("button", { name: "Clear draft" })).toBeEnabled();
   });
   it("keeps description and amount when navigating back", () => {
     mount();
@@ -176,6 +248,10 @@ describe("guided agreement creation", () => {
       (screen.getByLabelText("Shareable checkout link") as HTMLInputElement)
         .value,
     ).toContain(id);
+    expect(screen.getByText("5 of 5 steps complete")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Your order link is ready." }),
+    ).toHaveFocus();
     expect(
       screen.getByRole("link", { name: /View transaction/ }),
     ).toHaveAttribute("href", expect.stringContaining(hash));

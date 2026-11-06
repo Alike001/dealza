@@ -27,7 +27,8 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
   };
   useEffect(() => {
     if (!open) return;
-    panel.current?.focus();
+    if (panel.current) panel.current.scrollTop = 0;
+    panel.current?.focus({ preventScroll: true });
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
@@ -113,7 +114,16 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
           className="wallet-popover"
           aria-label="Wallet connection"
         >
-          <h2>{wallet.session ? "Your wallet" : "Choose your wallet"}</h2>
+          <div className="wallet-panel-heading">
+            <h2>{wallet.session ? "Your wallet" : "Choose your wallet"}</h2>
+            <button
+              className="text-button"
+              aria-label="Close wallet panel"
+              onClick={close}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
           {wallet.session && (
             <p className="wallet-connected" role="status">
               Connected ·{" "}
@@ -238,9 +248,6 @@ export function WalletControl({ api }: { api: PaymentGateway }) {
               {wallet.error} You can choose a wallet and try again.
             </p>
           )}
-          <button className="text-button close-wallet" onClick={close}>
-            Close wallet panel
-          </button>
         </section>
       )}
     </div>

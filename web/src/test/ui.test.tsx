@@ -78,6 +78,7 @@ describe("pending integration and routing", () => {
       </WalletContext.Provider>,
     );
     await user.type(screen.getByLabelText("What is this order for?"), text);
+    await user.click(screen.getByText("Draft options"));
     await user.click(screen.getByRole("button", { name: "Save draft" }));
     expect(
       screen.getByText(/No order or payment has been created/),
@@ -592,7 +593,7 @@ describe("seller draft recovery", () => {
       saved.fundingCutoff,
     );
     await userEvent.click(
-      screen.getByRole("button", { name: "Return to Agreement details" }),
+      screen.getByRole("button", { name: /^Return to Agreement details/ }),
     );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(
       saved.description,
@@ -641,7 +642,7 @@ describe("seller draft recovery", () => {
     }
     rerender(wallet(session(seller)));
     await userEvent.click(
-      screen.getByRole("button", { name: "Return to Agreement details" }),
+      screen.getByRole("button", { name: /^Return to Agreement details/ }),
     );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(gateway.create).not.toHaveBeenCalled();
@@ -715,7 +716,7 @@ describe("seller draft recovery", () => {
     view.unmount();
     createView(gateway);
     await userEvent.click(
-      screen.getByRole("button", { name: "Return to Agreement details" }),
+      screen.getByRole("button", { name: /^Return to Agreement details/ }),
     );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(gateway.create).toHaveBeenCalledTimes(1);
@@ -737,8 +738,9 @@ describe("seller draft recovery", () => {
     );
     expect(localStorage.getItem(draftKey())).toContain(text);
     expect(
-      screen.getByRole("button", { name: "Return to Agreement details" }),
+      screen.getByRole("button", { name: /^Return to Agreement details/ }),
     ).toBeDisabled();
+    await user.click(screen.getByText("Draft options"));
     expect(screen.getByRole("button", { name: "Clear draft" })).toBeDisabled();
     view.rerender(
       <WalletContext.Provider value={wallet(session(buyer))}>
@@ -771,7 +773,7 @@ describe("seller draft recovery", () => {
     view.unmount();
     createView(gateway);
     await userEvent.click(
-      screen.getByRole("button", { name: "Return to Agreement details" }),
+      screen.getByRole("button", { name: /^Return to Agreement details/ }),
     );
     expect(screen.getByLabelText("What is this order for?")).toHaveValue(text);
     expect(
@@ -802,6 +804,7 @@ describe("seller draft recovery", () => {
     fireEvent.change(screen.getByLabelText("What is this order for?"), {
       target: { value: text },
     });
+    await user.click(screen.getByText("Draft options"));
     await user.click(screen.getByRole("button", { name: "Clear draft" }));
     expect(localStorage.getItem(draftKey())).toBeNull();
     expect(screen.getByLabelText("What is this order for?")).toHaveValue("");
