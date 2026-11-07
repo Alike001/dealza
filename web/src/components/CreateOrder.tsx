@@ -104,9 +104,7 @@ function ScopedCreateOrder({
   const persist = (value: typeof form) => {
     try {
       writeOrderDraft(draftKey, value);
-      setSaved(
-        "Draft saved on this device. No order or payment has been created.",
-      );
+      setSaved("Draft saved on this device.");
       return true;
     } catch (e) {
       setSaved("");
@@ -249,12 +247,31 @@ function ScopedCreateOrder({
     "Confirmed and sharing",
   ];
   const currentStep = created ? 4 : stage;
+  // Draft persistence is independent of transaction progress. Once creation starts,
+  // let the transaction notice speak for the current state instead of the save.
+  const creationNotice: TxState = {
+    ...tx,
+    message:
+      tx.phase === "checking"
+        ? "Checking wallet and agreement."
+        : tx.phase === "signature"
+          ? "Review the order-creation request in MetaMask."
+          : tx.phase === "pending"
+            ? "Transaction submitted. Waiting for Base Sepolia confirmation. Do not submit again."
+            : tx.phase === "error" && tx.hash
+              ? `${tx.message} Verify the transaction before retrying order creation. Do not submit again while it remains unverified.`
+              : tx.message,
+  };
   const draftControls = (
     <div className="draft-controls">
-      <p role="status" className="field-help">
-        {saved ||
-          "Drafts save automatically for the connected wallet and network on this device. Keep private information out of the terms."}
-      </p>
+      {tx.phase === "idle" ? (
+        <p role="status" className="field-help">
+          {saved ||
+            "Drafts save automatically for the connected wallet and network on this device. Keep private information out of the terms."}
+        </p>
+      ) : (
+        <TransactionNotice tx={creationNotice} />
+      )}
       <details>
         <summary>Draft options</summary>
         <div className="button-row">
@@ -676,7 +693,7 @@ function ScopedCreateOrder({
             }
           >
             {busy
-              ? "Waiting for your transaction…"
+              ? "Creation in progress…"
               : api.deployment
                 ? "Create order on Base Sepolia"
                 : "Testnet integration pending"}
@@ -692,7 +709,6 @@ function ScopedCreateOrder({
           {error}
         </p>
       )}
-      {!created && <TransactionNotice tx={tx} />}
     </main>
   );
 }

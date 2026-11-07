@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import { CreateOrder } from "../components/CreateOrder";
 import { CheckoutProgress } from "../components/PaymentGuidance";
 import { WalletContext } from "../lib/wallet";
+import { descriptionHash, shareLink } from "../lib/domain";
 import {
   orderDraftKey,
   readDraftStage,
@@ -211,6 +212,15 @@ describe("guided agreement creation", () => {
     let finish!: () => void;
     const gateway = api({
       create: vi.fn(async (_terms, _session, update) => {
+        // The safety save must still happen before the gateway/wallet request.
+        expect(
+          localStorage.getItem(
+            orderDraftKey(session(seller), gateway.deployment)!,
+          ),
+        ).toContain(text);
+        await new Promise<void>((resolve) => {
+          finish = resolve;
+        });
         update({ phase: "signature", message: "Awaiting wallet" });
         await new Promise<void>((resolve) => {
           finish = resolve;
@@ -229,10 +239,35 @@ describe("guided agreement creation", () => {
     });
     mount(gateway);
     review();
+    expect(screen.getByText("Draft saved on this device.")).toBeInTheDocument();
+    expect(screen.getByText(descriptionHash(text))).toBeInTheDocument();
+    const key = orderDraftKey(session(seller), gateway.deployment)!;
+    localStorage.removeItem(key);
     click("Create order on Base Sepolia");
+    expect(
+      screen.getByText("Checking wallet and agreement."),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/Draft saved|No order or payment has been created/),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByLabelText("Shareable checkout link"),
     ).not.toBeInTheDocument();
+    await act(async () => finish());
+    expect(
+      screen.getByText("Review the order-creation request in MetaMask."),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("Review in your wallet")).toHaveLength(1);
+    expect(
+      screen.queryByText(
+        /Checking wallet|Draft saved|No order or payment has been created|Waiting for your transaction/,
+      ),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Creation in progress…" }),
+    ).toBeDisabled();
+    click("Creation in progress…");
+    expect(gateway.create).toHaveBeenCalledTimes(1);
     await act(async () => finish());
     expect(
       screen.getByText("Transaction submitted — verification pending"),
@@ -241,13 +276,37 @@ describe("guided agreement creation", () => {
       screen.queryByLabelText("Shareable checkout link"),
     ).not.toBeInTheDocument();
     expect(
+      screen.getByText(
+        "Transaction submitted. Waiting for Base Sepolia confirmation. Do not submit again.",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("link", { name: /View transaction/ }),
+    ).toHaveLength(1);
+    expect(
+      screen.queryByText(
+        /Draft saved|No order or payment has been created|Review in your wallet|Waiting for your transaction/,
+      ),
+    ).not.toBeInTheDocument();
+    expect(
       screen.getByRole("button", { name: "Edit Agreement details" }),
     ).toBeDisabled();
+    click("Creation in progress…");
+    expect(gateway.create).toHaveBeenCalledTimes(1);
+    expect(localStorage.getItem(key)).toContain(text);
     await act(async () => finish());
     expect(
       (screen.getByLabelText("Shareable checkout link") as HTMLInputElement)
         .value,
-    ).toContain(id);
+    ).toBe(shareLink(id, text));
+    expect(
+      screen.getByText("Receipt and effects verified"),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        /Draft saved|No order or payment has been created|Review in your wallet|Transaction submitted/,
+      ),
+    ).not.toBeInTheDocument();
     expect(screen.getByText("5 of 5 steps complete")).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Your order link is ready." }),
@@ -258,6 +317,85 @@ describe("guided agreement creation", () => {
     expect(
       localStorage.getItem(orderDraftKey(session(seller), gateway.deployment)!),
     ).toBeNull();
+  });
+  it.each(["retained", "thrown"])(
+    "warns before retrying an unverified transaction with a %s hash and keeps recovery available",
+    async (source) => {
+      const gateway = api({
+        create: vi.fn(async (_terms, _session, update) => {
+          if (source === "retained") {
+            update({ phase: "pending", hash, message: "Submitted" });
+          }
+          throw Object.assign(
+            new Error("Receipt verification unavailable."),
+            source === "thrown" ? { hash } : {},
+          );
+        }),
+      });
+      const view = mount(gateway);
+      review();
+      await act(async () => click("Create order on Base Sepolia"));
+      const alert = screen.getByRole("alert");
+      expect(alert).toHaveTextContent("Receipt verification unavailable.");
+      expect(alert).toHaveTextContent(
+        "Verify the transaction before retrying order creation.",
+      );
+      expect(alert).toHaveTextContent(
+        "Do not submit again while it remains unverified.",
+      );
+      expect(
+        within(alert).getByRole("link", { name: /View transaction/ }),
+      ).toHaveAttribute("href", expect.stringContaining(hash));
+      expect(
+        screen.queryByText(
+          /Draft saved|No order or payment has been created|Review in your wallet|Waiting for your transaction/,
+        ),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByLabelText("Shareable checkout link"),
+      ).not.toBeInTheDocument();
+      expect(
+        localStorage.getItem(
+          orderDraftKey(session(seller), gateway.deployment)!,
+        ),
+      ).toContain(text);
+      view.unmount();
+      mount(gateway);
+      expect(screen.getByText(/Incomplete draft restored/)).toHaveTextContent(
+        "check My orders before retrying",
+      );
+      click("Back");
+      expect(screen.getByLabelText("Buyer’s wallet address")).toHaveValue(
+        buyer,
+      );
+      click("Back");
+      expect(screen.getByLabelText("What is this order for?")).toHaveValue(
+        text,
+      );
+      expect(gateway.create).toHaveBeenCalledTimes(1);
+    },
+  );
+  it("shows a wallet rejection without a stale draft or a confirmation", async () => {
+    const gateway = api({
+      create: vi.fn(async () => {
+        throw new Error("Wallet request rejected");
+      }),
+    });
+    mount(gateway);
+    review();
+    await act(async () => click("Create order on Base Sepolia"));
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Wallet request rejected",
+    );
+    expect(
+      screen.queryByText(/Draft saved|No order or payment has been created/),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /View transaction/ }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Shareable checkout link"),
+    ).not.toBeInTheDocument();
   });
 });
 

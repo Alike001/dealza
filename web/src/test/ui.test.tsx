@@ -80,9 +80,7 @@ describe("pending integration and routing", () => {
     await user.type(screen.getByLabelText("What is this order for?"), text);
     await user.click(screen.getByText("Draft options"));
     await user.click(screen.getByRole("button", { name: "Save draft" }));
-    expect(
-      screen.getByText(/No order or payment has been created/),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Draft saved on this device.")).toBeInTheDocument();
     expect(gateway.create).not.toHaveBeenCalled();
     expect(
       localStorage.getItem(orderDraftKey(session(seller), null)!),
