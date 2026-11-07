@@ -1,0 +1,118 @@
+[
+  {
+    "width": 320,
+    "name": "home",
+    "overflow": false,
+    "title": "Make online deals clearer before money moves.",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 320,
+    "name": "orders",
+    "overflow": false,
+    "title": "Every deal, in view.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 320,
+    "name": "paid",
+    "overflow": false,
+    "title": "Your payment, step by step.",
+    "status": "Paid to seller",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 320,
+    "name": "returned",
+    "overflow": false,
+    "title": "Your payment, step by step.",
+    "status": "Returned to buyer",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 320,
+    "name": "help",
+    "overflow": false,
+    "title": "Know what you’re agreeing to.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 320,
+    "name": "wallet",
+    "overflow": false,
+    "focus": "Wallet connection",
+    "focusReturned": true
+  },
+  {
+    "width": 390,
+    "name": "home",
+    "overflow": false,
+    "title": "Make online deals clearer before money moves.",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 390,
+    "name": "orders",
+    "overflow": false,
+    "title": "Every deal, in view.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 390,
+    "name": "paid",
+    "overflow": false,
+    "title": "Your payment, step by step.",
+    "status": "Paid to seller",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 390,
+    "name": "returned",
+    "overflow": false,
+    "title": "Your payment, step by step.",
+    "status": "Returned to buyer",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 390,
+    "name": "help",
+    "overflow": false,
+    "title": "Know what you’re agreeing to.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["https://dealza-drab.vercel.app/assets/index-SYVdntCx.js"]
+  },
+  {
+    "width": 390,
+    "name": "wallet",
+    "overflow": false,
+    "focus": "Wallet connection",
+    "focusReturned": true
+  }
+]

@@ -348,7 +348,7 @@ describe("judge entry and FAQ", () => {
       </WalletProvider>,
     );
     const links = screen.getAllByRole("link", {
-      name: /View a real completed payment/,
+      name: /Buyer released 1 test USDC to the seller/,
     });
     expect(links.length).toBeGreaterThan(0);
     for (const link of links)
@@ -364,10 +364,11 @@ describe("judge entry and FAQ", () => {
       <CompletedPaymentEvidence id={completedPaymentId} />,
     );
     const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(6);
+    expect(links).toHaveLength(7);
+    expect(links[0]).toHaveTextContent("View buyer release receipt");
     completedPaymentReceipts.forEach(([label, hash], i) => {
-      expect(links[i]).toHaveTextContent(label);
-      expect(links[i]).toHaveAttribute(
+      expect(links[i + 1]).toHaveTextContent(label);
+      expect(links[i + 1]).toHaveAttribute(
         "href",
         `https://sepolia.basescan.org/tx/${hash}`,
       );

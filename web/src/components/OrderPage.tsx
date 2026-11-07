@@ -1,8 +1,11 @@
 import { OrderDetails, OrderHistory, OrderShare } from "./OrderDetails";
+import { CompletedPaymentEvidence } from "./CompletedPaymentEvidence";
 import { CheckoutFeedback } from "./CheckoutFeedback";
 import {
   ActionExplanation,
   CheckoutProgress,
+  CompletedOutcome,
+  completedOrderTitle,
   checkoutStatus,
   recommendedAction,
   StateExplanation,
@@ -235,6 +238,7 @@ export function OrderPage({
       status = friendlyError(e);
     }
   }
+  const completed = !!s && verifiedState && [4, 5, 7].includes(s.derived);
   const buyer =
     !!s && sameAddress(wallet.session?.account, s.order.payment.payer);
   const seller =
@@ -288,7 +292,7 @@ export function OrderPage({
       </a>
       <SectionTitle
         eyebrow="SHARED ORDER"
-        title="Your payment, step by step."
+        title={completed ? "Payment outcome." : "Your payment, step by step."}
       />
       {!api.deployment ? (
         <>
@@ -397,8 +401,9 @@ export function OrderPage({
                           : "The description isn’t included in this link."}
                       </strong>
                       <p>
-                        Ask the seller for the original agreement and compare
-                        its fingerprint below. Do not rely on unverified text.
+                        {description
+                          ? "This linked text is unverified. Ask the seller for the original full agreement link and compare its fingerprint. Do not rely on mismatched text."
+                          : "This link contains the order ID but no agreement text. Only the fingerprint is onchain. Ask the seller for the original full link; you can still verify the payment outcome and receipts."}
                       </p>
                     </div>
                   )}
@@ -414,23 +419,31 @@ export function OrderPage({
                   className="panel action-panel"
                   aria-labelledby="next-action-heading"
                 >
-                  <span className="eyebrow">YOUR NEXT STEP</span>
+                  <span className="eyebrow">
+                    {completed
+                      ? error
+                        ? "LAST VERIFIED OUTCOME"
+                        : "COMPLETED ORDER"
+                      : "YOUR NEXT STEP"}
+                  </span>
                   <h2
                     id="next-action-heading"
                     ref={actionHeading}
                     tabIndex={-1}
                   >
-                    {!wallet.session
-                      ? "Connect to take part."
-                      : buyer
-                        ? "You’re the buyer."
-                        : seller
-                          ? "You’re the seller."
-                          : reviewer
-                            ? "You’re the reviewer."
-                            : "Viewing this order."}
+                    {completed
+                      ? completedOrderTitle(s)
+                      : !wallet.session
+                        ? "Connect to take part."
+                        : buyer
+                          ? "You’re the buyer."
+                          : seller
+                            ? "You’re the seller."
+                            : reviewer
+                              ? "You’re the reviewer."
+                              : "Viewing this order."}
                   </h2>
-                  {!wallet.session && (
+                  {!wallet.session && !completed && (
                     <p>
                       You can read this order without connecting. Use the named
                       buyer, seller, or reviewer wallet to take its permitted
@@ -521,12 +534,17 @@ export function OrderPage({
                         : "A decision becomes available only when this order is disputed."}
                     </p>
                   )}
-                  {[4, 5, 7].includes(s.derived) && (
-                    <p>
-                      {s.derived === 4
-                        ? "The seller has been paid. No further payment is needed. Receipts do not prove physical delivery."
-                        : "This order is closed. Check the verified payment record and receipts below."}
-                    </p>
+                  {completed && (
+                    <>
+                      <CompletedOutcome snapshot={s} />
+                      <CompletedPaymentEvidence id={id} />
+                      <button
+                        className="text-button"
+                        onClick={() => openDetails("history-events")}
+                      >
+                        View verified order history
+                      </button>
+                    </>
                   )}
                   {s.held > 0n && <RiskNote />}
                   {s.order.status === 3 && (
@@ -821,7 +839,7 @@ export function OrderPage({
                   description={description}
                   matchedTerms={matchedTerms}
                 />
-                <OrderHistory id={id} state={orderHistory} />
+                <OrderHistory state={orderHistory} />
               </div>
             </>
           )}

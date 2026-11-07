@@ -1,4 +1,5 @@
-import { completedPaymentHref } from "./lib/completedPayment";
+import { genuineJourneys } from "./components/genuineJourneys";
+import { GenuineJourneys } from "./components/GenuineJourneys";
 import { useEffect, useState } from "react";
 import { PendingTransaction } from "./components/PendingTransaction";
 import { WalletControl } from "./components/WalletControl";
@@ -33,17 +34,18 @@ function Help({ api }: { api: PaymentGateway }) {
           trustworthy or verify that a package arrived.
         </p>
       </SectionTitle>
+      <GenuineJourneys />
       <section className="panel help-content">
         <h2>How to test in two minutes</h2>
         <ol>
           <li>
-            <a href={completedPaymentHref}>View a real completed payment</a>. No
-            wallet is needed. Check the matching terms, buyer, seller, reviewer
-            and verified payment state.
+            Open either genuine outcome above without a wallet. Check the
+            matching terms, recipient and verified payment state.
           </li>
           <li>
-            Inspect the transaction history and receipt links. The controlled
-            test captured 1 test USDC; no physical delivery occurred.
+            Inspect the settlement receipt and the six recorded transaction
+            links. One test paid the seller; the other returned the uncaptured
+            reserve to the buyer.
           </li>
           <li>
             Try <a href="#/create">creating a local draft</a>. Saving a draft
@@ -52,9 +54,9 @@ function Help({ api }: { api: PaymentGateway }) {
         </ol>
         <p>
           Wallet connection only shares an address. Allowance, payment terms
-          authorization, reservation, seller acknowledgment and buyer release
-          are separate wallet transactions. A submitted request is not verified
-          settlement.
+          authorization, reservation and later payment decisions are separate
+          wallet transactions. Delivery evidence is optional and never releases
+          funds. A submitted request is not verified settlement.
         </p>
         <h2>For sellers</h2>
         <p>
@@ -168,15 +170,28 @@ export default function App({ api = gateway }: { api?: PaymentGateway }) {
   const wallet = useWallet();
   const [route, setRoute] = useState(routeFromHash);
   useEffect(() => {
+    let focusFrame: number | undefined;
     const change = () => {
       setRoute(routeFromHash());
       window.scrollTo?.({ top: 0 });
-      window.requestAnimationFrame(() =>
-        document.getElementById("main")?.focus(),
-      );
+      if (focusFrame !== undefined) window.cancelAnimationFrame(focusFrame);
+      focusFrame = window.requestAnimationFrame(() => {
+        // Keep a user's new input/wallet focus if they acted before this frame.
+        const focused = document.activeElement;
+        if (
+          focused instanceof HTMLElement &&
+          (focused.matches("input, textarea, select, button") ||
+            focused.closest(".wallet-popover"))
+        )
+          return;
+        document.getElementById("main")?.focus();
+      });
     };
     window.addEventListener("hashchange", change);
-    return () => window.removeEventListener("hashchange", change);
+    return () => {
+      window.removeEventListener("hashchange", change);
+      if (focusFrame !== undefined) window.cancelAnimationFrame(focusFrame);
+    };
   }, []);
   const orderId = route.path.startsWith("/order/") ? route.path.slice(7) : "";
   return (
@@ -275,7 +290,11 @@ export default function App({ api = gateway }: { api?: PaymentGateway }) {
         </div>
         <div className="footer-links">
           <a href="#/orders">Your orders</a>
-          <a href={completedPaymentHref}>View a real completed payment</a>
+          {genuineJourneys.map((journey) => (
+            <a key={journey.id} href={journey.href}>
+              {journey.label}
+            </a>
+          ))}
           <a href="#/help">Safeguards & limitations</a>
           <a
             href="https://github.com/base/commerce-payments/tree/v1.1.0"

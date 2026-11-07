@@ -1,0 +1,22 @@
+[
+  {
+    "name": "paid",
+    "history": {
+      "open": true,
+      "focused": true
+    },
+    "receiptsOpen": true,
+    "termsVisible": true,
+    "horizontalOverflow": false
+  },
+  {
+    "name": "returned",
+    "history": {
+      "open": true,
+      "focused": true
+    },
+    "receiptsOpen": true,
+    "termsVisible": true,
+    "horizontalOverflow": false
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "paid",
+    "phase": "initial failure",
+    "noFalseOutcome": true,
+    "noFalseStatus": true
+  },
+  {
+    "name": "paid",
+    "phase": "cached failure",
+    "knownStatus": "Paid to seller",
+    "lastVerified": true,
+    "amountRetained": "Paid amount\n1 test USDC\nSeller received\n0xF74aD341e10187073a0eef55356D136F1be5E3Cf\non Base Sepolia explorer (opens a new tab)"
+  },
+  {
+    "name": "paid",
+    "phase": "recovered",
+    "completed": true
+  },
+  {
+    "name": "returned",
+    "phase": "initial failure",
+    "noFalseOutcome": true,
+    "noFalseStatus": true
+  },
+  {
+    "name": "returned",
+    "phase": "cached failure",
+    "knownStatus": "Returned to buyer",
+    "lastVerified": true,
+    "amountRetained": "Returned amount\n1 test USDC\nBuyer received\n0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25\non Base Sepolia explorer (opens a new tab)"
+  },
+  {
+    "name": "returned",
+    "phase": "recovered",
+    "completed": true
+  }
+]

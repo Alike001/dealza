@@ -4,7 +4,6 @@ import { money, shareLink, shortAddress } from "../lib/domain";
 import { explorerTx, network } from "../lib/config";
 import type { useHistory } from "../lib/useHistory";
 import { AddressLink, CopyButton, dateTime, Icon } from "./common";
-import { CompletedPaymentEvidence } from "./CompletedPaymentEvidence";
 
 export const eventNames: Record<string, string> = {
   OrderCreated: "Order terms recorded",
@@ -40,8 +39,9 @@ export function OrderDetails({
             <p className="terms-text">{description}</p>
           ) : (
             <p>
-              Obtain the original agreement from the seller and compare its
-              fingerprint. Linked text is not verified.
+              The agreement text travels in the full share link; only its
+              fingerprint is onchain. Ask the seller for the original full link.
+              Missing or mismatched text remains unverified.
             </p>
           )}
           <dl className="details">
@@ -157,6 +157,12 @@ export function OrderShare({
   return (
     <div className="share-row">
       <CopyButton value={link} />
+      {!description && (
+        <p className="field-help">
+          This copy contains the order ID only. Ask the seller for the full
+          agreement link to include the original text.
+        </p>
+      )}
       <details>
         <summary>Show share link</summary>
         <input
@@ -171,10 +177,8 @@ export function OrderShare({
 }
 
 export function OrderHistory({
-  id,
   state,
 }: {
-  id: Hash;
   state: ReturnType<typeof useHistory<Activity>>;
 }) {
   const { page: history, loading, error } = state;
@@ -271,7 +275,6 @@ export function OrderHistory({
           >
             Refresh history
           </button>
-          <CompletedPaymentEvidence id={id} />
         </div>
       </details>
     </section>

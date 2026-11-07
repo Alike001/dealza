@@ -1,0 +1,120 @@
+[
+  {
+    "width": 320,
+    "name": "home",
+    "overflow": false,
+    "title": "Make online deals clearer before money moves.",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 320,
+    "name": "orders",
+    "overflow": false,
+    "title": "Every deal, in view.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 320,
+    "name": "paid",
+    "overflow": false,
+    "title": "Payment outcome.",
+    "status": "Paid to seller",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 320,
+    "name": "returned",
+    "overflow": false,
+    "title": "Payment outcome.",
+    "status": "Returned to buyer",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 320,
+    "name": "help",
+    "overflow": false,
+    "title": "Know what you’re agreeing to.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 320,
+    "name": "wallet",
+    "overflow": false,
+    "focus": "Wallet connection",
+    "violations": [],
+    "focusReturned": true
+  },
+  {
+    "width": 390,
+    "name": "home",
+    "overflow": false,
+    "title": "Make online deals clearer before money moves.",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 390,
+    "name": "orders",
+    "overflow": false,
+    "title": "Every deal, in view.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 390,
+    "name": "paid",
+    "overflow": false,
+    "title": "Payment outcome.",
+    "status": "Paid to seller",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 390,
+    "name": "returned",
+    "overflow": false,
+    "title": "Payment outcome.",
+    "status": "Returned to buyer",
+    "warnings": [],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 390,
+    "name": "help",
+    "overflow": false,
+    "title": "Know what you’re agreeing to.",
+    "warnings": [
+      "A dispute does not pause the clock.The reviewer must decide before payment expiry. At expiry, the buyer can reclaim uncaptured funds directly from the payment protocol, even during an unresolved dispute."
+    ],
+    "violations": [],
+    "scripts": ["http://127.0.0.1:4181/assets/index-DMCRzlU0.js"]
+  },
+  {
+    "width": 390,
+    "name": "wallet",
+    "overflow": false,
+    "focus": "Wallet connection",
+    "violations": [],
+    "focusReturned": true
+  }
+]

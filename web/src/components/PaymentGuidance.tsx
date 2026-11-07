@@ -11,6 +11,59 @@ export function checkoutStatus(snapshot: OrderSnapshot): string {
     : verified;
 }
 
+export function completedOrderTitle(snapshot: OrderSnapshot): string {
+  const status = checkoutStatus(snapshot);
+  return status === "Paid to seller"
+    ? "Payment complete."
+    : status === "Returned to buyer"
+      ? "Reserve returned."
+      : status === "Recovered by buyer"
+        ? "Recovery complete."
+        : status === "Cancelled"
+          ? "Order cancelled."
+          : "Order details.";
+}
+
+export function CompletedOutcome({ snapshot: s }: { snapshot: OrderSnapshot }) {
+  const status = checkoutStatus(s);
+  if (
+    ![
+      "Paid to seller",
+      "Returned to buyer",
+      "Recovered by buyer",
+      "Cancelled",
+    ].includes(status)
+  )
+    return null;
+  if (status === "Cancelled")
+    return (
+      <p>This order closed before funding. No USDC was reserved or paid.</p>
+    );
+  const paid = status === "Paid to seller";
+  return (
+    <>
+      <p>
+        {paid
+          ? "The full payment was released to the seller."
+          : status === "Recovered by buyer"
+            ? "The buyer recovered the expired, uncaptured reserve."
+            : "The uncaptured reserve was returned to the buyer. The seller was not paid for this order."}
+      </p>
+      <dl className="details completion-details">
+        <dt>{paid ? "Paid amount" : "Returned amount"}</dt>
+        <dd>{money(s.order.payment.maxAmount)} test USDC</dd>
+        <dt>{paid ? "Seller received" : "Buyer received"}</dt>
+        <dd>
+          <AddressLink
+            value={paid ? s.order.payment.receiver : s.order.payment.payer}
+            full
+          />
+        </dd>
+      </dl>
+    </>
+  );
+}
+
 // Presentation only: these indicators never enable or disable protocol actions.
 function ApprovalDetails({ amount }: { amount: string }) {
   return (

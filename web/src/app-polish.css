@@ -1062,3 +1062,59 @@ summary {
   margin-top: 24px;
   padding-top: 20px;
 }
+
+/* Genuine examples are navigation, separate from each wallet's order history. */
+.genuine-journeys {
+  border-block: 1px solid var(--border);
+  padding-block: 18px;
+  margin-block: 24px;
+}
+.genuine-journeys h2 {
+  font-size: 1.05rem;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.genuine-journeys ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.genuine-journeys a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  line-height: 1.5;
+  font-size: 0.93rem;
+}
+.genuine-journeys svg {
+  flex-shrink: 0;
+}
+.genuine-journeys p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+.action-panel .recorded-receipts {
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 18px;
+}
+.recorded-receipts h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.recorded-receipts .settlement-receipt {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+}
+.completion-details {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.share-row > .field-help {
+  flex-basis: 100%;
+}

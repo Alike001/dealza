@@ -1,4 +1,4 @@
-import { completedPaymentHref } from "../lib/completedPayment";
+import { GenuineJourneys } from "./GenuineJourneys";
 import type { PaymentGateway } from "../lib/gateway";
 import { LandingDetails } from "./LandingDetails";
 import { Icon, PendingIntegration } from "./common";
@@ -22,7 +22,7 @@ const steps = [
   [
     "04",
     "Make a human decision.",
-    "The seller records a delivery claim. The buyer explicitly releases payment while undisputed, or the named reviewer decides a dispute before expiry.",
+    "The seller may record delivery evidence. The buyer can release payment while undisputed, or the agreed reviewer decides a dispute before expiry.",
   ],
 ];
 
@@ -38,9 +38,9 @@ export function LandingPage({ api }: { api: PaymentGateway }) {
             Make online deals clearer <em>before money moves.</em>
           </h1>
           <p className="hero-description">
-            The conversation starts in your DMs. Give the payment a clear
-            agreement: named people, written terms, reserved USDC, and a human
-            decision to release.
+            Online deals made in DMs need clearer payment agreements and a way
+            to resolve disputes. Agree on the terms and a trusted reviewer
+            before reserving funds.
           </p>
           <div className="button-row">
             <a className="button" href="#/create">
@@ -50,16 +50,7 @@ export function LandingPage({ api }: { api: PaymentGateway }) {
               Open your orders
             </a>
           </div>
-          <div className="real-payment-entry">
-            <a className="underlined-link" href={completedPaymentHref}>
-              View a real completed payment <Icon name="arrow" size={18} />
-            </a>
-            <p>
-              No wallet needed. Inspect the terms, participants and onchain
-              receipts of a controlled 1 test-USDC payment. No physical delivery
-              occurred.
-            </p>
-          </div>
+          <GenuineJourneys />
           <p className="hero-caption">
             Base Sepolia demo · Test USDC only · No platform fee
           </p>

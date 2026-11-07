@@ -1,0 +1,101 @@
+{
+  "note": "Genuine public completed orders. Descriptions come from original full agreement links and match their onchain fingerprints. Snapshots and all receipt links independently verified via Base official and PublicNode RPCs; no transaction was submitted.",
+  "block": "55629721",
+  "utc": "2026-11-07T10:36:53.000Z",
+  "cases": [
+    {
+      "name": "paid",
+      "description": "Dealza Checkpoint 6: fresh UI-only 1 test-USDC checkout; controlled test, no physical delivery.",
+      "snapshot": {
+        "id": "0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd",
+        "order": {
+          "descriptionHash": "0x43f2dcc0b9930bc16b3b0d560a08dd7c00dae3949d2355e22b4387541d73b4c8",
+          "payment": {
+            "authorizationExpiry": 1793962800,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "maxAmount": "1000000",
+            "maxFeeBps": 0,
+            "minFeeBps": 0,
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "preApprovalExpiry": 1793790000,
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "refundExpiry": 1793962800,
+            "salt": "1087428292995091272834244935853261831412821507521997327807314507376645222109",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+          },
+          "paymentHash": "0x146b39003d621a9f7dbfc083bb8ce77c6ddb00022a5a384681114cc6cefcf1e6",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "status": 4
+        },
+        "collected": true,
+        "held": "0",
+        "captured": "1000000",
+        "allowance": "0",
+        "preApproved": true,
+        "buyerBalance": "19000000",
+        "buyerGas": "100000000000000",
+        "storeBalance": "0",
+        "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+        "derived": 4,
+        "block": "55629721",
+        "chainTime": 1794047813
+      },
+      "receiptHashes": [
+        "0x057a937ac93132743a53276eefcd7023d3ae72210410fbcee6dc6fdf4fb84567",
+        "0x7807edd5f7838a287a8723268b0f5b3aba7d7e87a44a87a032ccb6359b7b7133",
+        "0x3bdd6c65eea5c193abc0dce78b0a92314d459f9cfb38615469977977652ee62c",
+        "0xcb162300071bc1ae68e081045050fd50d495de93d7651dfc45fe291b4912802b",
+        "0x2dec3e64944f1bc6db00051079e8f86edf671d454de99977cdacf3a8b081e0c0",
+        "0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023"
+      ]
+    },
+    {
+      "name": "returned",
+      "description": "Dealza Checkpoint 8: buyer dispute and reviewer return; controlled test, no physical delivery.",
+      "snapshot": {
+        "id": "0xbcb5e97254ce461b35efa91372f2d104f0f71c71ab5abff4f374ec36df4397d0",
+        "order": {
+          "descriptionHash": "0xccd6ceec3d964158dcbaa50098864f3879fa227175ee1283189a9417e67b6d32",
+          "payment": {
+            "authorizationExpiry": 1794163500,
+            "feeReceiver": "0x0000000000000000000000000000000000000000",
+            "maxAmount": "1000000",
+            "maxFeeBps": 0,
+            "minFeeBps": 0,
+            "operator": "0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8",
+            "payer": "0x4f7D38D29172f91F77d3050A9e0F75A1AAe5df25",
+            "preApprovalExpiry": 1794077100,
+            "receiver": "0xF74aD341e10187073a0eef55356D136F1be5E3Cf",
+            "refundExpiry": 1794163500,
+            "salt": "85356226041642779475703129761728611344062799464168213076218651557546932017104",
+            "token": "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+          },
+          "paymentHash": "0xa54d9ac0ad91b6e42ab2a0bb103c29dedff2a3739fe2f84a0fccfcd2799a1fcf",
+          "reviewer": "0x7F1104F54b3957C2aCE8EEe6EE97489eec51B548",
+          "status": 5
+        },
+        "collected": true,
+        "held": "0",
+        "captured": "0",
+        "allowance": "0",
+        "preApproved": true,
+        "buyerBalance": "19000000",
+        "buyerGas": "100000000000000",
+        "storeBalance": "0",
+        "tokenStore": "0x57EC2910410C3Ef888c6127A3684d04171D5a11a",
+        "derived": 5,
+        "block": "55629721",
+        "chainTime": 1794047813
+      },
+      "receiptHashes": [
+        "0xfa9c7845e4d5da67b9da3f82ef82c964f681c121e398fb2eb497564e08fba390",
+        "0x3f9e2f6a633c1d878f4542ee542df298cb117087e7c2b2bb16d1da22d170c664",
+        "0xef703b1a8350e4d66b9d9ff3c7f34776f38af746f0617b1836aa365b4412259c",
+        "0x4e3ffff0a2e567effebeb1e6f11c17f19bda00fce9d70e7724efab006df4e9df",
+        "0xf1bddacd50bf6cd0cb226fb97ccdd09117750d2a300698472b68e683c26515a6",
+        "0x3724fb79fef257a8dd5e2168b097755232d5299d90913591bb81d1049fc4e304"
+      ]
+    }
+  ]
+}

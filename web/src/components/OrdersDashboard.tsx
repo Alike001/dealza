@@ -1,4 +1,4 @@
-import { completedPaymentHref } from "../lib/completedPayment";
+import { GenuineJourneys } from "./GenuineJourneys";
 import { useState, type FormEvent } from "react";
 import type { Address } from "viem";
 import type { PaymentGateway } from "../lib/gateway";
@@ -148,11 +148,7 @@ export function OrdersDashboard({ api }: { api: PaymentGateway }) {
           records from Base Sepolia.
         </p>
       </SectionTitle>
-      <p className="judge-entry">
-        First visit?{" "}
-        <a href={completedPaymentHref}>View a real completed payment</a> without
-        connecting, or paste a shared checkout link below.
-      </p>
+      <GenuineJourneys />
       {!api.deployment && <PendingIntegration />}
       <section className="workspace panel">
         <div className="workspace-heading">
@@ -225,7 +221,11 @@ export function OrdersDashboard({ api }: { api: PaymentGateway }) {
                 {error}
               </p>
             )}
-            <p className="field-help">No wallet needed to view an agreement.</p>
+            <p className="field-help">
+              No wallet needed. An order ID opens the payment record. Paste the
+              seller’s full link, including its terms query, to read the
+              original agreement text.
+            </p>
           </form>
         </div>
       </section>
