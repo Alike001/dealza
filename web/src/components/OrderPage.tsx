@@ -3,6 +3,7 @@ import { CheckoutFeedback } from "./CheckoutFeedback";
 import {
   ActionExplanation,
   CheckoutProgress,
+  checkoutStatus,
   recommendedAction,
   StateExplanation,
 } from "./PaymentGuidance";
@@ -13,7 +14,6 @@ import type { Hash } from "viem";
 import {
   allowedActions,
   descriptionHash,
-  financialStatus,
   friendlyError,
   idleTx,
   money,
@@ -228,7 +228,7 @@ export function OrderPage({
   let verifiedState = false;
   if (s) {
     try {
-      status = financialStatus(s);
+      status = checkoutStatus(s);
       verifiedState = true;
       actions = error ? [] : allowedActions(s, wallet.session?.account);
     } catch (e) {

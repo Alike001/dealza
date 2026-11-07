@@ -1,0 +1,42 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "violations": [],
+    "status": "Returned to buyer",
+    "contractState": "Voided (5)",
+    "contractStateVisible": true,
+    "recommendedWalletActions": 0,
+    "walletConnected": false
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "violations": [],
+    "status": "Returned to buyer",
+    "contractState": "Voided (5)",
+    "contractStateVisible": true,
+    "recommendedWalletActions": 0,
+    "walletConnected": false
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "violations": [],
+    "status": "Returned to buyer",
+    "contractState": "Voided (5)",
+    "contractStateVisible": true,
+    "recommendedWalletActions": 0,
+    "walletConnected": false
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "violations": [],
+    "status": "Returned to buyer",
+    "contractState": "Voided (5)",
+    "contractStateVisible": true,
+    "recommendedWalletActions": 0,
+    "walletConnected": false
+  }
+]

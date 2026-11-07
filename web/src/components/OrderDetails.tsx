@@ -80,6 +80,12 @@ export function OrderDetails({
           <dl className="details">
             <dt>Order ID</dt>
             <dd className="mono">{s.id}</dd>
+            {s.order.status === 5 && (
+              <>
+                <dt>Contract state</dt>
+                <dd>Voided (5)</dd>
+              </>
+            )}
             <dt>Payment hash</dt>
             <dd className="mono">{s.order.paymentHash}</dd>
             <dt>Reserved in protocol</dt>

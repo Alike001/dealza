@@ -1,0 +1,27 @@
+{
+  "baseline": "3ec9615d7937c61b35206e5ff4b4284ef81b9ab9",
+  "verdict": "PASS",
+  "twoRPCReceiptAndStateAgreement": true,
+  "receiptTransactionIndexMatchesCanonicalBlock": true,
+  "fullLifetimeHistoryAgreement": true,
+  "terminalRevertSelector": "0xbaf3f0f7",
+  "targetedTests": {
+    "files": 5,
+    "tests": 117,
+    "passed": true
+  },
+  "fullFrontendTests": {
+    "files": 17,
+    "tests": 308,
+    "passed": true,
+    "command": "npm run test --workspace web -- --maxWorkers=2"
+  },
+  "typescript": "PASS",
+  "abiProvenance": "PASS",
+  "productionBuild": "PASS; existing node:worker_threads dependency warning",
+  "formatting": "PASS",
+  "widths": [320, 390, 768, 1440],
+  "noWalletConnected": true,
+  "noNewTransactionBroadcast": true,
+  "preservedExistingUntrackedFiles": 207
+}

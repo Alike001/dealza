@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-07T09:20:54.788Z",
+  "url": "https://dealza-drab.vercel.app/#/order/0xbcb5e97254ce461b35efa91372f2d104f0f71c71ab5abff4f374ec36df4397d0?terms=Dealza%20Checkpoint%208%3A%20buyer%20dispute%20and%20reviewer%20return%3B%20controlled%20test%2C%20no%20physical%20delivery.",
+  "summary": "ORDER 0xbcb5…97d0\nCancelled\n1 USDC\n\nTest USDC on Base Sepolia · Platform fee 0 USDC\n\nSeller\n0xF74a…E3Cf\non Base Sepolia explorer (opens a new tab)\n\nNo active payment deadline.\n\nVoided · This agreement has no reserved payment remaining.\n\nRead agreement and participants",
+  "verification": "Payment verification and custody\nOrder ID\n0xbcb5e97254ce461b35efa91372f2d104f0f71c71ab5abff4f374ec36df4397d0\nPayment hash\n0xa54d9ac0ad91b6e42ab2a0bb103c29dedff2a3739fe2f84a0fccfcd2799a1fcf\nReserved in protocol\n0 USDC\nCaptured (accounting)\n0 USDC\nOperator\n0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8\non Base Sepolia explorer (opens a new tab)\nUSDC token\n0x036CbD53842c5426634e7929541eC2318f3dCF7e\non Base Sepolia explorer (opens a new tab)\nCollector / approval spender\n0xF1F9C408C787B2bC6CAEB91e5BbEc434a5c8d2Ea\non Base Sepolia explorer (opens a new tab)\nCPP escrow\n0xf96815976523E00e65Be8f34cA5e64b4f41EB19c\non Base Sepolia explorer (opens a new tab)\nProtocol TokenStore\n0x57EC2910410C3Ef888c6127A3684d04171D5a11a\non Base Sepolia explorer (opens a new tab)\n\nThe TokenStore’s shared balance is 0 USDC across this operator’s orders. This order’s reserve is listed separately above. Dealza does not hold the USDC.",
+  "history": "Verifiable order history\n\nPartial history — older blocks have not been checked. Current payment status comes from the verified state above.\n\nView events and earlier activity\n\nConfirmed order and protocol events. Evidence references record claims; they do not verify delivery. An empty block range does not mean no transactions occurred.\n\nReviewer decision recorded\n\n0x29c68db65a0010d5b586989795a4ba3bf295e05e28289b3dfffc952626773c44\n\nNov 7, 2026, 10:07 AM · Block 55603005\n0x3724…e304\nOrder closed — inspect payment state for any return\n\nConfirmed on Base Sepolia\n\nNov 7, 2026, 10:07 AM · Block 55603005\n0x3724…e304\nReserved USDC returned by operator\n\n1 USDC\n\nNov 7, 2026, 10:07 AM · Block 55603005\n0x3724…e304\nLoad earlier activity\n\nRecent activity only. Load earlier activity to check older blocks. Latest checked block: 55604983.\n\nRefresh history",
+  "links": [
+    "https://sepolia.basescan.org/tx/0x3724fb79fef257a8dd5e2168b097755232d5299d90913591bb81d1049fc4e304",
+    "https://sepolia.basescan.org/tx/0x3724fb79fef257a8dd5e2168b097755232d5299d90913591bb81d1049fc4e304",
+    "https://sepolia.basescan.org/tx/0x3724fb79fef257a8dd5e2168b097755232d5299d90913591bb81d1049fc4e304"
+  ],
+  "walletConnected": false,
+  "scripts": ["https://dealza-drab.vercel.app/assets/index-Dikv40YH.js"]
+}

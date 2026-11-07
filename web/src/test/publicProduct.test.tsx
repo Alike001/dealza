@@ -68,6 +68,13 @@ describe("public product and preserved checkout boundaries", () => {
     ).not.toBeInTheDocument();
   });
   it("returns keyboard focus to the wallet trigger on Escape", async () => {
+    // Drain the previous route test’s queued hashchange/focus frame before
+    // mounting a new App; a late navigation correctly closes a wallet panel.
+    await act(async () => {
+      await new Promise<void>((resolve) => {
+        window.requestAnimationFrame(() => resolve());
+      });
+    });
     mount();
     const user = userEvent.setup();
     const trigger = screen.getByRole("button", {

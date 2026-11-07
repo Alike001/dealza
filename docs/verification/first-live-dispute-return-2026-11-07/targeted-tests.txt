@@ -1,0 +1,16 @@
+
+> @dealza/web@0.1.0 test
+> vitest run src/test/returnedOrder.test.tsx src/test/checkoutGuidance.test.tsx src/test/receiptProof.test.ts src/test/routedActions.test.ts src/test/historyUI.test.tsx --maxWorkers=2
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  5 passed (5)
+      Tests  117 passed (117)
+   Start at  10:20:06
+   Duration  9.42s (environment 35%, tests 33%, import 22%, setup 6%, transform 4%)
+
+Environment  jsdom was created 5 times · 5.82s total, 35% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments

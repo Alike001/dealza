@@ -1,7 +1,15 @@
 import type { Action, OrderSnapshot } from "../lib/domain";
-import { money } from "../lib/domain";
+import { financialStatus, money } from "../lib/domain";
 import { network } from "../lib/config";
 import { AddressLink, dateTime } from "./common";
+
+// Copy only: the underlying verified contract/financial status and permissions stay unchanged.
+export function checkoutStatus(snapshot: OrderSnapshot): string {
+  const verified = financialStatus(snapshot);
+  return verified === "Cancelled" && snapshot.collected
+    ? "Returned to buyer"
+    : verified;
+}
 
 // Presentation only: these indicators never enable or disable protocol actions.
 function ApprovalDetails({ amount }: { amount: string }) {
@@ -187,7 +195,9 @@ export function StateExplanation({ snapshot: s }: { snapshot: OrderSnapshot }) {
   if (s.order.status === 5)
     return (
       <p className="state-explanation">
-        Voided · This agreement has no reserved payment remaining.
+        {checkoutStatus(s) === "Returned to buyer"
+          ? "Returned to buyer · The previously reserved USDC was returned. No reserve or captured payment remains. Contract state: Voided (5)."
+          : "Cancelled · No funds were reserved for this order. Contract state: Voided (5)."}
       </p>
     );
   return (

@@ -344,7 +344,9 @@ describe("guided checkout from authoritative state", () => {
       });
       s.order.status = status;
       render(view(api({ loadOrder: vi.fn(async () => s) })));
-      await screen.findByText(status === 4 ? "Paid to seller" : "Cancelled");
+      await screen.findByText(
+        status === 4 ? "Paid to seller" : "Returned to buyer",
+      );
       expect(
         screen.getByText("No active payment deadline."),
       ).toBeInTheDocument();

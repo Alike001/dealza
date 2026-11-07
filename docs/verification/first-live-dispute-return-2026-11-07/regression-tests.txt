@@ -1,0 +1,15 @@
+
+> @dealza/web@0.1.0 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v5.1.0 /home/ali/Desktop/vibeathon/dealza/web
+
+
+ Test Files  17 passed (17)
+      Tests  308 passed (308)
+   Start at  10:26:19
+   Duration  34.59s (tests 55%, environment 25%, import 16%, setup 4%, transform 1%)
+
+    Isolate  17 workers spawned · ~1.11s startup each (spawn + environment, per file)
+             at least ~8.33s faster with isolate: false — reuses workers across files instead of one per file
