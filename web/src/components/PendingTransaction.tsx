@@ -6,6 +6,7 @@ import type { PaymentGateway } from "../lib/gateway";
 import { pendingIntent, type Intent } from "../lib/pendingTransaction";
 import { friendlyError, idleTx, type TxState } from "../lib/domain";
 import { TransactionNotice } from "./common";
+import { CheckoutFeedback } from "./CheckoutFeedback";
 export function PendingTransaction({ api }: { api: PaymentGateway }) {
   const { session } = useWallet();
   if (!session || !api.deployment) return null;
@@ -29,6 +30,7 @@ function ScopedPending({
     [hash, setHash] = useState(""),
     [tx, setTx] = useState<TxState>(idleTx),
     [created, setCreated] = useState<Hash>();
+  const receiptAction = useRef<Intent["action"] | null>(null);
   const active = useRef(true),
     inFlight = useRef(false);
   useEffect(() => {
@@ -52,6 +54,8 @@ function ScopedPending({
   const recheck = async () => {
     if (inFlight.current) return;
     inFlight.current = true;
+    // Keep the receipt label after reconciliation clears the persisted intent.
+    receiptAction.current = intent?.action ?? null;
     setError("");
     try {
       const id = await api.resumePending(
@@ -143,7 +147,11 @@ function ScopedPending({
           {error}
         </p>
       )}
-      <TransactionNotice tx={tx} />
+      {receiptAction.current === "create" ? (
+        <TransactionNotice tx={tx} />
+      ) : (
+        <CheckoutFeedback tx={tx} action={receiptAction.current} />
+      )}
       {created && (
         <a className="button" href={`#/order/${created}`}>
           Open verified order

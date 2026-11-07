@@ -131,7 +131,13 @@ export function CopyButton({
     </>
   );
 }
-export function TransactionNotice({ tx }: { tx: TxState }) {
+export function TransactionNotice({
+  tx,
+  title,
+}: {
+  tx: TxState;
+  title?: string;
+}) {
   if (tx.phase === "idle") return null;
   return (
     <div
@@ -140,19 +146,20 @@ export function TransactionNotice({ tx }: { tx: TxState }) {
       aria-live="polite"
     >
       <strong>
-        {tx.phase === "error"
-          ? /declined|reject/i.test(tx.message)
-            ? "Wallet request rejected"
-            : "Action not completed — failed or unverified"
-          : tx.phase === "confirmed"
-            ? tx.hash
-              ? "Receipt and effects verified"
-              : "Agreement verified"
-            : tx.phase === "pending"
-              ? "Transaction submitted — verification pending"
-              : tx.phase === "signature"
-                ? "Review in your wallet"
-                : "Checking before continuing"}
+        {title ??
+          (tx.phase === "error"
+            ? /declined|reject/i.test(tx.message)
+              ? "Wallet request rejected"
+              : "Action not completed — failed or unverified"
+            : tx.phase === "confirmed"
+              ? tx.hash
+                ? "Receipt and effects verified"
+                : "Agreement verified"
+              : tx.phase === "pending"
+                ? "Transaction submitted — verification pending"
+                : tx.phase === "signature"
+                  ? "Review in your wallet"
+                  : "Checking before continuing")}
       </strong>
       <p>{tx.message}</p>
       {tx.hash && (

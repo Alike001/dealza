@@ -3,63 +3,7 @@ import { money } from "../lib/domain";
 import { network } from "../lib/config";
 import { AddressLink, dateTime } from "./common";
 
-// These components explain already-verified state. They never enable an action.
-export function FundingSteps({ snapshot: s }: { snapshot: OrderSnapshot }) {
-  const amount = money(s.order.payment.maxAmount);
-  return (
-    <div className="funding-steps">
-      <ol>
-        <li>
-          <span className="step-number">1</span>
-          <div>
-            <h4>Allow exactly {amount} USDC</h4>
-            <p>
-              Set the collector’s allowance cap. This does not reserve funds or
-              pay the seller.
-            </p>
-            <p className="step-state">
-              {s.allowance === s.order.payment.maxAmount
-                ? "Exact allowance read onchain"
-                : s.allowance > 0n
-                  ? "Existing allowance: review or revoke before continuing"
-                  : "No allowance currently set"}
-            </p>
-          </div>
-        </li>
-        <li>
-          <span className="step-number">2</span>
-          <div>
-            <h4>Authorize this agreement’s payment</h4>
-            <p>
-              Approve the exact payment terms for this buyer, recipient, amount,
-              and deadlines. No USDC moves yet.
-            </p>
-            <p className="step-state">
-              {s.preApproved
-                ? "Payment authorization read onchain"
-                : "Payment terms not yet authorized"}
-            </p>
-          </div>
-        </li>
-        <li>
-          <span className="step-number">3</span>
-          <div>
-            <h4>Reserve {amount} USDC</h4>
-            <p>
-              Move the payment into the protocol’s TokenStore. Buyer release or
-              a permitted reviewer decision is still needed to pay the seller.
-            </p>
-          </div>
-        </li>
-      </ol>
-      <details>
-        <summary>Verify approval spender and cap</summary>
-        <ApprovalDetails amount={amount} />
-      </details>
-    </div>
-  );
-}
-
+// Presentation only: these indicators never enable or disable protocol actions.
 function ApprovalDetails({ amount }: { amount: string }) {
   return (
     <dl className="details approval-details">
@@ -219,6 +163,13 @@ export function StateExplanation({ snapshot: s }: { snapshot: OrderSnapshot }) {
         still requires a wallet transaction and gas.
       </p>
     );
+  if (s.order.status === 1 && s.derived === 6)
+    return (
+      <p className="state-explanation">
+        The reserve deadline has passed. This unfunded order can no longer
+        receive a payment.
+      </p>
+    );
   if (s.order.status === 3)
     return (
       <p className="state-explanation">
@@ -230,8 +181,7 @@ export function StateExplanation({ snapshot: s }: { snapshot: OrderSnapshot }) {
   if (s.order.status === 2)
     return (
       <p className="state-explanation">
-        Reserved · The seller has not been paid. Recording delivery evidence
-        does not release the reserve.
+        Reserved · The seller has not been paid.
       </p>
     );
   if (s.order.status === 5)
@@ -250,84 +200,76 @@ export function StateExplanation({ snapshot: s }: { snapshot: OrderSnapshot }) {
 export function CheckoutProgress({ snapshot: s }: { snapshot: OrderSnapshot }) {
   const reserved = s.collected;
   const terminal = [4, 5, 7].includes(s.derived);
-  const current = terminal
-    ? -1
-    : reserved
-      ? 4
-      : s.preApproved
-        ? 3
-        : s.allowance === s.order.payment.maxAmount
-          ? 2
-          : 1;
-  const steps = [
-    "Review agreement",
-    "Exact USDC allowance",
-    "Pre-approve terms",
-    "Reserve USDC",
-    "Delivery and decision",
+  const closed = s.chainTime >= s.order.payment.preApprovalExpiry;
+  const complete = [
+    reserved || s.allowance === s.order.payment.maxAmount,
+    reserved || s.preApproved,
+    reserved,
   ];
-  const expired = s.chainTime >= s.order.payment.authorizationExpiry;
-  const reserveClosed = s.chainTime >= s.order.payment.preApprovalExpiry;
+  const current =
+    terminal || closed || reserved ? -1 : complete.findIndex((done) => !done);
+  const steps = [
+    "Allow exact USDC amount",
+    "Authorize payment terms",
+    "Reserve funds",
+  ];
   return (
-    <section className="panel checkout-progress" aria-label="Payment progress">
-      <span className="eyebrow">YOUR PAYMENT JOURNEY</span>
+    <section className="checkout-progress" aria-label="Payment progress">
+      <h3>Reserve in three wallet steps</h3>
       <ol>
         {steps.map((label, i) => (
-          <li key={label} aria-current={i === current ? "step" : undefined}>
-            <span className="step-number">{i + 1}</span>
+          <li
+            key={label}
+            aria-current={i === current ? "step" : undefined}
+            data-complete={complete[i]}
+          >
+            <span className="step-number" aria-hidden="true">
+              {complete[i] ? "✓" : i + 1}
+            </span>
             <div>
               <strong>{label}</strong>
-              <p>
-                {i === 0
-                  ? "Check the terms and acknowledge below"
-                  : i === 1
-                    ? s.allowance === s.order.payment.maxAmount
-                      ? "Exact cap verified onchain"
-                      : "Separate wallet transaction"
-                    : i === 2
-                      ? s.preApproved
-                        ? "Authorization verified onchain"
-                        : "Separate wallet transaction"
-                      : i === 3
-                        ? reserved
-                          ? "Reservation verified onchain"
-                          : reserveClosed
-                            ? "Reserve deadline passed"
-                            : "Separate wallet transaction"
-                        : terminal
-                          ? "See verified financial outcome below"
-                          : reserved
-                            ? "Buyer release or reviewer decision required"
-                            : "After reservation"}
-              </p>
+              <span className="step-state">
+                {complete[i]
+                  ? "Verified"
+                  : terminal || closed
+                    ? "Not completed"
+                    : i === current
+                      ? "Next step"
+                      : "Not completed"}
+              </span>
             </div>
           </li>
         ))}
       </ol>
       <p className="field-help">
-        Progress reflects the last verified chain read. Submitted transactions
-        do not complete a step.
-      </p>
-      <p
-        className={
-          !terminal &&
-          (expired ||
-            (s.held > 0n &&
-              s.order.payment.authorizationExpiry - s.chainTime < 86400))
-            ? "notice warning"
-            : "field-help"
-        }
-      >
         {terminal
           ? "This payment has reached its verified financial outcome. No active reserve deadline remains."
-          : expired
+          : s.chainTime >= s.order.payment.authorizationExpiry
             ? "Expiry has passed. Uncaptured funds require buyer recovery; release and reviewer decisions are closed."
-            : s.held > 0n
-              ? "Reserved funds can expire, including during a dispute. Complete release or review before the deadline; recovery is not automatic."
-              : reserveClosed
+            : reserved
+              ? "All three funding steps are verified."
+              : closed
                 ? "The reserve deadline has passed. This agreement can no longer be funded."
-                : "Reserve before the funding deadline, then allow time for delivery and review."}
+                : "Progress comes from verified chain reads. A submitted request does not complete a step."}
       </p>
     </section>
+  );
+}
+
+// Ranking changes emphasis only. All other independently permitted actions stay available.
+export function recommendedAction(
+  actions: Action[],
+  s: OrderSnapshot,
+): Action | undefined {
+  if (s.order.status === 1) {
+    if (actions.includes("approve")) return "approve";
+    if (s.allowance !== s.order.payment.maxAmount && actions.includes("revoke"))
+      return "revoke";
+    if (actions.includes("preApprove")) return "preApprove";
+    if (actions.includes("fund")) return "fund";
+    return undefined;
+  }
+  return (["reclaim", "delivery", "release", "sync"] as Action[]).find(
+    (action) => actions.includes(action),
   );
 }

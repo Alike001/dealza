@@ -66,7 +66,20 @@ describe("durable pending submissions", () => {
     saveIntent(saved);
     const gateway = api({
       resumePending: vi.fn(async (_session, update) => {
-        update({ phase: "confirmed", hash, message: "Verified" });
+        const after = snapshot({
+          held: 0n,
+          captured: 1000000n,
+          storeBalance: 0n,
+          derived: 4,
+          block: 501n,
+        });
+        after.order.status = 4;
+        update({
+          phase: "confirmed",
+          hash,
+          message: "Verified",
+          snapshot: after,
+        });
         clearIntent(saved);
         return undefined;
       }),
@@ -84,7 +97,7 @@ describe("durable pending submissions", () => {
     await userEvent.click(
       screen.getByRole("button", { name: /Recheck saved transaction/ }),
     );
-    await screen.findByText("Verified");
+    await screen.findByText("Funds released");
     expect(gateway.act).not.toHaveBeenCalled();
     expect(gateway.create).not.toHaveBeenCalled();
     expect(gateway.resumePending).toHaveBeenCalledTimes(1);

@@ -411,7 +411,7 @@ describe("authoritative checkout progress", () => {
     const view = render(<CheckoutProgress snapshot={s} />);
     const current = () =>
       within(screen.getByRole("region", { name: "Payment progress" }))
-        .getByText("Exact USDC allowance")
+        .getByText("Allow exact USDC amount")
         .closest("li");
     expect(current()).toHaveAttribute("aria-current", "step");
     view.rerender(
@@ -419,12 +419,19 @@ describe("authoritative checkout progress", () => {
         snapshot={{ ...s, allowance: s.order.payment.maxAmount }}
       />,
     );
-    expect(screen.getByText("Pre-approve terms").closest("li")).toHaveAttribute(
-      "aria-current",
-      "step",
+    expect(
+      screen.getByText("Authorize payment terms").closest("li"),
+    ).toHaveAttribute("aria-current", "step");
+    view.rerender(
+      <CheckoutProgress
+        snapshot={{
+          ...s,
+          allowance: s.order.payment.maxAmount,
+          preApproved: true,
+        }}
+      />,
     );
-    view.rerender(<CheckoutProgress snapshot={{ ...s, preApproved: true }} />);
-    expect(screen.getByText("Reserve USDC").closest("li")).toHaveAttribute(
+    expect(screen.getByText("Reserve funds").closest("li")).toHaveAttribute(
       "aria-current",
       "step",
     );

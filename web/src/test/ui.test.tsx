@@ -355,10 +355,10 @@ describe("financial UI transitions", () => {
     order(api({ loadOrder: vi.fn(async () => s) }), wallet(session(reviewer)));
     await screen.findByText("In review");
     expect(
-      screen.getByRole("button", { name: "Decide: pay the seller" }),
+      screen.getByRole("radio", { name: "Decide: pay the seller" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Decide: return to buyer" }),
+      screen.getByRole("radio", { name: "Decide: return to buyer" }),
     ).toBeInTheDocument();
   });
   it("unverified linked terms are clearly identified before funding", async () => {

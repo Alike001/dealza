@@ -1,15 +1,15 @@
-import { CompletedPaymentEvidence } from "./CompletedPaymentEvidence";
+import { OrderDetails, OrderHistory, OrderShare } from "./OrderDetails";
+import { CheckoutFeedback } from "./CheckoutFeedback";
 import {
   ActionExplanation,
   CheckoutProgress,
-  FundingSteps,
+  recommendedAction,
   StateExplanation,
 } from "./PaymentGuidance";
 import { usePendingRequest } from "../lib/usePendingRequest";
 import { useHistory } from "../lib/useHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Hash } from "viem";
-import { explorerTx } from "../lib/config";
 import {
   allowedActions,
   descriptionHash,
@@ -18,7 +18,6 @@ import {
   idleTx,
   money,
   sameAddress,
-  shareLink,
   shortAddress,
   type Action,
   type OrderSnapshot,
@@ -28,13 +27,11 @@ import type { PaymentGateway } from "../lib/gateway";
 import { useWallet } from "../lib/wallet";
 import {
   AddressLink,
-  CopyButton,
   dateTime,
   Icon,
   PendingIntegration,
   RiskNote,
   SectionTitle,
-  TransactionNotice,
 } from "./common";
 
 const labels: Record<Action, string> = {
@@ -50,20 +47,6 @@ const labels: Record<Action, string> = {
   reclaim: "Recover expired funds",
   sync: "Update recovery record",
   revoke: "Revoke unused USDC allowance",
-};
-const eventNames: Record<string, string> = {
-  OrderCreated: "Order terms recorded",
-  OrderFunded: "Reservation recorded",
-  PaymentAuthorized: "USDC reserved in the protocol",
-  DeliveryNoted: "Seller submitted a delivery claim",
-  DisputeOpened: "Dispute opened",
-  DisputeResolved: "Reviewer decision recorded",
-  PaymentCaptured: "USDC paid to seller",
-  OrderReleased: "Release recorded",
-  PaymentVoided: "Reserved USDC returned by operator",
-  OrderVoided: "Order cancelled",
-  PaymentReclaimed: "Buyer reclaimed expired funds",
-  RecoverySynced: "Recovery record updated",
 };
 export function OrderPage({
   id,
@@ -86,18 +69,15 @@ export function OrderPage({
     snapshot?.id === id
       ? `${id}:${wallet.session?.account ?? "public"}:${wallet.session?.chainId ?? 84532}`
       : null;
-  const {
-    page: history,
-    loading: historyLoading,
-    error: historyError,
-    older: moreHistory,
-    retry: retryHistory,
-    refresh: refreshHistory,
-  } = useHistory(
+  const orderHistory = useHistory(
     historyScope,
     (before, signal) => api.activity(snapshot!, before, signal),
     (event) => `${event.hash.toLowerCase()}:${event.logIndex}`,
   );
+  const { page: history, refresh: refreshHistory } = orderHistory;
+  const [feedbackAction, setFeedbackAction] = useState<Action | null>(null);
+  const [reviewerChoice, setReviewerChoice] = useState<Action | null>(null);
+  const actionHeading = useRef<HTMLHeadingElement>(null);
   const [tx, setTx] = useState<TxState>(idleTx);
   const [acknowledged, setAcknowledged] = useState(false);
   const [evidence, setEvidence] = useState("");
@@ -152,6 +132,9 @@ export function OrderPage({
     let ignore = false;
     setSnapshot(null);
     setAcknowledged(false);
+    setReviewerChoice(null);
+    setFeedbackAction(null);
+    setEvidence("");
     setProposed(null);
     setTx(idleTx);
     setError("");
@@ -183,6 +166,9 @@ export function OrderPage({
   }, [id, api]);
   useEffect(() => {
     setAcknowledged(false);
+    setReviewerChoice(null);
+    setFeedbackAction(null);
+    setEvidence("");
     setProposed(null);
     setTx(idleTx);
   }, [wallet.session?.account, wallet.session?.chainId]);
@@ -249,20 +235,61 @@ export function OrderPage({
       status = friendlyError(e);
     }
   }
+  const buyer =
+    !!s && sameAddress(wallet.session?.account, s.order.payment.payer);
+  const seller =
+    !!s && sameAddress(wallet.session?.account, s.order.payment.receiver);
+  const reviewer =
+    !!s && sameAddress(wallet.session?.account, s.order.reviewer);
+  const nextAction = s ? recommendedAction(actions, s) : undefined;
+  const deciding =
+    actions.includes("resolveRelease") && actions.includes("resolveVoid");
+  const recommended = deciding
+    ? reviewerChoice && actions.includes(reviewerChoice)
+      ? reviewerChoice
+      : undefined
+    : nextAction;
+  const otherActions = actions.filter(
+    (a) =>
+      a !== recommended &&
+      !["resolveRelease", "resolveVoid", "dispute"].includes(a),
+  );
+  const blocked =
+    !acknowledged ||
+    pending ||
+    busy ||
+    loading ||
+    wallet.session?.chainId !== 84532;
+  const needsEvidence = (a: Action) =>
+    ["delivery", "dispute", "resolveRelease", "resolveVoid"].includes(a);
+  const actionLabels = {
+    ...labels,
+    cancel:
+      s?.order.status === 1
+        ? "Cancel unfunded order"
+        : "Return reserve to buyer",
+  };
+  const propose = (action: Action) => {
+    setFeedbackAction(action);
+    setTx(idleTx);
+    setProposed(action);
+  };
+  const openDetails = (id: string) => {
+    const element = document.getElementById(id) as HTMLDetailsElement | null;
+    if (element) {
+      element.open = true;
+      element.querySelector("summary")?.focus();
+    }
+  };
   return (
-    <main id="main" tabIndex={-1} className="page">
+    <main id="main" tabIndex={-1} className="page guided-checkout">
       <a href="#/orders" className="back">
         ← All orders
       </a>
       <SectionTitle
         eyebrow="SHARED ORDER"
-        title="One agreement. A clear next step."
-      >
-        <p>
-          Review the terms and the people involved before making a wallet
-          transaction.
-        </p>
-      </SectionTitle>
+        title="Your payment, step by step."
+      />
       {!api.deployment ? (
         <>
           <PendingIntegration />
@@ -307,515 +334,494 @@ export function OrderPage({
           )}
           {s && (
             <>
-              {!error && verifiedState && <CheckoutProgress snapshot={s} />}
               <div className="checkout-layout">
-                <div>
-                  <section className="panel payment-sheet">
-                    <div className="sheet-heading">
-                      <span className="eyebrow">ORDER {shortAddress(id)}</span>
-                      <span
-                        className={`badge ${status === "Paid to seller" ? "green" : ""}`}
-                      >
-                        {status}
-                      </span>
-                    </div>
-                    <div className="price">
-                      {money(s.order.payment.maxAmount)} <span>USDC</span>
-                    </div>
-                    <p className="price-caption">
-                      Test USDC on Base Sepolia · Platform fee 0 USDC
+                <section
+                  className="panel payment-sheet"
+                  aria-label="Order summary"
+                >
+                  <div className="sheet-heading">
+                    <span className="eyebrow">ORDER {shortAddress(id)}</span>
+                    <span
+                      className={`badge ${status === "Paid to seller" ? "green" : ""}`}
+                    >
+                      {status}
+                    </span>
+                  </div>
+                  <div className="price">
+                    {money(s.order.payment.maxAmount)} <span>USDC</span>
+                  </div>
+                  <p className="price-caption">
+                    Test USDC on Base Sepolia · Platform fee 0 USDC
+                  </p>
+                  <dl className="summary-seller">
+                    <dt>Seller</dt>
+                    <dd>
+                      <AddressLink value={s.order.payment.receiver} />
+                    </dd>
+                  </dl>
+                  {[4, 5, 7].includes(s.derived) ? (
+                    <p className="settled-deadline">
+                      No active payment deadline.
                     </p>
+                  ) : (
                     <div className="checkout-deadline">
                       <Icon name="clock" size={18} />
                       <div>
-                        <span>Release / review deadline</span>
+                        <span>
+                          {s.order.status === 1
+                            ? "Reserve before"
+                            : s.derived === 6
+                              ? "Review deadline passed · buyer recovery"
+                              : "Release or resolve before"}
+                        </span>
                         <strong>
-                          {dateTime(s.order.payment.authorizationExpiry)}
+                          {dateTime(
+                            s.order.status === 1
+                              ? s.order.payment.preApprovalExpiry
+                              : s.order.payment.authorizationExpiry,
+                          )}
                         </strong>
                       </div>
                     </div>
-                    {!error &&
-                      [
-                        "Paid to seller",
-                        "Cancelled",
-                        "Recovered by buyer",
-                        "Recovery available",
-                        "In review",
-                        "Payment reserved",
-                        "Payment window closed",
-                        "Awaiting payment",
-                      ].includes(status) && <StateExplanation snapshot={s} />}
-                    <div className="terms-block">
-                      <h2>The agreed terms</h2>
-                      {matchedTerms ? (
-                        <p className="terms-text">{description}</p>
-                      ) : (
-                        <div className="notice warning">
-                          <strong>
-                            {description
-                              ? "These linked terms do not match the order."
-                              : "The description isn’t included in this link."}
-                          </strong>
-                          <p>
-                            Ask the seller for the original agreement and
-                            compare its fingerprint below. Do not rely on
-                            unverified text.
-                          </p>
-                        </div>
-                      )}
-                      <details>
-                        <summary>View immutable terms fingerprint</summary>
-                        <p className="mono">{s.order.descriptionHash}</p>
-                      </details>
-                    </div>
-                    <dl className="details">
-                      <dt>Seller receives</dt>
-                      <dd>
-                        <AddressLink value={s.order.payment.receiver} full />
-                      </dd>
-                      <dt>Named buyer</dt>
-                      <dd>
-                        <AddressLink value={s.order.payment.payer} full />
-                      </dd>
-                      <dt>Agreed reviewer</dt>
-                      <dd>
-                        <AddressLink value={s.order.reviewer} full />
-                      </dd>
-                      <dt>Reserved in protocol</dt>
-                      <dd>{money(s.held)} USDC</dd>
-                      <dt>Captured (accounting)</dt>
-                      <dd>{money(s.captured)} USDC</dd>
-                      <dt>Payment hash</dt>
-                      <dd className="mono">{s.order.paymentHash}</dd>
-                    </dl>
-                    <details>
-                      <summary>Verify where the reserve is held</summary>
+                  )}
+                  {!error &&
+                    verifiedState &&
+                    (s.order.status !== 1 || s.derived === 6) && (
+                      <StateExplanation snapshot={s} />
+                    )}
+                  {!matchedTerms && (
+                    <div className="notice warning">
+                      <strong>
+                        {description
+                          ? "These linked terms do not match the order."
+                          : "The description isn’t included in this link."}
+                      </strong>
                       <p>
-                        The protocol’s TokenStore for this operator:{" "}
-                        <AddressLink value={s.tokenStore} full />.
+                        Ask the seller for the original agreement and compare
+                        its fingerprint below. Do not rely on unverified text.
                       </p>
-                      <p className="field-help">
-                        Its current shared balance is {money(s.storeBalance)}{" "}
-                        USDC across all this operator’s orders. This order’s
-                        authorized reserve is shown separately above.
-                      </p>
-                    </details>
-                    <div className="share-row">
-                      <CopyButton
-                        value={shareLink(id, matchedTerms ? description : "")}
-                      />
-                      <details>
-                        <summary>Show share link</summary>
-                        <input
-                          readOnly
-                          aria-label="Share link"
-                          value={shareLink(id, matchedTerms ? description : "")}
-                          onFocus={(e) => e.target.select()}
-                        />
-                      </details>
                     </div>
-                  </section>
-                  <section className="panel">
-                    <div className="panel-heading">
-                      <Icon name="clock" />
-                      <h2>The payment timeline</h2>
-                    </div>
-                    <ol className="timeline">
-                      <li>
-                        <span className="timeline-dot" />
-                        <div>
-                          <h3>
-                            Reserve before{" "}
-                            {dateTime(s.order.payment.preApprovalExpiry)}
-                          </h3>
-                          <p>
-                            The named buyer allows USDC, authorizes these terms,
-                            and reserves funds. Reservation does not pay the
-                            seller.
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <span className="timeline-dot" />
-                        <div>
-                          <h3>
-                            Release or resolve before{" "}
-                            {dateTime(s.order.payment.authorizationExpiry)}
-                          </h3>
-                          <p>
-                            The buyer can approve release while undisputed.
-                            During a dispute, only the agreed reviewer can
-                            decide. Delivery evidence alone never pays.
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <span className="timeline-dot" />
-                        <div>
-                          <h3>
-                            Buyer recovery from{" "}
-                            {dateTime(s.order.payment.authorizationExpiry)}
-                          </h3>
-                          <p>
-                            Uncaptured funds become reclaimable directly from
-                            the protocol, including during an unresolved
-                            dispute. Recovery needs a buyer transaction and test
-                            ETH.
-                          </p>
-                        </div>
-                      </li>
-                    </ol>
-                    <p className="field-help">
-                      Chain time at last read: {dateTime(s.chainTime)} · Block{" "}
-                      {s.block.toString()}.{" "}
-                      {loading ? "Refreshing…" : "Refreshes every 15 seconds."}
+                  )}
+                  <button
+                    className="text-button agreement-link"
+                    onClick={() => openDetails("agreement-details")}
+                  >
+                    Read agreement and participants{" "}
+                    <Icon name="arrow" size={16} />
+                  </button>
+                </section>
+                <section
+                  className="panel action-panel"
+                  aria-labelledby="next-action-heading"
+                >
+                  <span className="eyebrow">YOUR NEXT STEP</span>
+                  <h2
+                    id="next-action-heading"
+                    ref={actionHeading}
+                    tabIndex={-1}
+                  >
+                    {!wallet.session
+                      ? "Connect to take part."
+                      : buyer
+                        ? "You’re the buyer."
+                        : seller
+                          ? "You’re the seller."
+                          : reviewer
+                            ? "You’re the reviewer."
+                            : "Viewing this order."}
+                  </h2>
+                  {!wallet.session && (
+                    <p>
+                      You can read this order without connecting. Use the named
+                      buyer, seller, or reviewer wallet to take its permitted
+                      actions.
                     </p>
-                  </section>
-                  <CompletedPaymentEvidence id={id} />
-                  <section className="panel">
-                    <div className="panel-heading">
-                      <Icon name="link" />
-                      <h2>Verifiable order history</h2>
+                  )}
+                  {wallet.session && wallet.session.chainId !== 84532 && (
+                    <div className="notice warning">
+                      <p>Switch to Base Sepolia to continue.</p>
+                      <button
+                        className="button"
+                        onClick={() => void wallet.switchNetwork()}
+                      >
+                        Switch network
+                      </button>
                     </div>
-                    <p className="field-help">
-                      Confirmed contract events from the configured operator and
-                      protocol, including direct expiry recovery. Delivery
-                      claims are evidence submissions, not delivery
-                      verification.
+                  )}
+                  {buyer && s.order.status === 1 && nextAction && (
+                    <p>
+                      {nextAction === "approve"
+                        ? `Allow exactly ${money(s.order.payment.maxAmount)} USDC. This sets a spending cap; no USDC moves.`
+                        : nextAction === "preApprove"
+                          ? "Authorize this agreement’s exact payment terms. No USDC moves."
+                          : nextAction === "fund"
+                            ? "Reserve funds in the protocol. The seller is not paid until an allowed release."
+                            : "Clear the existing allowance before setting an exact spending cap."}
                     </p>
-                    {historyLoading && (
-                      <p role="status">Reading confirmed activity…</p>
-                    )}
-                    {historyError && (
-                      <p className="inline-error" role="alert">
-                        History is incomplete. History could not load:{" "}
-                        {historyError}
-                        <button
-                          className="text-button"
-                          onClick={() => void retryHistory()}
-                          disabled={historyLoading}
-                        >
-                          Retry history
-                        </button>
-                      </p>
-                    )}
-                    {history && !history.items.length && (
-                      <p>No matching activity in this block range.</p>
-                    )}
-                    <ol className="activity-list">
-                      {history?.items.map((event) => (
-                        <li key={`${event.hash}-${event.logIndex}`}>
-                          <div>
-                            <strong>
-                              {eventNames[event.name] || event.name}
-                            </strong>
-                            <p className="mono">{event.detail}</p>
-                            <small>
-                              {dateTime(event.timestamp)} · Block{" "}
-                              {event.block.toString()}
-                            </small>
-                          </div>
+                  )}
+                  {buyer && s.order.status === 1 && (
+                    <p className="field-help">
+                      Buyer balance: {money(s.buyerBalance)} test USDC.{" "}
+                      {s.buyerGas === 0n
+                        ? "You need test ETH for gas."
+                        : "Your wallet estimates the ETH gas fee."}
+                      {s.buyerBalance < s.order.payment.maxAmount && (
+                        <>
+                          {" "}
+                          Insufficient test USDC.{" "}
                           <a
-                            href={explorerTx(event.hash)}
-                            aria-label={`${eventNames[event.name] || event.name} transaction on Base Sepolia explorer (opens a new tab)`}
+                            href="https://faucet.circle.com/"
                             target="_blank"
                             rel="noreferrer"
-                            className="address"
                           >
-                            {shortAddress(event.hash)}{" "}
-                            <Icon name="external" size={13} />
+                            Get free test USDC ↗
                           </a>
-                        </li>
-                      ))}
-                    </ol>
-                    {history?.next !== undefined && (
+                        </>
+                      )}
+                      {s.allowance > 0n &&
+                        s.allowance !== s.order.payment.maxAmount &&
+                        " Review or revoke the existing allowance before setting an exact cap."}
+                    </p>
+                  )}
+                  {seller && s.order.status === 1 && s.derived !== 6 && (
+                    <p>
+                      Waiting for the buyer to reserve funds. Share this order
+                      link with the named buyer.
+                    </p>
+                  )}
+                  {seller && nextAction === "delivery" && (
+                    <p>
+                      Record delivery evidence for the buyer and reviewer.
+                      Evidence does not release payment.
+                    </p>
+                  )}
+                  {seller && s.derived === 6 && (
+                    <p>
+                      {s.held > 0n
+                        ? "The review deadline has passed. You may still return the reserve to the buyer using the controls below."
+                        : "The reserve window is closed. This order cannot be funded."}
+                    </p>
+                  )}
+                  {buyer && s.order.status === 2 && s.derived === 2 && (
+                    <p>
+                      Review delivery before releasing funds. If there’s a
+                      problem, open a dispute for the agreed reviewer.
+                    </p>
+                  )}
+                  {buyer && s.order.status === 3 && s.derived === 3 && (
+                    <p>
+                      The agreed reviewer must decide the dispute. Share your
+                      original evidence with them before the deadline.
+                    </p>
+                  )}
+                  {reviewer && !deciding && ![4, 5, 7].includes(s.derived) && (
+                    <p>
+                      {s.derived === 6
+                        ? "The review window is closed. A reviewer decision is no longer permitted."
+                        : "A decision becomes available only when this order is disputed."}
+                    </p>
+                  )}
+                  {[4, 5, 7].includes(s.derived) && (
+                    <p>
+                      {s.derived === 4
+                        ? "The seller has been paid. No further payment is needed. Receipts do not prove physical delivery."
+                        : "This order is closed. Check the verified payment record and receipts below."}
+                    </p>
+                  )}
+                  {s.held > 0n && <RiskNote />}
+                  {s.order.status === 3 && (
+                    <div className="dispute-context">
+                      <h3>Dispute and evidence</h3>
+                      <p>
+                        Ask both parties for the original evidence. Onchain
+                        references do not prove delivery.
+                      </p>
+                      {history?.items
+                        .filter((event) =>
+                          ["DisputeOpened", "DeliveryNoted"].includes(
+                            event.name,
+                          ),
+                        )
+                        .slice(0, 3)
+                        .map((event) => (
+                          <p
+                            className="mono"
+                            key={`${event.hash}-${event.logIndex}`}
+                          >
+                            <span>
+                              {event.name === "DisputeOpened"
+                                ? "Dispute reference: "
+                                : "Delivery evidence: "}
+                            </span>
+                            {event.detail}
+                          </p>
+                        ))}
+                      <p className="field-help">
+                        {[4, 5, 6, 7].includes(s.derived)
+                          ? "The review window is closed. Evidence references remain available for inspection."
+                          : history?.next !== undefined ||
+                              !history ||
+                              orderHistory.error
+                            ? "Evidence history is partial or unavailable. Check earlier activity before deciding."
+                            : "Review the recorded references and originals before deciding."}
+                      </p>
                       <button
-                        className="button secondary"
-                        onClick={() => void moreHistory()}
-                        disabled={historyLoading}
+                        className="text-button"
+                        onClick={() => openDetails("history-events")}
                       >
-                        Load earlier activity
+                        Read dispute and evidence history
                       </button>
-                    )}
-                    {history && (
-                      <p className="field-help" role="status">
-                        {historyError
-                          ? "This history is incomplete; the failed page has not been skipped."
-                          : history.next !== undefined
-                            ? "Recent activity only. Load earlier activity to check older blocks."
-                            : "End of history — checked back to the verified deployment."}{" "}
-                        Latest checked block: {history.through.toString()}.
-                      </p>
-                    )}
-                    <button
-                      className="text-button"
-                      onClick={refreshHistory}
-                      disabled={historyLoading}
-                    >
-                      Refresh history
-                    </button>
-                  </section>
-                </div>
-                <aside className="checkout-aside">
-                  <section className="panel action-panel">
-                    <span className="eyebrow">YOUR NEXT STEP</span>
-                    <h2>
-                      {s.order.status === 4
-                        ? "Payment complete."
-                        : !wallet.session
-                          ? "Connect to take part."
-                          : sameAddress(
-                                wallet.session.account,
-                                s.order.payment.payer,
-                              )
-                            ? "You’re the buyer."
-                            : sameAddress(
-                                  wallet.session.account,
-                                  s.order.payment.receiver,
-                                )
-                              ? "You’re the seller."
-                              : sameAddress(
-                                    wallet.session.account,
-                                    s.order.reviewer,
-                                  )
-                                ? "You’re the reviewer."
-                                : "Viewing this order."}
-                    </h2>
-                    {s.order.status === 4 && (
-                      <p>
-                        The seller has been paid. Inspect the terms,
-                        participants and receipts; no further payment is needed.
-                        Payment receipts do not prove physical delivery.
-                      </p>
-                    )}
-                    {!wallet.session && s.order.status !== 4 && (
-                      <p>
-                        You can read this order without connecting. Use the
-                        named buyer, seller, or reviewer wallet to take its
-                        permitted actions.
-                      </p>
-                    )}
-                    {wallet.session && wallet.session.chainId !== 84532 && (
-                      <div className="notice warning">
-                        <p>Switch to Base Sepolia to continue.</p>
-                        <button
-                          className="button"
-                          onClick={() => void wallet.switchNetwork()}
-                        >
-                          Switch network
-                        </button>
-                      </div>
-                    )}
-                    {sameAddress(
-                      wallet.session?.account,
-                      s.order.payment.payer,
-                    ) &&
-                      s.order.status === 1 && (
-                        <div className="funding-checklist">
-                          <h3>Reserve in three wallet steps</h3>
-                          <FundingSteps snapshot={s} />
-                          <p>
-                            Buyer balance: {money(s.buyerBalance)} test USDC.{" "}
-                            {s.buyerGas === 0n
-                              ? "You need test ETH for gas."
-                              : "Test ETH is available; your wallet estimates fees."}
-                          </p>
-                          {s.buyerBalance < s.order.payment.maxAmount && (
-                            <a
-                              href="https://faucet.circle.com/"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Get free test USDC ↗
-                            </a>
+                    </div>
+                  )}
+                  {actions.length > 0 && (
+                    <>
+                      {!proposed && deciding && (
+                        <fieldset className="reviewer-choices">
+                          <legend>Choose the full payment outcome</legend>
+                          {(["resolveVoid", "resolveRelease"] as Action[]).map(
+                            (action) => (
+                              <label key={action}>
+                                <input
+                                  type="radio"
+                                  name="reviewer-decision"
+                                  checked={reviewerChoice === action}
+                                  disabled={busy || pending || loading}
+                                  onChange={() => setReviewerChoice(action)}
+                                />
+                                {actionLabels[action]}
+                              </label>
+                            ),
                           )}
+                        </fieldset>
+                      )}
+                      <label className="check-label">
+                        <input
+                          type="checkbox"
+                          checked={acknowledged}
+                          disabled={busy || pending}
+                          onChange={(e) => setAcknowledged(e.target.checked)}
+                        />
+                        <span>
+                          I reviewed the{" "}
+                          {matchedTerms
+                            ? "verified order terms"
+                            : "original offchain agreement and its fingerprint"}
+                          , recipient, reviewer, and expiry. I understand this
+                          action uses a wallet transaction.
+                        </span>
+                      </label>
+                      {(proposed
+                        ? needsEvidence(proposed)
+                        : nextAction === "delivery" || deciding) && (
+                        <>
+                          <label htmlFor="evidence">
+                            Evidence or decision reference
+                          </label>
+                          <textarea
+                            id="evidence"
+                            value={evidence}
+                            disabled={busy || pending}
+                            onChange={(e) => setEvidence(e.target.value)}
+                            maxLength={1600}
+                            rows={3}
+                            placeholder="A reference you can share with the buyer and reviewer…"
+                          />
                           <p className="field-help">
-                            If an old allowance remains, revoke it before
-                            setting a new exact allowance.
+                            Only a hash is recorded. Keep and share the original
+                            separately. Do not include private personal
+                            information.
                           </p>
+                        </>
+                      )}
+                      {!proposed && (
+                        <>
+                          {recommended && (
+                            <button
+                              className="button recommended-action"
+                              disabled={blocked}
+                              onClick={() => propose(recommended)}
+                            >
+                              {deciding
+                                ? "Review reviewer decision"
+                                : actionLabels[recommended]}
+                            </button>
+                          )}
+                          {deciding && !recommended && (
+                            <p className="field-help">
+                              Choose release or return above. Neither outcome is
+                              selected for you.
+                            </p>
+                          )}
+                          {actions.includes("dispute") && (
+                            <button
+                              className="text-button dispute-action"
+                              disabled={blocked}
+                              onClick={() => propose("dispute")}
+                            >
+                              Open a dispute
+                            </button>
+                          )}
+                          {otherActions.length > 0 && (
+                            <details className="secondary-actions">
+                              <summary>
+                                {s.order.status === 1
+                                  ? "Other permitted actions · cancellation and allowance"
+                                  : "Cancellation, allowance and recovery controls"}
+                              </summary>
+                              <p className="field-help">
+                                These are independently permitted actions.
+                                Review their effects before continuing.
+                              </p>
+                              <div className="action-buttons">
+                                {otherActions.map((action) => (
+                                  <button
+                                    className="text-button"
+                                    key={action}
+                                    disabled={blocked}
+                                    onClick={() => propose(action)}
+                                  >
+                                    {actionLabels[action]}
+                                  </button>
+                                ))}
+                              </div>
+                            </details>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                  {pending && !busy && (
+                    <p className="notice warning">
+                      A saved wallet request is unresolved. Use the transaction
+                      recheck above before submitting again.
+                    </p>
+                  )}
+                  {wallet.session && !actions.length && !error && (
+                    <p className="field-help">
+                      No payment action is available to this wallet in the
+                      current order state.
+                    </p>
+                  )}
+                  {proposed && (
+                    <div
+                      className="confirm-action"
+                      role="region"
+                      aria-label="Review wallet action"
+                    >
+                      <h3 ref={confirmationHeading} tabIndex={-1}>
+                        {actionLabels[proposed]}
+                      </h3>
+                      <ActionExplanation action={proposed} snapshot={s} />
+                      {[
+                        "resolveRelease",
+                        "resolveVoid",
+                        "release",
+                        "cancel",
+                        "reclaim",
+                        "fund",
+                      ].includes(proposed) && (
+                        <dl className="details decision-details">
+                          <dt>Exact amount</dt>
+                          <dd>{money(s.order.payment.maxAmount)} USDC</dd>
+                          <dt>
+                            {["resolveRelease", "release"].includes(proposed)
+                              ? "Pay seller"
+                              : proposed === "fund"
+                                ? "Reserve in protocol TokenStore"
+                                : "Return to buyer (if reserved)"}
+                          </dt>
+                          <dd>
+                            <AddressLink
+                              value={
+                                ["resolveRelease", "release"].includes(proposed)
+                                  ? s.order.payment.receiver
+                                  : proposed === "fund"
+                                    ? s.tokenStore
+                                    : s.order.payment.payer
+                              }
+                              full
+                            />
+                          </dd>
+                          <dt>Outcome</dt>
+                          <dd>
+                            {proposed === "resolveRelease"
+                              ? "Reviewer releases the full reserve. This cannot be undone by Dealza."
+                              : proposed === "resolveVoid"
+                                ? "Reviewer returns the full reserve and closes the agreement. This decision cannot be undone."
+                                : proposed === "reclaim"
+                                  ? "Protocol expiry recovery; a later sync only updates the order record."
+                                  : proposed === "cancel"
+                                    ? "Cancel the agreement; this is not a refund of captured funds."
+                                    : proposed === "fund"
+                                      ? "Funds are reserved; seller is not paid."
+                                      : "Seller receives the payment. Dealza cannot reverse capture."}
+                          </dd>
+                        </dl>
+                      )}
+                      {proposed === "dispute" && (
+                        <div className="notice warning">
+                          <strong>Expiry keeps running</strong>
+                          <p>
+                            Share your original evidence with the agreed
+                            reviewer. You trust this wallet to make a final
+                            decision; the evidence hash alone does not prove
+                            delivery.
+                          </p>
+                          <AddressLink value={s.order.reviewer} full />
                         </div>
                       )}
-                    {actions.length > 0 && (
-                      <>
-                        <label className="check-label">
-                          <input
-                            type="checkbox"
-                            checked={acknowledged}
-                            onChange={(e) => setAcknowledged(e.target.checked)}
-                          />
-                          <span>
-                            I reviewed the{" "}
-                            {matchedTerms
-                              ? "verified order terms"
-                              : "original offchain agreement and its fingerprint"}
-                            , recipient, reviewer, and expiry. I understand this
-                            action uses a wallet transaction.
-                          </span>
-                        </label>
-                        {actions.some((a) =>
-                          [
-                            "delivery",
-                            "dispute",
-                            "resolveRelease",
-                            "resolveVoid",
-                          ].includes(a),
-                        ) && (
-                          <>
-                            <label htmlFor="evidence">
-                              Evidence or decision reference
-                            </label>
-                            <textarea
-                              id="evidence"
-                              value={evidence}
-                              onChange={(e) => setEvidence(e.target.value)}
-                              maxLength={1600}
-                              rows={3}
-                              placeholder="A reference to evidence you can share with the reviewer…"
-                            />
-                            <p className="field-help">
-                              Only a hash is recorded. Keep and share the
-                              original separately. Do not include private
-                              personal information.
-                            </p>
-                          </>
-                        )}
-                        <div className="action-buttons">
-                          {actions.map((action) => (
-                            <button
-                              key={action}
-                              className={`button ${["revoke", "cancel", "dispute", "delivery", "sync"].includes(action) ? "secondary" : ""}`}
-                              disabled={
-                                !acknowledged ||
-                                pending ||
-                                busy ||
-                                loading ||
-                                wallet.session?.chainId !== 84532 ||
-                                ([
-                                  "delivery",
-                                  "dispute",
-                                  "resolveRelease",
-                                  "resolveVoid",
-                                ].includes(action) &&
-                                  !evidence.trim())
-                              }
-                              onClick={() => setProposed(action)}
-                            >
-                              {labels[action]}
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                    {wallet.session && !actions.length && !error && (
-                      <p>
-                        No payment action is available to this wallet in the
-                        current order state.
-                      </p>
-                    )}
-                    {proposed && (
-                      <div
-                        className="confirm-action"
-                        role="region"
-                        aria-label="Review wallet action"
-                      >
-                        <h3 ref={confirmationHeading} tabIndex={-1}>
-                          {labels[proposed]}
-                        </h3>
-                        <ActionExplanation action={proposed} snapshot={s} />
-                        {[
-                          "resolveRelease",
-                          "resolveVoid",
-                          "release",
-                          "cancel",
-                          "reclaim",
-                          "fund",
-                        ].includes(proposed) && (
-                          <dl className="details decision-details">
-                            <dt>Exact amount</dt>
-                            <dd>{money(s.order.payment.maxAmount)} USDC</dd>
-                            <dt>
-                              {["resolveRelease", "release"].includes(proposed)
-                                ? "Pay seller"
-                                : proposed === "fund"
-                                  ? "Reserve in protocol TokenStore"
-                                  : "Return to buyer (if reserved)"}
-                            </dt>
-                            <dd>
-                              <AddressLink
-                                value={
-                                  ["resolveRelease", "release"].includes(
-                                    proposed,
-                                  )
-                                    ? s.order.payment.receiver
-                                    : proposed === "fund"
-                                      ? s.tokenStore
-                                      : s.order.payment.payer
-                                }
-                                full
-                              />
-                            </dd>
-                            <dt>Outcome</dt>
-                            <dd>
-                              {proposed === "resolveRelease"
-                                ? "Reviewer releases the full reserve. This cannot be undone by Dealza."
-                                : proposed === "resolveVoid"
-                                  ? "Reviewer returns the full reserve and closes the agreement. This decision cannot be undone."
-                                  : proposed === "reclaim"
-                                    ? "Protocol expiry recovery; a later sync only updates the order record."
-                                    : proposed === "cancel"
-                                      ? "Cancel the agreement; this is not a refund of captured funds."
-                                      : proposed === "fund"
-                                        ? "Funds are reserved; seller is not paid."
-                                        : "Seller receives the payment. Dealza cannot reverse capture."}
-                            </dd>
-                          </dl>
-                        )}
-                        {proposed === "dispute" && (
-                          <div className="notice warning">
-                            <strong>Expiry keeps running</strong>
-                            <p>
-                              Share your original evidence with the agreed
-                              reviewer. You trust this wallet to make a final
-                              decision; the evidence hash alone does not prove
-                              delivery.
-                            </p>
-                            <AddressLink value={s.order.reviewer} full />
-                          </div>
-                        )}
-                        <div className="button-row">
-                          <button
-                            className="button"
-                            disabled={
-                              !acknowledged ||
-                              pending ||
-                              busy ||
-                              wallet.session?.chainId !== 84532
-                            }
-                            onClick={() => void execute()}
-                          >
-                            Continue to wallet
-                          </button>
-                          <button
-                            className="text-button"
-                            onClick={() => setProposed(null)}
-                          >
-                            Go back
-                          </button>
-                        </div>
+                      <div className="button-row">
+                        <button
+                          className="button"
+                          disabled={
+                            blocked ||
+                            !actions.includes(proposed) ||
+                            (needsEvidence(proposed) && !evidence.trim())
+                          }
+                          onClick={() => void execute()}
+                        >
+                          Continue to wallet
+                        </button>
+                        <button
+                          className="text-button"
+                          onClick={() => {
+                            setProposed(null);
+                            actionHeading.current?.focus();
+                          }}
+                        >
+                          Go back
+                        </button>
                       </div>
+                    </div>
+                  )}
+
+                  <CheckoutFeedback tx={tx} action={feedbackAction} />
+                  {verifiedState &&
+                    !error &&
+                    (buyer || (!wallet.session && s.order.status === 1)) &&
+                    ![4, 5, 7].includes(s.derived) && (
+                      <CheckoutProgress snapshot={s} />
                     )}
-                    <TransactionNotice tx={tx} />
-                  </section>
-                  <RiskNote />
-                  <div className="aside-note small">
-                    <h3>What Dealza can’t promise</h3>
-                    <p>
-                      No automatic delivery check, guaranteed reviewer decision,
-                      insurance, or guaranteed refund after capture. Your
-                      reviewer is trusted and cannot be replaced.
-                    </p>
-                  </div>
-                </aside>
+                </section>
+              </div>
+              <div className="checkout-meta">
+                <OrderShare
+                  id={id}
+                  description={matchedTerms ? description : ""}
+                />
+                <p className="field-help verified-at">
+                  Last verified: {dateTime(s.chainTime)} · Block{" "}
+                  {s.block.toString()}.{" "}
+                  {loading ? "Refreshing…" : "Refreshes every 15 seconds."}
+                </p>
+              </div>
+              <div className="checkout-details">
+                <OrderDetails
+                  snapshot={s}
+                  description={description}
+                  matchedTerms={matchedTerms}
+                />
+                <OrderHistory id={id} state={orderHistory} />
               </div>
             </>
           )}
