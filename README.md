@@ -1,16 +1,35 @@
 # Dealza
 
-**Clear agreements. Human decisions.** Make online deals clearer before money moves. Dealza gives social-commerce buyers and sellers explicit USDC payment terms, a shareable checkout, and a named reviewer. This release is a **Base Sepolia testnet demo**.
+**Problem:** Online deals made in DMs often lack clear payment terms and an agreed way to resolve disputes.
 
-Public website: **https://dealza-drab.vercel.app/** · [GitHub: Alike001/dealza](https://github.com/Alike001/dealza) · default/production branch: **main**. Further pushes and deployments remain manual.
+**Dealza — Clear agreements. Human decisions.** A Base-powered payment agreement app for people buying and selling through WhatsApp, Telegram, X, and other social channels. The seller records written terms, a named buyer, a fixed trusted reviewer, and deadlines; the buyer reserves test USDC using Coinbase Payment Protocol (CPP). An authorized buyer can release an undisputed payment, while the agreed reviewer can decide a disputed release or return before expiry. **Dealza does not custody the USDC.**
 
-**Complete real MetaMask UI checkout verified on Base Sepolia: all six gates PASS.** Final release [`0x6408…c023`](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023): buyer **19 USDC**, seller **2 USDC**, reserve **0**, captured **1 USDC**, fee **0**, order **Released**. Controlled test; no physical delivery occurred. [Complete evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) · [Release checklist](docs/18-VIBEATHON-RELEASE-CHECKLIST.md). The website and repository are publicly available. This UX polish is committed locally; it has not been pushed or deployed.
+**[Try the live Base Sepolia app](https://dealza-drab.vercel.app/)** · **[Watch the 3-minute Vibeathon demo](https://youtu.be/Pui1nd1uwfs)** · [Source code](https://github.com/Alike001/dealza) · [How it works and safeguards](https://dealza-drab.vercel.app/#/help)
+
+> **Vibestarter Vibeathon 02 submission received — November 9, 2026.** The public app and repository use `main`. This is a **controlled Base Sepolia testnet MVP**, not a production escrow, delivery-verification service, or guarantee of payment recovery.
+
+## Judge quickstart — no wallet or transactions required
+
+Start with the two **real, previously completed** Base Sepolia workflows below. Both are accessible in a fresh browser with no wallet; they are not seeded or fictional payments. The order links include the original offchain terms, which are matched to onchain fingerprints.
+
+| Outcome | Public checkout | Verified final transaction | Actual effect |
+| --- | --- | --- | --- |
+| **Paid to seller** | [Open completed checkout](https://dealza-drab.vercel.app/#/order/0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd?terms=Dealza%20Checkpoint%206%3A%20fresh%20UI-only%201%20test-USDC%20checkout%3B%20controlled%20test%2C%20no%20physical%20delivery.) | [Buyer-authorized release](https://sepolia.basescan.org/tx/0x6408f9a480cd2b46927237e3ed7d14052eb49bbaefa2b1e3df65d2275360c023) | **1 test USDC to seller**, 0 reserved; contract `Released (4)` |
+| **Returned to buyer** | [Open disputed checkout](https://dealza-drab.vercel.app/#/order/0xbcb5e97254ce461b35efa91372f2d104f0f71c71ab5abff4f374ec36df4397d0?terms=Dealza%20Checkpoint%208%3A%20buyer%20dispute%20and%20reviewer%20return%3B%20controlled%20test%2C%20no%20physical%20delivery.) | [Reviewer-authorized return](https://sepolia.basescan.org/tx/0x3724fb79fef257a8dd5e2168b097755232d5299d90913591bb81d1049fc4e304) | **1 test USDC uncaptured reserve returned to buyer**, 0 reserved; contract `Voided (5)` |
+
+**Suggested judging path:** Open the [home page](https://dealza-drab.vercel.app/) → inspect both outcomes above and their BaseScan receipts → try the [five-stage agreement wizard](https://dealza-drab.vercel.app/#/create) with a **local draft only** → read the [limitations](https://dealza-drab.vercel.app/#/help). **Do not sign or submit a new order just to evaluate the examples.**
+
+**What is real:** A six-transaction buyer-authorized UI checkout with 1 test USDC paid to the seller, plus a separate live buyer-dispute/reviewer-return journey with 1 test USDC returned from CPP custody. Both outcomes were checked against two independent Base Sepolia RPCs, exact events and token transfers; neither test involved physical delivery. [Buyer-release evidence](docs/27-COMPLETE-REAL-UI-CHECKOUT.md) · [Reviewer-return evidence](docs/31-FIRST-LIVE-DISPUTE-AND-RETURN.md) · [Final judge-experience checks](docs/32-FINAL-JUDGE-EXPERIENCE.md).
+
+**What was demonstrated and refined for Vibeathon:** The interactive agreement wizard and checkout guidance, responsive public deployment, real MetaMask buyer checkout, canonical receipt/effect verification, clear completed-payment and returned-reserve pages, and a signed reviewer decision with a genuine Base Sepolia reserve return. The [historical checkpoint reports](docs/) preserve chronology; these statements do not claim every underlying protocol component originated during the event.
+
+**Important limits:** Test assets only; named trusted reviewer cannot be replaced; a dispute does **not** pause expiry; delivery is not independently verified; returns of **uncaptured reserves** are not refunds of already captured seller payments. Broader physical mobile-wallet and expiry-recovery acceptance is not proven, and automated tests are not an independent security audit.
 
 ## How to Test
 
 Dealza includes a responsive web application with real Base Sepolia wallet/payment interfaces. **DealzaOperator is deployed and independently verified** at `0xd798Ec27019Bba2E6411986A2D58ff3D50F8C9c8`, block **53676176**. The centralized frontend configuration now uses this address. [Deployment evidence and first-payment procedure](docs/09-LIVE-DEPLOYMENT-AND-FIRST-PAYMENT.md). **The first controlled live 1 test-USDC lifecycle passed independent two-RPC verification**: buyer 20 USDC, seller 1 USDC, original Released, duplicate Voided, zero reserved balance and zero platform fee. [All six transactions and settlement proof](docs/17-FIRST-COMPLETE-LIVE-PAYMENT.md).
 
-For judges, start with **[View a real completed payment](https://dealza-drab.vercel.app/#/order/0x0267766d20ca737e4c13b696dfb2134c512ca1af13c12848dcf2d985e7c9aedd?terms=Dealza%20Checkpoint%206%3A%20fresh%20UI-only%201%20test-USDC%20checkout%3B%20controlled%20test%2C%20no%20physical%20delivery.)**. No wallet is needed. Inspect matching terms, participants, **Released / Paid to seller**, **0 reserved**, **1 USDC captured**, and genuine transaction receipts. No physical delivery occurred. No further payment is needed.
+For judges, the [wallet-free quickstart](#judge-quickstart--no-wallet-or-transactions-required) above links both completed payment outcomes, original terms, onchain receipts, and a safe draft-only exploration path.
 
 Historical deployment preparation: [EIP-7702 resolution](docs/verification/delegation-resolution/READINESS.md). The original deployer was restored to a standard EOA before deployment. Live buyer-release settlement and frontend publication are verified; broader physical-wallet/browser acceptance remains limited as described below.
 
@@ -70,7 +89,7 @@ npm run preview --workspace web
 
 Production output: **`web/dist/`**. The preview command serves that output locally, normally at `http://127.0.0.1:4173`.
 
-Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. The pre-polish baseline passed **234 frontend tests**. See [judge-ready verification](docs/30-JUDGE-READY-RELEASE.md) for the updated results. Coverage includes route and draft persistence, exact approval disclosure, keyboard focus, bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
+Tests cover wallet disconnect/account changes, incorrect networks, declined signatures, reverted payments, pending versus confirmed receipts, expiry during disputes, reviewer permissions, stale reads, mismatched financial records/terms, seller creation, and deployment-pending states. The latest recorded judge-experience suite passed **330 frontend tests across 18 files** (November 7, 2026); see [the evidence and test log](docs/32-FINAL-JUDGE-EXPERIENCE.md). The earlier 234-test baseline is preserved in [prior verification](docs/30-JUDGE-READY-RELEASE.md). Coverage includes route and draft persistence, exact approval disclosure, keyboard focus, bounded history, authentic routed receipts, canonical block/transaction proof, strict financial events/state, replacements and durable pending recovery. Wallet/RPC fixtures exist only in tests, never in the production application. A passing test with fixtures is not evidence of a real testnet payment.
 
 The committed frontend ABIs are generated from the existing Solidity artifacts and pinned CPP v1.1.0 ABI. Their source hashes are checked during the production build. A clean frontend build does not need generated Foundry outputs. If Solidity interfaces intentionally change, run:
 
@@ -102,7 +121,7 @@ The default Solidity profile runs offline tests; the fork profile uses read-only
 
 ## Product and payment rules
 
-Dealza is a USDC order-payment application for people selling through WhatsApp, Telegram, X, or other social platforms, entered in **Vibestarter Vibeathon 02**. Seller and buyer keep their own wallets. Offers name a specific buyer and an agreed reviewer before funding.
+Dealza is a USDC order-payment application for people selling through WhatsApp, Telegram, X, or other social platforms, submitted to **Vibestarter Vibeathon 02**. Seller and buyer keep their own wallets. Offers name a specific buyer and an agreed reviewer before funding.
 
 Buyer funding has three separate wallet transactions: exact USDC allowance to the existing collector, authorization of the exact CPP payment terms, and reservation. Reserved USDC stays in CPP’s TokenStore, not in DealzaOperator. Seller delivery evidence never releases funds. An undisputed buyer can explicitly release; a disputed order requires the agreed reviewer’s full-release or full-return decision before expiry. The reviewer cannot be replaced and there is no admin override.
 
@@ -144,9 +163,9 @@ The original settlement verifier is `web/scripts/verify-ui-gate6-settlement.mjs`
 
 The confirmation UI now applies the already-verified receipt-block snapshot immediately. Lagging RPC reads cannot roll it back; a failed refresh retains the last verified record, explains the delay, pauses actions and retries automatically. Saved receipt reconciliation also updates the visible order. No optimistic payment success or financial-contract changes were introduced.
 
-The full happy-path UI checkout is verified. Physical mobile wallets, broader wrong-network/account-switch behavior and live signed funded-cancellation/reviewer/disputed-expiry-recovery branches remain acceptance limits. Contract/fork/fixture coverage for these branches passes; it is not live UI acceptance or an independent audit. Publish as a **Base Sepolia controlled-test demo**, with these limits explicit.
+The full buyer-release UI checkout **and one genuine buyer dispute followed by a reviewer-authorized full return of an uncaptured reserve** have been verified on Base Sepolia. Physical mobile wallets, broader real-device wrong-network/account-switch acceptance and live disputed-expiry recovery remain unverified; coverage from contract/fork/fixture tests is not a substitute for those live tests or an independent audit. The product remains a **Base Sepolia controlled-test demo**.
 
-For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Node 24 is pinned in `.nvmrc` and the root package engine. The [public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) has exact hosting settings and public acceptance checks. The current public release is hosted on Vercel at the URL above. This polish does not push or deploy automatically.
+For Vercel: repository root, `npm ci`, `npm run build`, output `web/dist`; root `vercel.json` declares the settings and security headers. For Cloudflare Pages: repository root, build `npm run build`, output `web/dist`, Node 24. `_headers` is copied into the output. Hash-based routes (`/#/order/<id>`) work without a server rewrite. Node 24 is pinned in `.nvmrc` and the root package engine. The [public launch runbook](docs/28-PUBLIC-LAUNCH-RUNBOOK.md) has exact hosting settings and public acceptance checks. The public Vercel application is available at the URL above; `main` contains the published judge-experience changes. Changes to GitHub do not themselves guarantee that a new Vercel deployment has completed; verify the production deployment independently.
 
 ## Repository and evidence
 
